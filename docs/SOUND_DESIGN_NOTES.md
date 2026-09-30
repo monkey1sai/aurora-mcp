@@ -79,7 +79,7 @@ No changes to params.js or util.js were needed. Behaviours other engineers or th
 
 ## fm
 
-I wrote src/dsp/engines/fm.js (825 lines), a 4-operator FM engine. It follows ARCHITECTURE.md §4 and is verified with numbers across the keyboard, at 44.1/48/96 kHz, including a randomised fuzz test. The only file I touched is fm.js. Test scripts are in the scratchpad fm/ folder.
+I wrote src/dsp/engines/fm.js (825 lines), a 4-operator FM engine. It follows ARCHITECTURE.md §4 and is verified with numbers across the keyboard, at 44.1/48/96 kHz, including a randomised fuzz test. The only file I touched is fm.js.
 
 What it does:
 - The 8 algorithms exactly as specified, plus op4 self-feedback using the two-sample average.
@@ -339,4 +339,3 @@ No changes to params.js or util.js; no changes to them are needed.
 - When the delay goes idle it clears its buffer once: 2×2^18 floats at 48 kHz, roughly a 0.1 ms spike. The reverb does the same with about 1–2 MB when it goes idle.
 - JIT warm-up: the reverb's large process function runs slower until V8 optimises it, typically in the first 0.5–1 s after it starts. Under heavy machine load I saw several hundred µs per block during that period, which is still within the 2667 µs budget.
 - Timing numbers are noisy on this shared machine (load averages of 7–57 while other engineers ran tests; the process can also land on efficiency cores). The CPU figures I report are the minimum/median of repeated runs.
-- The project test suite's only failure in the suites I ran is a missing index.html. That file belongs to the UI engineer, not the FX module.

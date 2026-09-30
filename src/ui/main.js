@@ -31,6 +31,13 @@ async function tryImport(spec) {
   try { return await import(spec); } catch (e) { console.warn(`[aurora] optional module ${spec} unavailable:`, e); return null; }
 }
 
+// ?video=1: the app runs inside the scripted video recorder (tools/video/director.html). Only then: no first-run
+// tips, no session restore/autosave (the recording starts clean and never touches the viewer's saved sound), and
+// tools/video/capture/app-hook.js gets the handles it scripts (window.__aurora). Without ?video=1 nothing changes.
+const REPO_URL = 'https://github.com/pixbvr/aurora-synth';
+
+const VIDEO = (() => { try { return new URLSearchParams(location.search).get('video') === '1'; } catch { return false; } })();
+
 /** visuals.js factories wrapped so a throwing factory falls back to the minimal Canvas2D version. */
 function safeVisuals(mod) {
   const out = {};
@@ -136,6 +143,7 @@ async function boot() {
         { sep: true },
         { label: t('help'), icon: 'help', onClick: openHelp, hint: '?' },
         { label: getLang() === 'en' ? '中文介面' : 'English UI', icon: 'globe', onClick: () => setLang(getLang() === 'zh' ? 'en' : 'zh') },
+        { label: getLang() === 'en' ? 'Source on GitHub' : 'GitHub 原始碼', icon: 'github', onClick: () => window.open(REPO_URL, '_blank', 'noopener') },
       ]),
     },
   });
@@ -214,6 +222,7 @@ async function boot() {
   }
 
   const saveSession = debounce(() => {
+    if (VIDEO) return;
     const meta = store.getMeta();
     // a sound tour / theater mode is borrowing the patch: keep the user's own session until it ends
     if (meta.source === 'demo') return;
@@ -231,7 +240,7 @@ async function boot() {
 
   const hadSession = !!storage.get('aurora.session', null); // returning user: no first-run tips
   (function restore() {
-    const sess = storage.get('aurora.session', null);
+    const sess = VIDEO ? null : storage.get('aurora.session', null);
     if (sess && sess.preset && sess.preset.params) {
       const lib = sess.key ? library.get(sess.key) : null;
       if (lib && !sess.dirty) { loadEntry(lib); return; }
@@ -585,7 +594,7 @@ async function boot() {
   let coachEl = null;
   function showCoach(force = false) {
     if (coachEl) return;
-    if (!force && storage.get('aurora.coachSeen', false)) return;
+    if (!force && (VIDEO || storage.get('aurora.coachSeen', false))) return;
     const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
     const step = (n, txt, onClick) => {
       const li = h('li.coach__step', null, h('b.coach__n', { 'aria-hidden': 'true' }, String(n)), h('span', null, txt));
@@ -671,6 +680,18 @@ async function boot() {
 
   // expose for debugging in the console
   globalThis.aurora = { store, library, get audio() { return audio; }, editor, startDemo, stopDemo, get center() { return center; } };
+
+  // video recorder only (?video=1): hand the internals to the capture hook, which builds window.__aurora
+  if (VIDEO) {
+    const internals = {
+      store, library, categories, presets: factory, songsModule: () => import('../demo/songs/index.js'),
+      getAudio: () => audio, getCenter: () => center, loadEntry, initPatch, startAudio, dismissSplash, splashUp,
+      startDemo, stopDemo, panic, setEditMode, playView, editor, dock, topbar, browser, qwerty,
+    };
+    import('../../tools/video/capture/app-hook.js')
+      .then(m => m.install(internals))
+      .catch(e => console.error('[aurora] video hook failed', e));
+  }
 }
 
 boot().catch((e) => {

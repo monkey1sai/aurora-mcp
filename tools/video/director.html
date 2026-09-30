@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>AURORA — video director</title>
+<!-- same web fonts as the app (the overlay and the default cursor use them); loaded eagerly: nothing is filmed before they are in -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap">
+<style>
+  /* Fixed 1920×1080 stage: the recorder's viewport is exactly this size (no scaling, 1 CSS px = 1 video px).
+     Opened in a normal browser window the stage is scaled to fit (preview only). */
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #07080d; }
+  html, body, * { cursor: none !important; }
+  /* overflow: clip (not hidden): the stage must never be a scroll container — a scrollIntoView() inside the app
+     (e.g. the preset list following the current preset) would otherwise scroll the whole zoomed stage */
+  #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: clip; background: #07080d;
+    transform-origin: 0 0; contain: strict; }
+  /* the camera: a CSS transform on this wrapper = smooth zooms / pans over the live app */
+  #camera { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+  #app { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; border: 0; display: block; background: #07080d; }
+  #overlay-root { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; z-index: 10; }
+  /* built-in fallback cursor (used only when no overlay cursor is available) */
+  #dcursor { position: absolute; left: 0; top: 0; width: 34px; height: 42px; margin: -3px 0 0 -4px; z-index: 900; pointer-events: none;
+    opacity: 0; transition: opacity .2s; filter: drop-shadow(0 3px 8px rgba(0,0,0,.55)); }
+  #dcursor.is-on { opacity: 1; }
+  #dcursor svg { width: 100%; height: 100%; display: block; transition: transform .09s ease-out; }
+  #dcursor.is-down svg { transform: scale(.82); }
+  /* recorder calibration marks: never in the delivered video (pre-/post-roll) unless a timeline uses them */
+  .dmark { position: absolute; width: 120px; height: 120px; background: #fff; z-index: 1000; display: none; pointer-events: none; }
+  .dmark.is-on { display: block; }
+  #sync { left: 0; top: 0; }
+  #noteflash { right: 0; top: 0; }
+  /* recorder timecode strip (?tc=1): below the 1080-px stage, outside the delivered picture (cropped away) */
+  #tc { position: absolute; left: 0; top: 1080px; width: 256px; height: 8px; display: none; image-rendering: pixelated; }
+  html.tc #tc { display: block; }
+</style>
+</head>
+<body>
+<canvas id="tc" width="256" height="8"></canvas>
+<div id="stage">
+  <div id="camera"><iframe id="app" title="AURORA" allow="autoplay; midi"></iframe></div>
+  <div id="overlay-root"></div>
+  <div id="dcursor"><svg viewBox="0 0 58 70" aria-hidden="true"><path d="M7 5 L7 55 L19.5 43.5 L28.5 64 L38 59.8 L29.2 39.8 L46 39.8 Z" fill="#fff" stroke="#07101c" stroke-width="3.2" stroke-linejoin="round"/></svg></div>
+  <div id="sync" class="dmark"></div>
+  <div id="noteflash" class="dmark"></div>
+</div>
+<script type="module" src="./director.js"></script>
+</body>
+</html>

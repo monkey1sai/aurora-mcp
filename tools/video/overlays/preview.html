@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AURORA overlay preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  :root { color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: #030408; color: #e8ecff; font: 13px/1.4 system-ui, -apple-system, sans-serif; overflow: hidden; }
+  #wrap { position: absolute; inset: 0 0 64px 0; display: grid; place-items: center; }
+  body.clean #wrap { inset: 0; display: block; }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #07080d; transform-origin: 0 0; flex: none; }
+  #bg { position: absolute; inset: 0; }
+  #bg img, #bg iframe { position: absolute; inset: 0; width: 1920px; height: 1080px; border: 0; display: block; }
+  #bg.gradient { background:
+    radial-gradient(40% 50% at 20% 30%, rgba(62, 240, 176, .35), transparent 70%),
+    radial-gradient(40% 50% at 80% 30%, rgba(167, 139, 250, .35), transparent 70%),
+    radial-gradient(50% 50% at 50% 90%, rgba(255, 107, 214, .25), transparent 70%), #0a0c16;
+    animation: g 8s ease-in-out infinite alternate; background-size: 140% 140%; }
+  @keyframes g { from { background-position: 0% 0%; } to { background-position: 100% 100%; } }
+  #overlay { position: absolute; inset: 0; }
+  #bar { position: absolute; left: 0; right: 0; bottom: 0; height: 64px; display: flex; align-items: center; gap: 6px; padding: 0 12px; overflow-x: auto;
+    background: #0b0d16; border-top: 1px solid rgba(140, 160, 220, .16); }
+  body.clean #bar { display: none; }
+  #bar button, #bar select { height: 34px; padding: 0 12px; border-radius: 9px; border: 0; cursor: pointer; color: #cfd6f5; font: 600 12.5px system-ui;
+    background: linear-gradient(180deg, rgba(40, 48, 76, .8), rgba(20, 25, 40, .9)); box-shadow: inset 0 0 0 1px rgba(140, 160, 220, .16); white-space: nowrap; }
+  #bar button.primary { color: #051018; background: linear-gradient(120deg, #3ef0b0, #5cf2ff 30%, #a78bfa 65%, #ff6bd6); }
+  #bar .sp { flex: 1; }
+  #hud { font: 11px/1.3 ui-monospace, Menlo, monospace; color: #8e97b8; white-space: pre; min-width: 220px; }
+</style>
+</head>
+<body>
+<div id="wrap"><div id="stage"><div id="bg"></div><div id="overlay"></div></div></div>
+<div id="bar">
+  <button class="primary" data-run="film">▶ Sample film</button>
+  <button data-run="hook">Hook</button>
+  <button data-run="captions">Captions</button>
+  <button data-run="badges">Badges</button>
+  <button data-run="cursor">Cursor + spotlight</button>
+  <button data-run="counter">Counter</button>
+  <button data-run="stats">Stats</button>
+  <button data-run="swarm">Swarm</button>
+  <button data-run="flash">Flash</button>
+  <button data-run="end">End card</button>
+  <button data-run="clear">Clear</button>
+  <select id="lang"><option value="en">EN captions</option><option value="zh">中文字幕</option></select>
+  <select id="bgsel"><option value="shot">bg: app screenshot</option><option value="app">bg: live app</option><option value="gradient">bg: gradient</option><option value="none">bg: none</option></select>
+  <span class="sp"></span>
+  <span id="hud"></span>
+</div>
+<script type="module" src="./preview.js"></script>
+</body>
+</html>

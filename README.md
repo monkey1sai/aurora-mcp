@@ -2,6 +2,10 @@
 
 在瀏覽器裡執行的混合式合成器：好聽、好看、好上手，也夠深入做聲音設計。還會自己演奏、自己調音色：打開「示範中心」，聽六首多聲部示範曲、看旋鈕在音色導覽裡自己轉動、讓它即興伴奏，或把整個畫面交給劇院模式。
 
+> **English:** AURORA 極光 is a hybrid synthesizer that runs entirely in the browser — virtual-analog, wavetable, 4-op FM and physical-modelling engines, 100 presets, 6 demo songs, sound tours, a generative jam mode and a theater mode. Zero npm dependencies, no audio samples: every sound is synthesized live in an AudioWorklet. Built with [Claude Code](https://claude.com/claude-code).
+>
+> **Try it:** https://aurora.pixbvr.com · **Run locally:** Node 20+, then `npm start` and open http://localhost:5173 (click once to start audio). **Keys:** A–K play, Z / X octave, Esc Esc panic.
+
 ## Features 功能總覽
 
 ### 合成器 Synth
@@ -193,4 +197,9 @@ src/dsp/ensemble.js         多聲部歌曲引擎（每個聲部是一個完整�
 src/dsp/engines/, fx/       振盪器、FM、物理模型、噪音；各種效果
 src/presets/                出廠音色（每個都有 4 個巨集與 demo 樂句）
 tools/                      serve（含 https／區網模式與自簽憑證 selfsigned）、render、render-song、render-jam、analyze、test、wav／png 編碼器、phrases
+tools/video/, docs/video/    宣傳影片的錄製工具（無頭 Chrome 錄製真實 App）、動態字幕與分鏡
 ```
+
+## License 授權
+
+[MIT](LICENSE) © 2026 pixbvr。這個專案由 [Claude Code](https://claude.com/claude-code) 打造。

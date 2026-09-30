@@ -1,0 +1,7 @@
+// Cloudflare Workers static assets: `node tools/build-site.mjs && npx wrangler deploy`
+{
+  "name": "aurora-synth",
+  "compatibility_date": "2026-09-30",
+  "assets": { "directory": "./dist" },
+  "routes": [{ "pattern": "aurora.pixbvr.com", "custom_domain": true }]
+}

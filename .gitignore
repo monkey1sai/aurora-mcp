@@ -2,3 +2,5 @@ renders/
 node_modules/
 .DS_Store
 .cert/
+dist/
+.wrangler/
