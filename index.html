@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AURORA 極光 — 混合式合成器 Hybrid Synthesizer</title>
+<meta name="description" content="AURORA 極光：在瀏覽器裡執行的混合式合成器 — 振盪器、波表、FM、物理模型、豐富效果與示範樂句。A hybrid browser synthesizer.">
+<meta name="theme-color" content="#07080d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233ef0b0'/%3E%3Cstop offset='.4' stop-color='%235cf2ff'/%3E%3Cstop offset='.7' stop-color='%23a78bfa'/%3E%3Cstop offset='1' stop-color='%23ff6bd6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%2307080d'/%3E%3Cpath d='M5 22c4-10 8-14 11-14s7 4 11 14' fill='none' stroke='url(%23g)' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- web fonts must not block the first paint (slow / blocked fonts.googleapis.com); system fonts show until they arrive -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/visuals.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/demo.css">
+<link rel="stylesheet" href="css/compat.css">
+<link rel="modulepreload" href="src/ui/main.js">
+</head>
+<body>
+<div id="app" class="app" aria-busy="true"></div>
+
+<div id="splash" class="splash" role="dialog" aria-modal="true" aria-label="AURORA 極光">
+  <div class="splash__sky" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="splash__stars"></span></div>
+  <div class="splash__content">
+    <div class="splash__logo"><span class="splash__word">AURORA</span><span class="splash__zh">極光</span></div>
+    <p class="splash__tag">混合式合成器<span>Hybrid Synthesizer</span></p>
+    <button class="splash__start" type="button" aria-label="點一下開始 Tap to start">
+      <span class="splash__ring" aria-hidden="true"></span>
+      <span class="splash__play" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 4.8v14.4a.8.8 0 001.2.7l12-7.2a.8.8 0 000-1.4l-12-7.2a.8.8 0 00-1.2.7z"/></svg></span>
+      <span class="splash__cta">點一下開始<small>Tap to start</small></span>
+    </button>
+    <p class="splash__status" role="status">正在啟動音訊引擎… Starting audio engine…</p>
+    <p class="splash__hint"><span class="splash__hint--kb">電腦鍵盤 A–K 彈奏 · Z / X 切換八度<span class="splash__midi"> · 支援 MIDI</span><br><span class="splash__hintEn">Play with A–K · Z / X octave<span class="splash__midi"> · MIDI ready</span></span></span><span class="splash__hint--touch">點下方琴鍵彈奏 · ‹ › 切換八度<br><span class="splash__hintEn">Tap the keys to play · ‹ › octave</span></span></p>
+  </div>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<noscript>
+  <div style="position:fixed;inset:0;display:grid;place-items:center;background:#07080d;color:#e8ecff;font:15px system-ui;z-index:5000">
+    AURORA 極光 需要啟用 JavaScript。 · JavaScript is required.
+  </div>
+</noscript>
+
+<script type="module" src="src/ui/main.js"></script>
+</body>
+</html>

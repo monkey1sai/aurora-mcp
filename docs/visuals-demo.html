@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurora Visuals</title>
+<meta name="description" content="AURORA 極光 — visualizer test bench: hero aurora, scope, spectrum, filter response, LFO view and meters driven by a local Web Audio test signal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../css/visuals.css">
+<style>
+  :root {
+    --bg-0:#07080d; --bg-1:#0c0f18; --bg-2:#121726; --panel:rgba(22,28,46,.72); --panel-hi:rgba(38,48,78,.6);
+    --line:rgba(140,160,220,.14); --text:#e8ecff; --text-dim:#8e97b8; --text-faint:#5a6284;
+    --a-cyan:#5cf2ff; --a-teal:#3ef0b0; --a-violet:#a78bfa; --a-pink:#ff6bd6; --a-amber:#ffc46b; --a-red:#ff6b81;
+    --grad-aurora: linear-gradient(120deg,#3ef0b0,#5cf2ff 30%,#a78bfa 65%,#ff6bd6);
+    --radius:14px; --radius-sm:8px; --shadow: 0 10px 40px rgba(0,0,0,.45);
+    --font-ui: "Inter","Noto Sans TC",system-ui,sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; color: var(--text); font-family: var(--font-ui);
+    background:
+      radial-gradient(900px 500px at 12% -10%, rgba(62,240,176,.10), transparent 60%),
+      radial-gradient(900px 600px at 88% -5%, rgba(167,139,250,.14), transparent 60%),
+      radial-gradient(700px 500px at 50% 110%, rgba(255,107,214,.07), transparent 60%),
+      var(--bg-0);
+    background-attachment: fixed;
+  }
+  header {
+    display: flex; align-items: center; gap: 14px 18px; flex-wrap: wrap;
+    padding: 22px 28px 8px; max-width: 1400px; margin: 0 auto;
+  }
+  .logo { font-weight: 700; font-size: 22px; letter-spacing: .18em; }
+  .logo b { background: var(--grad-aurora); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .logo span { font-weight: 500; font-size: 13px; letter-spacing: .1em; color: var(--text-dim); margin-left: 10px; }
+  .hdr-right { margin-left: auto; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  main {
+    max-width: 1400px; margin: 0 auto; padding: 14px 28px 40px;
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px;
+  }
+  .panel {
+    position: relative; grid-column: span 6; padding: 16px 18px 18px; border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: var(--shadow);
+    min-width: 0;
+  }
+  .panel.w12 { grid-column: span 12; }
+  .panel.w8 { grid-column: span 8; }
+  .panel.w4 { grid-column: span 4; }
+  .panel h2 {
+    margin: 0 0 12px; font-size: 13px; font-weight: 600; letter-spacing: .06em; display: flex; align-items: baseline; gap: 8px;
+  }
+  .panel h2 small { font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint); font-weight: 600; }
+  .panel h2::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--acc, var(--a-cyan)); box-shadow: 0 0 10px var(--acc, var(--a-cyan)); align-self: center; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+  .row + .row, .vis + .row, .row + .vis { margin-top: 12px; }
+  .btn {
+    font: 500 12px var(--font-ui); color: var(--text); cursor: pointer; padding: 7px 12px; border-radius: 9px; border: 0;
+    background: linear-gradient(180deg, rgba(40,48,76,.8), rgba(20,25,40,.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 0 0 1px rgba(140,160,220,.18);
+    transition: box-shadow .18s ease, transform .1s ease;
+  }
+  .btn:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 0 0 1px rgba(92,242,255,.5), 0 0 12px rgba(92,242,255,.2); }
+  .btn:active { transform: translateY(1px); }
+  .btn.on { box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 0 0 1px var(--a-teal), 0 0 14px rgba(62,240,176,.35); }
+  .btn:focus-visible { outline: 2px solid var(--a-cyan); outline-offset: 2px; }
+  .btn.primary {
+    color: #06121a; font-weight: 700; letter-spacing: .04em; padding: 9px 16px;
+    background: var(--grad-aurora); box-shadow: 0 0 22px rgba(92,242,255,.35);
+  }
+  .btn small { color: var(--text-faint); font-size: 9.5px; letter-spacing: .12em; margin-left: 4px; }
+  .btn.primary small { color: rgba(6,18,26,.6); }
+  .pill { font: 500 11px var(--font-mono); color: var(--text-dim); padding: 5px 10px; border-radius: 99px; background: rgba(0,0,0,.3); border: 1px solid var(--line); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .pill b { color: var(--a-cyan); font-weight: 600; }
+  .sub { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); font-weight: 600; }
+  .hero-wrap { position: relative; height: clamp(300px, 46vw, 520px); }
+  .hero-wrap .av-hero { height: 100%; }
+  .hero-hud { position: absolute; left: 14px; top: 12px; z-index: 5; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
+  .hero-hud .pill { background: rgba(4,6,12,.55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  .hero-hint { position: absolute; left: 0; right: 0; bottom: 18px; z-index: 5; text-align: center; pointer-events: none; font-size: 12px; letter-spacing: .08em; color: rgba(232,236,255,.55); transition: opacity .6s ease; }
+  .hero-hint b { color: var(--text); font-weight: 600; }
+  .ctl { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-dim); }
+  .ctl output { font: 500 11px var(--font-mono); color: var(--text); min-width: 64px; }
+  .ctl select, .ctl input[type=range] { accent-color: var(--acc, var(--a-cyan)); }
+  select {
+    font: 500 12px var(--font-ui); color: var(--text); background: rgba(10,13,22,.9); border: 1px solid var(--line);
+    border-radius: 8px; padding: 5px 8px;
+  }
+  input[type=range] { width: 130px; }
+  .meters { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; }
+  .meters .col { display: flex; flex-direction: column; gap: 10px; }
+  .keys { display: flex; gap: 3px; height: 74px; user-select: none; touch-action: none; margin-top: 12px; }
+  .key {
+    flex: 1; border-radius: 0 0 7px 7px; cursor: pointer; position: relative;
+    background: linear-gradient(180deg, rgba(232,236,255,.85), rgba(200,208,240,.75));
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,.18);
+  }
+  .key.b { background: linear-gradient(180deg, #1a1f33, #0c0f18); box-shadow: inset 0 0 0 1px rgba(140,160,220,.2); flex: .75; }
+  .key.on { background: var(--grad-aurora); box-shadow: 0 0 16px rgba(92,242,255,.55); }
+  .key span { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; font: 600 9px var(--font-mono); color: rgba(7,8,13,.5); }
+  .key.b span { color: rgba(232,236,255,.4); }
+  table { width: 100%; border-collapse: collapse; font: 500 11.5px var(--font-mono); }
+  th, td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--text-faint); font-weight: 600; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+  td.ok { color: var(--a-teal); } td.warn { color: var(--a-amber); } td.bad { color: var(--a-red); }
+  .note { color: var(--text-faint); font-size: 11.5px; line-height: 1.55; margin: 10px 0 0; }
+  body.solo { overflow: hidden; }
+  body.solo .panel { -webkit-backdrop-filter: none; backdrop-filter: none; } /* else it becomes the fixed containing block */
+  body.solo .hero-wrap { position: fixed; inset: 0; height: 100vh; height: 100dvh; z-index: 50; }
+  body.solo .hero-wrap .av-hero { border-radius: 0; }
+  @media (max-width: 1100px) { .panel, .panel.w8, .panel.w4 { grid-column: span 12; } }
+  @media (max-width: 640px) {
+    header, main { padding-left: 16px; padding-right: 16px; }
+    .panel { padding: 14px; }
+    input[type=range] { width: 100px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><b>AURORA</b> 極光 <span>視覺化測試台 VISUALS BENCH</span></div>
+  <div class="hdr-right">
+    <button class="btn primary" id="start">▶ 啟動音訊 <small>START AUDIO</small></button>
+    <span class="pill" id="status">音訊未啟動 · idle</span>
+  </div>
+</header>
+<main>
+  <section class="panel w12" style="--acc: var(--a-teal)">
+    <h2>極光主視覺 <small>Hero visualizer · WebGL2 HDR + bloom · Canvas2D fallback</small></h2>
+    <div class="hero-wrap" id="hero-wrap">
+      <div class="hero-hud"><span class="pill" id="hud-r">—</span><span class="pill" id="hud-fps">— fps</span><span class="pill" id="hud-ms">— ms</span></div>
+      <div class="hero-hint" id="hint">按 <b>啟動音訊</b> 開始 · 靜音時極光緩緩漂移 — press <b>Start audio</b></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <span class="sub">場景 Scene</span>
+      <button class="btn" data-scene="pad">鋪底 <small>PAD</small></button>
+      <button class="btn" data-scene="arp">琶音 <small>ARP</small></button>
+      <button class="btn" data-scene="groove">律動 <small>GROOVE</small></button>
+      <button class="btn" data-scene="sweep">掃頻 <small>SWEEP</small></button>
+      <button class="btn" data-scene="stress">16 聲部 <small>STRESS</small></button>
+      <button class="btn" data-scene="stop">靜音 <small>SILENCE</small></button>
+    </div>
+    <div class="row">
+      <span class="sub">色盤 Palette</span>
+      <button class="btn on" data-pal="aurora">極光 <small>AURORA</small></button>
+      <button class="btn" data-pal="sunset">夕陽 <small>SUNSET</small></button>
+      <button class="btn" data-pal="ocean">深海 <small>OCEAN</small></button>
+      <button class="btn" data-pal="mono">單色 <small>MONO</small></button>
+      <span class="sub" style="margin-left:12px">渲染 Renderer</span>
+      <button class="btn on" data-rend="auto">WebGL2</button>
+      <button class="btn" data-rend="canvas2d">Canvas2D</button>
+    </div>
+    <div class="keys" id="keys" aria-label="Test keyboard"></div>
+    <p class="note">全螢幕：雙擊主視覺或按 Shift+F（Esc 離開）；全螢幕時 1–6 切換場景、C 切換色盤。 Fullscreen: double-click the hero or press Shift+F (Esc exits); there, keys 1–6 switch scenes and C cycles palettes.</p>
+    <p class="note">鍵盤：點擊（上方輕、下方重）或電腦鍵盤 A W S E D F T G Y H U J K O L P。每個新音符在其音高位置綻放光環，亮度隨聲部包絡淡出。 Click keys (higher = softer) or use the QWERTY row — each new note blooms at its pitch position and fades with the voice envelope.</p>
+  </section>
+
+  <section class="panel" style="--acc: var(--a-cyan)">
+    <h2>示波器 <small>Scope · trigger-stabilised · lissajous</small></h2>
+    <div id="scope" class="vis"></div>
+    <div class="row">
+      <button class="btn on" data-scope="wave">波形 <small>WAVE</small></button>
+      <button class="btn" data-scope="lissajous">李薩如 <small>XY</small></button>
+    </div>
+  </section>
+
+  <section class="panel" style="--acc: var(--a-pink)">
+    <h2>頻譜 <small>Spectrum · log-frequency · peak hold</small></h2>
+    <div id="spectrum" class="vis"></div>
+    <div class="row"><span class="pill">20 Hz – 20 kHz · +3 dB/oct tilt · peak hold</span></div>
+  </section>
+
+  <section class="panel" style="--acc: var(--a-violet)">
+    <h2>濾波器響應 <small>Filter view · dsp/filter.js filterResponse</small></h2>
+    <div id="filter" class="vis"></div>
+    <div class="row">
+      <label class="ctl">類型 <select id="f-type"></select></label>
+      <label class="ctl"><input type="checkbox" id="f-auto"> 自動掃頻 auto</label>
+    </div>
+    <div class="row">
+      <label class="ctl">Cutoff <input type="range" id="f-cut" min="0" max="1" step="0.001" value="0.7"><output id="o-cut"></output></label>
+      <label class="ctl">Res <input type="range" id="f-res" min="0" max="1" step="0.01" value="0.35"><output id="o-res"></output></label>
+    </div>
+    <div class="row">
+      <label class="ctl">Drive <input type="range" id="f-drv" min="0" max="1" step="0.01" value="0"><output id="o-drv"></output></label>
+      <label class="ctl">Vowel <input type="range" id="f-vow" min="0" max="1" step="0.01" value="0"><output id="o-vow"></output></label>
+    </div>
+  </section>
+
+  <section class="panel" style="--acc: var(--a-amber)">
+    <h2>LFO · 電平表 <small>LFO view · stereo peak / RMS meter</small></h2>
+    <div id="lfo" class="vis"></div>
+    <div class="row">
+      <label class="ctl">波形 <select id="l-shape"></select></label>
+      <label class="ctl">Sync <select id="l-sync"></select></label>
+    </div>
+    <div class="row">
+      <label class="ctl">Rate <input type="range" id="l-rate" min="0" max="1" step="0.001" value="0.55"><output id="o-rate"></output></label>
+      <label class="ctl">Phase <input type="range" id="l-ph" min="0" max="1" step="0.01" value="0"><output id="o-ph"></output></label>
+    </div>
+    <div class="meters" style="margin-top:14px">
+      <div class="col"><span class="sub">輸出 Output · peak / RMS / hold / clip</span><div id="meter-h"></div></div>
+      <div id="meter-v"></div>
+    </div>
+  </section>
+
+  <section class="panel w12" style="--acc: var(--a-teal)">
+    <h2>效能 <small>Per-visual main-thread cost (JS) · budget &lt; 4 ms / frame</small></h2>
+    <table id="stats"><thead><tr><th>Visual</th><th>avg ms</th><th>peak ms</th><th>frames</th><th>visible</th></tr></thead><tbody></tbody></table>
+    <p class="note">The hero's GPU work (HDR scene, ¼ + ⅛ res bloom, ACES tone map) is not included in JS time; the hero lowers its resolution automatically if the frame rate drops. Visuals pause while the tab is hidden and skip work while scrolled out of view.</p>
+  </section>
+</main>
+
+<script type="module">
+import {
+  createHeroVisualizer, createScope, createSpectrum, createFilterView, createLfoView, createMeter, getVisualStats,
+} from '../src/ui/visuals.js';
+import { PARAM_BY_ID } from '../src/dsp/params.js';
+
+const $ = s => document.querySelector(s);
+const mtof = n => 440 * Math.pow(2, (n - 69) / 12);
+
+/* ───────────── deterministic PRNG for the demo patterns ───────────── */
+let seed = 12345;
+const rnd = () => { seed ^= seed << 13; seed >>>= 0; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0; return seed / 4294967296; };
+
+/* ───────────── test signal engine: plain Web Audio nodes ───────────── */
+class TestEngine {
+  constructor(ctx) {
+    this.ctx = ctx;
+    this.bus = ctx.createGain();
+    this.master = ctx.createGain(); this.master.gain.value = 0.85;
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -10; comp.ratio.value = 4; comp.attack.value = 0.003; comp.release.value = 0.2; comp.knee.value = 6;
+    // stereo ping-pong delay for width
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3800;
+    const dl = ctx.createDelay(1.5), dr = ctx.createDelay(1.5);
+    dl.delayTime.value = 0.2679; dr.delayTime.value = 0.2679;
+    const fb = ctx.createGain(); fb.gain.value = 0.4;
+    this.wet = ctx.createGain(); this.wet.gain.value = 0.32;
+    const merge = ctx.createChannelMerger(2);
+    this.bus.connect(this.master);
+    this.bus.connect(lp); lp.connect(dl); dl.connect(dr); dr.connect(fb); fb.connect(dl);
+    dl.connect(merge, 0, 0); dr.connect(merge, 0, 1); merge.connect(this.wet); this.wet.connect(this.master);
+    this.master.connect(comp); comp.connect(ctx.destination);
+    // analysers: summed (spectrum/hero) + L/R (scope, width, meters)
+    this.analyser = ctx.createAnalyser(); this.analyser.fftSize = 4096; this.analyser.smoothingTimeConstant = 0.5;
+    this.analyserL = ctx.createAnalyser(); this.analyserL.fftSize = 2048; this.analyserL.smoothingTimeConstant = 0;
+    this.analyserR = ctx.createAnalyser(); this.analyserR.fftSize = 2048; this.analyserR.smoothingTimeConstant = 0;
+    const split = ctx.createChannelSplitter(2);
+    comp.connect(this.analyser); comp.connect(split);
+    split.connect(this.analyserL, 0); split.connect(this.analyserR, 1);
+    // noise
+    const nb = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), d = nb.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = rnd() * 2 - 1;
+    this.noiseBuf = nb;
+    this.slots = new Array(16).fill(null);
+    this.bpm = 110; this.beat0 = 0; this.seqPlaying = false;
+    this._st = null; this._stT = -1;
+    this._tL = new Float32Array(2048); this._tR = new Float32Array(2048);
+  }
+  _slot(t) {
+    for (let i = 0; i < 16; i++) { const v = this.slots[i]; if (!v || t > v.tEnd) return i; }
+    let best = 0; for (let i = 1; i < 16; i++) if (this.slots[i].t0 < this.slots[best].t0) best = i;  // steal oldest
+    this._kill(this.slots[best], t);
+    return best;
+  }
+  _kill(v, t) {
+    try { v.g.gain.cancelScheduledValues(t); v.g.gain.setTargetAtTime(0, t, 0.004); v.oscs.forEach(o => o.stop(t + 0.03)); } catch {}
+    v.tEnd = t;
+  }
+  noteOn(note, vel = 0.8, o = {}) {
+    const ctx = this.ctx, t = Math.max(ctx.currentTime, o.when ?? ctx.currentTime);
+    const P = { wave: 'sawtooth', det: 9, cutoff: 2200, q: 1.5, env: 2.5, a: 0.008, d: 0.4, s: 0.6, r: 0.5, gain: 0.2, pan: (rnd() * 2 - 1) * 0.55, ...o };
+    const index = this._slot(t);
+    const f0 = mtof(note);
+    const oscs = [-P.det, P.det].map(dt => { const x = ctx.createOscillator(); x.type = P.wave; x.frequency.value = f0; x.detune.value = dt; return x; });
+    const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = P.q;
+    const top = Math.min(16000, P.cutoff * (1 + P.env * vel));
+    f.frequency.setValueAtTime(P.cutoff, t);
+    f.frequency.linearRampToValueAtTime(top, t + P.a + 0.004);
+    f.frequency.setTargetAtTime(P.cutoff, t + P.a + 0.004, Math.max(0.02, P.d / 2));
+    const g = ctx.createGain(), peak = P.gain * (0.35 + 0.65 * vel);
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(peak, t + P.a);
+    g.gain.setTargetAtTime(peak * P.s, t + P.a, Math.max(0.01, P.d / 3));
+    const pan = ctx.createStereoPanner(); pan.pan.value = P.pan;
+    oscs.forEach(x => { x.connect(f); x.start(t); });
+    f.connect(g); g.connect(pan); pan.connect(this.bus);
+    const v = { note, vel, t0: t, tOff: null, tEnd: Infinity, P, peak, g, f, oscs, index };
+    this.slots[index] = v;
+    oscs[0].onended = () => { try { pan.disconnect(); } catch {} };
+    if (P.dur) this.noteOff(v, t + P.dur);
+    return v;
+  }
+  noteOff(v, when) {
+    if (!v || v.tOff != null) return;
+    const t = Math.max(this.ctx.currentTime, when ?? this.ctx.currentTime, v.t0 + 0.005);
+    const lvl = this.levelAt(v, t) * v.peak;
+    v.g.gain.cancelScheduledValues(t);
+    v.g.gain.setValueAtTime(lvl, t);
+    v.g.gain.setTargetAtTime(0, t, v.P.r / 4);
+    v.tOff = t;
+    v.tEnd = t + v.P.r * 1.6 + 0.05;
+    v.oscs.forEach(o => o.stop(v.tEnd));
+  }
+  /** Envelope level 0..1 (what the synth reports as voice.level), analytic mirror of the automation. */
+  levelAt(v, time) {
+    const { a, d, s, r } = v.P;
+    const env = x => (x < 0 ? 0 : x < a ? x / a : s + (1 - s) * Math.exp(-(x - a) / Math.max(0.01, d / 3)));
+    if (v.tOff != null && time >= v.tOff) return env(v.tOff - v.t0) * Math.exp(-(time - v.tOff) / (r / 4));
+    return env(time - v.t0);
+  }
+  hat(when, vel = 0.5, open = false) {
+    const ctx = this.ctx, src = ctx.createBufferSource(); src.buffer = this.noiseBuf;
+    const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 7500;
+    const g = ctx.createGain(), p = ctx.createStereoPanner(); p.pan.value = 0.35;
+    g.gain.setValueAtTime(0.14 * vel, when); g.gain.setTargetAtTime(0, when + 0.002, open ? 0.09 : 0.022);
+    src.connect(hp); hp.connect(g); g.connect(p); p.connect(this.bus);
+    src.start(when, rnd() * 1.5); src.stop(when + (open ? 0.5 : 0.15));
+  }
+  kick(when, vel = 1) {
+    const ctx = this.ctx, o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(150, when); o.frequency.exponentialRampToValueAtTime(44, when + 0.12);
+    g.gain.setValueAtTime(0.9 * vel, when); g.gain.setTargetAtTime(0, when + 0.01, 0.09);
+    o.connect(g); g.connect(this.master); o.start(when); o.stop(when + 0.6);
+  }
+  allOff() { const t = this.ctx.currentTime; this.slots.forEach(v => v && v.tOff == null && this.noteOff(v, t)); }
+  /** Fake synth state, refreshed at ~30 Hz like the worklet's posts. */
+  getState() {
+    const now = this.ctx.currentTime;
+    if (this._st && now - this._stT < 1 / 30) return this._st;
+    this._stT = now;
+    const voices = [];
+    for (const v of this.slots) {
+      if (!v || now >= v.tEnd || now < v.t0) continue;
+      const x = now - v.t0;
+      const stage = v.tOff != null && now >= v.tOff ? 'release' : x < v.P.a ? 'attack' : x < v.P.a + v.P.d ? 'decay' : 'sustain';
+      voices.push({ note: v.note, velocity: v.vel, level: this.levelAt(v, now), stage, age: x, index: v.index });
+    }
+    this.analyserL.getFloatTimeDomainData(this._tL); this.analyserR.getFloatTimeDomainData(this._tR);
+    let pl = 0, pr = 0, sl = 0, sr = 0;
+    for (let i = 0; i < 2048; i++) { const l = this._tL[i], r = this._tR[i]; pl = Math.max(pl, Math.abs(l)); pr = Math.max(pr, Math.abs(r)); sl += l * l; sr += r * r; }
+    const beat = this.seqPlaying ? (now - this.beat0) * this.bpm / 60 : 0;
+    this._st = { voices, peak: [pl, pr], rms: [Math.sqrt(sl / 2048), Math.sqrt(sr / 2048)], held: voices.filter(v => v.stage !== 'release').map(v => v.note), arpStep: -1, beat, bpm: this.bpm, seqPlaying: this.seqPlaying };
+    return this._st;
+  }
+}
+
+/* ───────────── scenes (16th-note step sequencer with look-ahead) ───────────── */
+const CHORDS = [[48, 52, 55, 59, 62], [45, 48, 52, 55, 59], [41, 45, 48, 52, 59], [43, 47, 50, 52, 57]];
+const PENTA = [72, 74, 76, 79, 81, 84, 86, 88];
+const SCENES = {
+  pad: { bpm: 72, step(i, e, t, sd) {
+    if (i % 32 === 0) CHORDS[(i / 32) % 4].forEach((n, k) => e.noteOn(n, 0.55 + 0.1 * k / 4, { when: t, a: 1.1, d: 2.4, s: 0.8, r: 2.6, cutoff: 1300, env: 1.2, det: 13, gain: 0.11, dur: sd * 30, pan: (k / 4 - 0.5) * 1.3 }));
+    if (i % 8 === 4 || (i % 16 === 14 && rnd() < 0.5)) {
+      const n = PENTA[Math.floor(rnd() * PENTA.length)];
+      e.noteOn(n, 0.35 + rnd() * 0.6, { when: t, wave: 'triangle', det: 3, a: 0.004, d: 0.9, s: 0.15, r: 1.6, cutoff: 3000, env: 1.5, gain: 0.16, dur: sd * 3, pan: (n - 80) / 14 });
+    }
+  } },
+  arp: { bpm: 118, step(i, e, t, sd) {
+    const ch = CHORDS[Math.floor(i / 32) % 4];
+    const seq = [0, 1, 2, 3, 4, 3, 2, 1];
+    const n = ch[seq[i % 8]] + 12 + (Math.floor(i / 8) % 2) * 12;
+    const accent = i % 4 === 0 ? 0.95 : 0.45 + 0.25 * rnd();
+    e.noteOn(n, accent, { when: t, a: 0.002, d: 0.22, s: 0.0, r: 0.22, cutoff: 700, env: 7, q: 5, gain: 0.2, dur: sd * 0.7, pan: Math.sin(i * 0.7) * 0.6 });
+    if (i % 32 === 0) e.noteOn(ch[0] - 12, 0.8, { when: t, a: 0.01, d: 1.5, s: 0.6, r: 0.8, cutoff: 380, env: 2, gain: 0.22, dur: sd * 30, pan: 0 });
+  } },
+  groove: { bpm: 124, step(i, e, t, sd) {
+    if (i % 4 === 0) e.kick(t, 1);
+    if (i % 2 === 1 || rnd() < 0.2) e.hat(t, i % 4 === 2 ? 0.9 : 0.45, i % 16 === 14);
+    const bass = [36, 36, 48, 36, 39, 36, 46, 43];
+    if (i % 2 === 0) e.noteOn(bass[(i / 2) % 8], i % 8 === 0 ? 1 : 0.7, { when: t, a: 0.003, d: 0.18, s: 0.35, r: 0.08, cutoff: 260, env: 5, q: 4, gain: 0.26, dur: sd * 1.5, pan: 0, det: 5 });
+    if (i % 16 === 6 || i % 16 === 14) [60, 63, 67, 70].forEach((n, k) => e.noteOn(n, 0.75, { when: t, a: 0.004, d: 0.25, s: 0.1, r: 0.3, cutoff: 1400, env: 3, gain: 0.08, dur: sd * 1.2, pan: (k / 3 - 0.5) * 1.2 }));
+  } },
+  sweep: { bpm: 90, step(i, e, t, sd) {
+    if (i % 64 !== 0) return;
+    const dur = sd * 62;
+    [45, 45.1, 57].forEach((n, k) => {
+      const v = e.noteOn(n, 0.8, { when: t, a: 0.05, d: 1, s: 1, r: 0.6, cutoff: 120, env: 0, q: 9, gain: 0.13, dur, pan: [-0.7, 0.7, 0][k] });
+      const f = v.f.frequency;
+      f.cancelScheduledValues(t); f.setValueAtTime(90, t);
+      f.exponentialRampToValueAtTime(12000, t + dur * 0.5); f.exponentialRampToValueAtTime(90, t + dur);
+    });
+  } },
+  stress: { bpm: 140, step(i, e, t, sd) {
+    if (i % 4 === 0) for (let k = 0; k < 16; k++) e.noteOn(40 + k * 3 + (Math.floor(i / 16) % 3), 0.3 + 0.7 * rnd(), { when: t, a: 0.004, d: 0.4, s: 0.5, r: 0.5, cutoff: 1800, env: 3, gain: 0.035, dur: sd * 3.5, pan: (k / 15 - 0.5) * 1.6 });
+    if (i % 2 === 1) e.hat(t, 0.5);
+  } },
+};
+class Sequencer {
+  constructor(eng) { this.eng = eng; this.timer = 0; this.scene = null; }
+  play(name) {
+    this.stop();
+    const sc = SCENES[name]; if (!sc) return;
+    const e = this.eng, ctx = e.ctx;
+    seed = 12345;
+    this.scene = sc; e.bpm = sc.bpm; this.sd = 60 / sc.bpm / 4;
+    this.t0 = ctx.currentTime + 0.06; this.i = 0;
+    e.beat0 = this.t0; e.seqPlaying = true;
+    const tick = () => { const horizon = ctx.currentTime + 0.14; while (this.t0 + this.i * this.sd < horizon) { sc.step(this.i, e, this.t0 + this.i * this.sd, this.sd); this.i++; } };
+    tick(); this.timer = setInterval(tick, 25);
+  }
+  stop() { clearInterval(this.timer); this.timer = 0; this.scene = null; this.eng.seqPlaying = false; this.eng.allOff(); }
+}
+
+/* ───────────── visuals ───────────── */
+let eng = null, seq = null, ctx = null;
+const getState = () => (eng ? eng.getState() : null);
+let hero = null, rendererPref = 'auto', palette = 'aurora';
+function makeHero() {
+  if (hero) { hero.destroy(); hero.el.remove(); }
+  hero = createHeroVisualizer({ getState, renderer: rendererPref, palette, ...(eng ? { analyser: eng.analyser, analyserL: eng.analyserL, analyserR: eng.analyserR } : {}) });
+  $('#hero-wrap').prepend(hero.el);
+  hero.start();
+  $('#hud-r').innerHTML = `<b>${hero.renderer}</b>${hero.hdr ? ' · HDR' : ''}`;
+}
+makeHero();
+
+const scope = createScope({ mode: 'wave' });
+$('#scope').appendChild(scope.el); scope.start();
+const spectrum = createSpectrum({});
+$('#spectrum').appendChild(spectrum.el); spectrum.start();
+
+// filter view + controls
+const fType = $('#f-type');
+PARAM_BY_ID['filter.type'].options.forEach((id, i) => fType.add(new Option(PARAM_BY_ID['filter.type'].labels[i], id)));
+const fp = { type: 'ladder24', cutoff: 1200, res: 0.35, drive: 0, vowel: 0 };
+const cutFromN = n => 20 * Math.pow(1000, n);
+const filterView = createFilterView({ getParams: () => fp, sampleRate: 48000 });
+$('#filter').appendChild(filterView.el);
+const fmt = (id, v) => (PARAM_BY_ID[id] ? `${v >= 1000 ? (v / 1000).toFixed(2) + ' kHz' : Math.round(v) + ' Hz'}` : v);
+function syncFilter() {
+  fp.type = fType.value; fp.cutoff = cutFromN(+$('#f-cut').value); fp.res = +$('#f-res').value; fp.drive = +$('#f-drv').value; fp.vowel = +$('#f-vow').value;
+  $('#o-cut').textContent = fmt('filter.cutoff', fp.cutoff); $('#o-res').textContent = `${Math.round(fp.res * 100)}%`;
+  $('#o-drv').textContent = `${Math.round(fp.drive * 100)}%`; $('#o-vow').textContent = 'AEIOU'[Math.min(4, Math.round(fp.vowel * 4))];
+  filterView.update();
+}
+['#f-type', '#f-cut', '#f-res', '#f-drv', '#f-vow'].forEach(s => $(s).addEventListener('input', syncFilter));
+syncFilter();
+let autoT = 0;
+setInterval(() => { if (!$('#f-auto').checked) return; autoT += 0.05; const n = 0.55 + 0.35 * Math.sin(autoT * 0.9); $('#f-cut').value = n; syncFilter(); }, 50);
+
+// lfo view + controls
+const lShape = $('#l-shape'), lSync = $('#l-sync');
+PARAM_BY_ID['lfo1.shape'].options.forEach((id, i) => lShape.add(new Option(PARAM_BY_ID['lfo1.shape'].labels[i], id)));
+['off', '1/1', '1/2', '1/4', '1/8', '1/8T', '1/16'].forEach(s => lSync.add(new Option(s === 'off' ? 'Free' : s, s)));
+const lp = { shape: 'sine', rate: 2, sync: 'off', phase: 0, bpm: 110 };
+const lfoView = createLfoView({ getParams: () => lp });
+$('#lfo').appendChild(lfoView.el);
+function syncLfo() {
+  lp.shape = lShape.value; lp.sync = lSync.value; lp.rate = 0.05 * Math.pow(400, +$('#l-rate').value); lp.phase = +$('#l-ph').value;
+  lp.bpm = eng ? eng.bpm : 110;
+  $('#o-rate').textContent = `${lp.rate.toFixed(2)} Hz`; $('#o-ph').textContent = `${Math.round(lp.phase * 360)}°`;
+  lfoView.update();
+}
+['#l-shape', '#l-sync', '#l-rate', '#l-ph'].forEach(s => $(s).addEventListener('input', syncLfo));
+syncLfo();
+
+// meters
+const meterH = createMeter({ getState });
+$('#meter-h').appendChild(meterH.el);
+const meterV = createMeter({ getState, orientation: 'v' });
+$('#meter-v').appendChild(meterV.el);
+
+/* ───────────── controls ───────────── */
+function setStatus(s) { $('#status').innerHTML = s; }
+async function startAudio() {
+  if (ctx) { if (ctx.state !== 'running') await ctx.resume(); return; }
+  ctx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive' });
+  eng = new TestEngine(ctx);
+  seq = new Sequencer(eng);
+  hero.setSources({ analyser: eng.analyser, analyserL: eng.analyserL, analyserR: eng.analyserR, getState });
+  scope.setSources({ analyserL: eng.analyserL, analyserR: eng.analyserR });
+  spectrum.setSources({ analyser: eng.analyser });
+  if (ctx.state !== 'running') await ctx.resume().catch(() => {});
+  setStatus(`<b>${ctx.state}</b> · ${ctx.sampleRate} Hz`);
+  $('#hint').style.opacity = '0';
+  $('#start').textContent = '■ 停止 STOP';
+}
+$('#start').addEventListener('click', async () => {
+  if (seq && seq.scene) { seq.stop(); markScene('stop'); $('#start').textContent = '▶ 播放 PLAY'; return; }
+  await startAudio();
+  seq.play('pad'); markScene('pad');
+  $('#start').textContent = '■ 停止 STOP';
+});
+function markScene(name) { document.querySelectorAll('[data-scene]').forEach(b => b.classList.toggle('on', b.dataset.scene === name)); }
+document.querySelectorAll('[data-scene]').forEach(b => b.addEventListener('click', async () => {
+  await startAudio();
+  const name = b.dataset.scene;
+  if (name === 'stop') { seq.stop(); $('#start').textContent = '▶ 播放 PLAY'; } else { seq.play(name); $('#start').textContent = '■ 停止 STOP'; }
+  markScene(name);
+  syncLfo();
+}));
+document.querySelectorAll('[data-pal]').forEach(b => b.addEventListener('click', () => {
+  palette = b.dataset.pal; hero.setPalette(palette);
+  document.querySelectorAll('[data-pal]').forEach(x => x.classList.toggle('on', x === b));
+}));
+document.querySelectorAll('[data-rend]').forEach(b => b.addEventListener('click', () => {
+  rendererPref = b.dataset.rend; makeHero();
+  document.querySelectorAll('[data-rend]').forEach(x => x.classList.toggle('on', x === b));
+}));
+document.querySelectorAll('[data-scope]').forEach(b => b.addEventListener('click', () => {
+  scope.setMode(b.dataset.scope);
+  document.querySelectorAll('[data-scope]').forEach(x => x.classList.toggle('on', x === b));
+}));
+
+/* ───────────── test keyboard (pointer + QWERTY) ───────────── */
+const LOW = 60, HIGH = 83, keysEl = $('#keys'), keyEls = new Map(), held = new Map();
+for (let n = LOW; n <= HIGH; n++) {
+  const black = [1, 3, 6, 8, 10].includes(n % 12);
+  const k = document.createElement('div');
+  k.className = `key${black ? ' b' : ''}`; k.dataset.note = n;
+  if (n % 12 === 0) k.innerHTML = `<span>C${n / 12 - 1}</span>`;
+  keysEl.appendChild(k); keyEls.set(n, k);
+}
+const KEYMAP = 'awsedftgyhujkolp';
+async function play(n, vel, id) {
+  await startAudio();
+  if (held.has(id)) return;
+  const v = eng.noteOn(n, vel, { a: 0.006, d: 0.8, s: 0.55, r: 0.9, cutoff: 1600, env: 3, det: 8, gain: 0.2, pan: (n - 72) / 16 });
+  held.set(id, v); keyEls.get(n)?.classList.add('on');
+}
+function release(id) { const v = held.get(id); if (!v) return; eng.noteOff(v); held.delete(id); keyEls.get(v.note)?.classList.remove('on'); }
+keysEl.addEventListener('pointerdown', e => {
+  const k = e.target.closest('.key'); if (!k) return;
+  keysEl.setPointerCapture(e.pointerId);
+  const r = k.getBoundingClientRect();
+  play(+k.dataset.note, Math.min(1, 0.25 + 0.75 * (e.clientY - r.top) / r.height), `p${e.pointerId}`);
+});
+['pointerup', 'pointercancel'].forEach(t => keysEl.addEventListener(t, e => release(`p${e.pointerId}`)));
+addEventListener('keydown', e => {
+  if (e.repeat || e.metaKey || e.ctrlKey || /INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName)) return;
+  const i = KEYMAP.indexOf(e.key.toLowerCase()); if (i < 0) return;
+  play(LOW + i, 0.8, `k${e.key.toLowerCase()}`);
+});
+addEventListener('keyup', e => release(`k${e.key.toLowerCase()}`));
+
+/* ───────────── stats ───────────── */
+setInterval(() => {
+  const s = getVisualStats();
+  const cls = ms => (ms < 1.5 ? 'ok' : ms < 4 ? 'warn' : 'bad');
+  $('#stats tbody').innerHTML = s.visuals.map(v => `<tr><td>${v.name}</td><td class="${cls(v.avgMs)}">${v.avgMs.toFixed(3)}</td><td class="${cls(v.peakMs)}">${v.peakMs.toFixed(2)}</td><td>${v.frames}</td><td>${v.visible ? '●' : '○'}</td></tr>`).join('')
+    + `<tr><td><b>total</b></td><td class="${cls(s.visuals.reduce((a, v) => a + v.avgMs, 0))}">${s.visuals.reduce((a, v) => a + v.avgMs, 0).toFixed(3)}</td><td></td><td>${s.fps} fps</td><td></td></tr>`;
+  $('#hud-fps').textContent = `${Math.round(s.fps)} fps`;
+  const hv = s.visuals.find(v => v.name.startsWith('hero'));
+  const g = hero._debug.gpuMs;
+  $('#hud-ms').textContent = hv ? `JS ${hv.avgMs.toFixed(2)} ms${g >= 0 ? ` · GPU ${g.toFixed(1)} ms` : ''} · ${Math.round(hero._debug.resScale * 100)}% res` : '—';
+}, 500);
+
+/* ───────────── solo (fullscreen hero) ───────────── */
+const SCENE_KEYS = ['pad', 'arp', 'groove', 'sweep', 'stress', 'stop'];
+const PALS = ['aurora', 'sunset', 'ocean', 'mono'];
+function setSolo(on) {
+  document.body.classList.toggle('solo', on);
+  $('#hint').innerHTML = on ? '1 鋪底 · 2 琶音 · 3 律動 · 4 掃頻 · 5 壓力 · 6 靜音 · C 色盤 · Esc 離開' : $('#hint').innerHTML;
+  if (!on) $('#hint').style.opacity = ctx ? '0' : '1';
+  clearTimeout(setSolo.t);
+  if (on) { $('#hint').style.opacity = '1'; setSolo.t = setTimeout(() => { $('#hint').style.opacity = '0'; }, 4500); }
+}
+$('#hero-wrap').addEventListener('dblclick', () => setSolo(!document.body.classList.contains('solo')));
+addEventListener('keydown', e => {
+  if (/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName) || e.metaKey || e.ctrlKey) return;
+  const solo = document.body.classList.contains('solo');
+  if (e.key === 'Escape' && solo) setSolo(false);
+  else if (e.key === 'F' && e.shiftKey) setSolo(!solo);
+  else if (solo && /^[1-6]$/.test(e.key)) document.querySelector(`[data-scene="${SCENE_KEYS[+e.key - 1]}"]`).click();
+  else if (solo && (e.key === 'c' || e.key === 'C')) { const i = (PALS.indexOf(palette) + 1) % PALS.length; document.querySelector(`[data-pal="${PALS[i]}"]`).click(); }
+});
+if (new URLSearchParams(location.search).has('solo')) setSolo(true);
+
+window.__av = { setSolo, get hero() { return hero; }, scope, spectrum, filterView, lfoView, meterH, meterV, getVisualStats, get eng() { return eng; }, get seq() { return seq; }, startAudio, fp, lp, syncFilter, syncLfo };
+</script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurora Components</title>
+<meta name="description" content="AURORA 極光 — gallery of UI controls: knobs, sliders, toggles, selects, envelope editor, XY pad and keyboard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../css/components.css">
+<style>
+  :root {
+    --bg-0:#07080d; --bg-1:#0c0f18; --bg-2:#121726; --panel:rgba(22,28,46,.72); --panel-hi:rgba(38,48,78,.6);
+    --line:rgba(140,160,220,.14); --text:#e8ecff; --text-dim:#8e97b8; --text-faint:#5a6284;
+    --a-cyan:#5cf2ff; --a-teal:#3ef0b0; --a-violet:#a78bfa; --a-pink:#ff6bd6; --a-amber:#ffc46b; --a-red:#ff6b81;
+    --grad-aurora: linear-gradient(120deg,#3ef0b0,#5cf2ff 30%,#a78bfa 65%,#ff6bd6);
+    --radius:14px; --radius-sm:8px; --shadow: 0 10px 40px rgba(0,0,0,.45);
+    --font-ui: "Inter","Noto Sans TC",system-ui,sans-serif; --font-mono:"JetBrains Mono",ui-monospace,monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh; background: var(--bg-0); color: var(--text); font-family: var(--font-ui);
+    background:
+      radial-gradient(900px 500px at 12% -10%, rgba(62,240,176,.10), transparent 60%),
+      radial-gradient(900px 600px at 88% -5%, rgba(167,139,250,.14), transparent 60%),
+      radial-gradient(700px 500px at 50% 110%, rgba(255,107,214,.07), transparent 60%),
+      var(--bg-0);
+    background-attachment: fixed;
+  }
+  header {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 22px 28px 8px; max-width: 1400px; margin: 0 auto;
+  }
+  .logo { font-weight: 700; font-size: 22px; letter-spacing: .18em; }
+  .logo b { background: var(--grad-aurora); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .logo span { font-weight: 500; font-size: 13px; letter-spacing: .1em; color: var(--text-dim); margin-left: 10px; }
+  .hdr-note { color: var(--text-faint); font-size: 12px; margin-left: auto; }
+  main {
+    max-width: 1400px; margin: 0 auto; padding: 14px 28px 40px;
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px;
+  }
+  .panel {
+    position: relative; grid-column: span 6; padding: 16px 18px 18px; border-radius: var(--radius);
+    background: var(--panel); border: 1px solid var(--line);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: var(--shadow);
+  }
+  .panel.w12 { grid-column: span 12; }
+  .panel.w8 { grid-column: span 8; }
+  .panel.w4 { grid-column: span 4; }
+  .panel h2 {
+    margin: 0 0 14px; font-size: 13px; font-weight: 600; letter-spacing: .06em; display: flex; align-items: baseline; gap: 8px;
+  }
+  .panel h2 small { font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--text-faint); font-weight: 600; }
+  .panel h2::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--acc, var(--a-cyan)); box-shadow: 0 0 10px var(--acc, var(--a-cyan)); align-self: center; }
+  .row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px 16px; }
+  .row + .row { margin-top: 16px; }
+  .col { display: flex; flex-direction: column; gap: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
+  .readout {
+    margin-top: 12px; font: 500 11px/1.5 var(--font-mono); color: var(--text-dim);
+    padding: 7px 10px; border-radius: 8px; background: rgba(0,0,0,.25); border: 1px solid var(--line);
+    white-space: pre-wrap; min-height: 32px;
+  }
+  .readout b { color: var(--text); font-weight: 600; }
+  .sub { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); margin: 2px 0 8px; font-weight: 600; }
+  .btn {
+    font: 500 12px var(--font-ui); color: var(--text); cursor: pointer; padding: 6px 12px; border-radius: 9px; border: 0;
+    background: linear-gradient(180deg, rgba(40,48,76,.8), rgba(20,25,40,.9));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 0 0 1px rgba(140,160,220,.18);
+  }
+  .btn:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 0 0 1px rgba(92,242,255,.5), 0 0 12px rgba(92,242,255,.2); }
+  .btn.on { box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 0 0 1px var(--a-teal), 0 0 14px rgba(62,240,176,.35); }
+  .btn:focus-visible { outline: 2px solid var(--a-cyan); outline-offset: 2px; }
+  .kb-wrap { margin-top: 90px; }
+  .kb-bar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 18px; margin-bottom: 10px; }
+  .pill { font: 500 11px var(--font-mono); color: var(--text-dim); padding: 4px 9px; border-radius: 99px; background: rgba(0,0,0,.3); border: 1px solid var(--line); }
+  .pill b { color: var(--a-cyan); font-weight: 600; }
+  .strips { display: flex; gap: 10px; align-items: stretch; }
+  #log { height: 150px; overflow: auto; }
+  .env-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .env-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .env-head span { font-size: 12px; font-weight: 500; }
+  .env-head em { font: 500 10px var(--font-mono); font-style: normal; color: var(--text-faint); }
+  @media (max-width: 1100px) {
+    .panel, .panel.w8, .panel.w4 { grid-column: span 12; }
+  }
+  @media (max-width: 640px) {
+    header, main { padding-left: 16px; padding-right: 16px; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><b>AURORA</b> 極光 <span>元件庫 COMPONENT GALLERY</span></div>
+  <div class="hdr-note">Drag · Shift = fine · Wheel · Double-click = default · Arrow keys · Tab to focus</div>
+</header>
+<main>
+  <section class="panel w12" style="--acc: var(--a-violet)">
+    <h2>巨集 <small>Macros · xl · aurora</small></h2>
+    <div class="row" id="macros" style="justify-content: space-around"></div>
+    <div class="readout" id="macro-out">—</div>
+  </section>
+
+  <section class="panel" style="--acc: var(--a-cyan)">
+    <h2>旋鈕 <small>Knobs · sizes · accents · bipolar · modulation</small></h2>
+    <div class="sub">Sizes</div>
+    <div class="row" id="knob-sizes"></div>
+    <div class="sub" style="margin-top:16px">Section accents · bipolar · stepped</div>
+    <div class="row" id="knob-accents"></div>
+    <div class="sub" style="margin-top:16px">Modulation range (setModulation) · animated setValue</div>
+    <div class="row" id="knob-mod"></div>
+    <div class="readout" id="knob-out">—</div>
+  </section>
+
+  <section class="panel" style="--acc: var(--a-teal)">
+    <h2>滑桿 · 開關 <small>Sliders · Toggles</small></h2>
+    <div class="grid2">
+      <div class="col" id="sliders-h"></div>
+      <div class="strips" id="sliders-v"></div>
+    </div>
+    <div class="sub" style="margin-top:18px">Toggles</div>
+    <div class="row" id="toggles" style="align-items:center"></div>
+    <div class="readout" id="slider-out">—</div>
+  </section>
+
+  <section class="panel w8" style="--acc: var(--a-violet)">
+    <h2>選擇器 <small>Selects · segmented ≤ 4 · dropdown &gt; 4</small></h2>
+    <div class="grid2" id="selects"></div>
+    <div class="readout" id="select-out">—</div>
+  </section>
+
+  <section class="panel w4" style="--acc: var(--a-cyan)">
+    <h2>XY 觸控板 <small>XY Pad</small></h2>
+    <div id="xy"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="xy-auto" type="button">自動 Auto-move (setXY)</button>
+    </div>
+    <div class="readout" id="xy-out">—</div>
+  </section>
+
+  <section class="panel w12" style="--acc: var(--a-amber)">
+    <h2>包絡編輯器 <small>Envelope editors · drag nodes · curve handles · playhead</small></h2>
+    <div class="grid2">
+      <div><div class="env-head"><span>音量包絡 Amp Env</span><em id="env-a-out"></em></div><div id="env-a"></div></div>
+      <div><div class="env-head"><span>濾波包絡 Filter Env</span><em id="env-f-out"></em></div><div id="env-f"></div></div>
+    </div>
+    <div class="row" id="env-knobs" style="margin-top:14px"></div>
+  </section>
+
+  <section class="panel w12" style="--acc: var(--a-teal)">
+    <h2>鍵盤 <small>Keyboard · QWERTY · MIDI · scale lock</small></h2>
+    <div class="kb-bar" id="kb-bar">
+      <span class="pill">QWERTY <b>A–'</b> · Z/X octave · C/V velocity</span>
+      <span class="pill" id="qw-state">Octave C4 · Vel 100</span>
+      <button class="btn" id="midi-btn" type="button">連接 MIDI Connect</button>
+      <span class="pill" id="midi-state">MIDI: —</span>
+      <button class="btn" id="sound-btn" type="button">試聽 Preview sound: off</button>
+      <button class="btn" id="hint-btn" type="button">鍵位提示 Key hints</button>
+    </div>
+    <div class="kb-bar" id="kb-controls"></div>
+    <div class="kb-wrap"><div id="kb"></div></div>
+    <div class="readout" id="kb-out">—</div>
+  </section>
+
+  <section class="panel w12" style="--acc: var(--a-pink)">
+    <h2>事件紀錄 <small>Event log (onChange callbacks)</small></h2>
+    <div class="readout" id="log"></div>
+  </section>
+</main>
+
+<script type="module">
+import { createKnob, createSlider, createToggle, createSelect, createEnvelopeEditor, createXYPad, envAttackK, envDecayK, envShape } from '../src/ui/components.js';
+import { createKeyboard, attachQwerty, attachMidi } from '../src/ui/keyboard.js';
+import { PARAM_BY_ID, SCALES, formatValue, toNorm, noteName } from '../src/dsp/params.js';
+import { mtof } from '../src/dsp/util.js';
+
+const $ = (id) => document.getElementById(id);
+const P = (id) => PARAM_BY_ID[id];
+const logEl = $('log');
+const lines = [];
+function log(msg) {
+  const t = new Date().toLocaleTimeString('en-GB', { hour12: false });
+  lines.unshift(`${t}  ${msg}`);
+  if (lines.length > 60) lines.pop();
+  logEl.textContent = lines.join('\n');
+}
+const show = (el, id, v) => { el.innerHTML = `<b>${id}</b> = ${typeof v === 'number' ? +v.toFixed(4) : JSON.stringify(v)}  (${formatValue(P(id), v)})`; };
+window.__aurora = {};
+
+// ── Macros ──
+const macroNames = ['亮度 Bright', '空間 Space', '律動 Motion', '厚度 Width'];
+const macroOut = $('macro-out');
+const macros = macroNames.map((name, i) => {
+  const k = createKnob({ param: P(`macro${i + 1}`), value: [0.35, 0.6, 0.2, 0.8][i], size: 'xl', accent: 'aurora', label: name,
+    onChange: (v) => { show(macroOut, `macro${i + 1}`, v); log(`macro${i + 1} → ${v.toFixed(3)}`); } });
+  $('macros').append(k.el);
+  return k;
+});
+window.__aurora.macros = macros;
+
+// ── Knobs ──
+const knobOut = $('knob-out');
+const onK = (id) => (v) => { show(knobOut, id, v); log(`${id} → ${JSON.stringify(v)}`); };
+for (const [size, id] of [['sm', 'osc1.detune'], ['md', 'filter.res'], ['lg', 'filter.cutoff'], ['xl', 'reverb.decay']]) {
+  const k = createKnob({ param: P(id), size, onChange: onK(id), accent: size === 'xl' ? 'var(--a-pink)' : undefined });
+  $('knob-sizes').append(k.el);
+}
+const accentKnobs = [
+  ['osc1.shape', 'var(--a-cyan)'], ['filter.drive', 'var(--a-violet)'], ['fenv.a', 'var(--a-amber)'],
+  ['delay.mix', 'var(--a-pink)'], ['arp.gate', 'var(--a-teal)'], ['amp.pan', 'var(--a-cyan)'],
+  ['filter.env', 'var(--a-violet)'], ['osc1.fine', 'var(--a-cyan)'], ['osc1.unison', 'var(--a-cyan)'], ['phaser.stages', 'var(--a-pink)'],
+];
+const knobs = {};
+for (const [id, acc] of accentKnobs) {
+  const k = createKnob({ param: P(id), accent: acc, onChange: onK(id), value: id === 'filter.env' ? 0.45 : id === 'amp.pan' ? -0.3 : undefined });
+  knobs[id] = k;
+  $('knob-accents').append(k.el);
+}
+// modulation demo
+const modCut = createKnob({ param: P('filter.cutoff'), value: 1200, size: 'lg', accent: 'var(--a-violet)', onChange: onK('filter.cutoff') });
+const modPw = createKnob({ param: P('osc1.pw'), value: 0.5, size: 'lg', onChange: onK('osc1.pw') });
+const animK = createKnob({ param: P('lfo1.rate'), value: 2, size: 'lg', accent: 'var(--a-amber)', label: '動畫 Animated', onChange: onK('lfo1.rate') });
+const randBtn = document.createElement('button');
+randBtn.className = 'btn'; randBtn.type = 'button'; randBtn.textContent = '隨機 setValue()';
+randBtn.onclick = () => { const v = 0.01 * Math.pow(4000, Math.random()); animK.setValue(v); modCut.setValue(20 * Math.pow(1000, Math.random())); log(`setValue(lfo1.rate, ${v.toFixed(2)}) — animated, no onChange`); };
+$('knob-mod').append(modCut.el, modPw.el, animK.el, randBtn);
+let modT = 0;
+(function modLoop(t) {
+  modT = t / 1000;
+  const base = toNorm(P('filter.cutoff'), modCut.getValue());
+  const depth = 0.18;
+  const lfo = Math.sin(modT * 1.3);
+  modCut.setModulation(base - depth, base + depth);          // static range
+  const pw = toNorm(P('osc1.pw'), modPw.getValue());
+  modPw.setModulation(Math.min(pw, pw + 0.25 * lfo), Math.max(pw, pw + 0.25 * lfo), 'var(--a-teal)'); // live range
+  requestAnimationFrame(modLoop);
+})(0);
+
+// ── Sliders & toggles ──
+const sOut = $('slider-out');
+const onS = (id) => (v) => { show(sOut, id, v); log(`${id} → ${JSON.stringify(v)}`); };
+$('sliders-h').append(
+  createSlider({ param: P('master.volume'), onChange: onS('master.volume') }).el,
+  createSlider({ param: P('amp.pan'), accent: 'var(--a-teal)', onChange: onS('amp.pan') }).el,
+  createSlider({ param: P('global.bpm'), accent: 'aurora', onChange: onS('global.bpm') }).el,
+  createSlider({ param: P('voice.poly'), accent: 'var(--a-violet)', onChange: onS('voice.poly') }).el,
+);
+const bendP = { id: 'bend', type: 'float', min: -1, max: 1, def: 0, zh: '彎音', label: 'Bend' };
+const wheelP = { id: 'wheel', type: 'float', min: 0, max: 1, def: 0, zh: '調變輪', label: 'Mod', unit: '%' };
+$('sliders-v').append(
+  createSlider({ param: bendP, orientation: 'v', spring: true, accent: 'var(--a-pink)', onChange: (v) => { sOut.textContent = `bend = ${v.toFixed(3)} (spring)`; } }).el,
+  createSlider({ param: wheelP, orientation: 'v', accent: 'var(--a-amber)', onChange: (v) => { sOut.textContent = `wheel = ${v.toFixed(3)}`; } }).el,
+  createSlider({ param: P('amp.level'), orientation: 'v', onChange: onS('amp.level') }).el,
+);
+const tOut = (name) => (v) => { sOut.textContent = `${name} = ${v}`; log(`${name} → ${v}`); };
+$('toggles').append(
+  createToggle({ param: 'osc1.on', value: true, onChange: tOut('osc1.on') }).el,
+  createToggle({ param: 'filter.on', accent: 'var(--a-violet)', onChange: tOut('filter.on') }).el,
+  createToggle({ label: '琶音 Arp', value: false, accent: 'var(--a-teal)', onChange: tOut('arp.on') }).el,
+  createToggle({ label: '殘響 Reverb', value: true, accent: 'var(--a-pink)', onChange: tOut('reverb.on') }).el,
+  createToggle({ label: '保持 Latch', size: 'sm', accent: 'aurora', value: true, onChange: tOut('arp.latch') }).el,
+);
+
+// ── Selects ──
+const selOut = $('select-out');
+for (const [id, acc] of [
+  ['voice.mode', 'var(--a-teal)'], ['osc1.mode', 'var(--a-cyan)'], ['phys.exciter', 'var(--a-cyan)'], ['phaser.stages', 'var(--a-pink)'],
+  ['filter.type', 'var(--a-violet)'], ['osc1.table', 'var(--a-cyan)'], ['lfo1.sync', 'var(--a-amber)'], ['mod1.dst', 'var(--a-amber)'],
+  ['chord.type', 'var(--a-teal)'], ['fm.algo', 'var(--a-cyan)'],
+]) {
+  const s = createSelect({ param: P(id), accent: acc, onChange: (v) => { show(selOut, id, v); log(`${id} → ${JSON.stringify(v)}`); } });
+  $('selects').append(s.el);
+}
+
+// ── XY pad ──
+const xyOut = $('xy-out');
+const xy = createXYPad({ x: 0.35, y: 0.65, labelX: '亮度 Bright', labelY: '空間 Space',
+  onChange: (x, y) => { xyOut.textContent = `x = ${x.toFixed(3)}  y = ${y.toFixed(3)}`; macros[0].setValue(x); macros[1].setValue(y); } });
+$('xy').append(xy.el);
+let autoXY = 0;
+$('xy-auto').onclick = (e) => {
+  if (autoXY) { clearInterval(autoXY); autoXY = 0; e.target.classList.remove('on'); return; }
+  e.target.classList.add('on');
+  let t = 0;
+  autoXY = setInterval(() => { t += 0.9; xy.setXY(0.5 + 0.38 * Math.sin(t * 0.7), 0.5 + 0.38 * Math.sin(t * 1.1 + 1)); }, 450);
+};
+window.__aurora.xy = xy;
+
+// ── Envelopes ──
+const envVals = { a: 0.02, d: 0.45, s: 0.6, r: 0.9, curve: 0.5 };
+const envOutA = $('env-a-out');
+const envKnobs = {};
+const envA = createEnvelopeEditor({ values: envVals, prefix: 'aenv', onChange: (part) => {
+  Object.assign(envVals, part);
+  for (const k in part) envKnobs[k] && envKnobs[k].setValue(part[k]);
+  envOutA.textContent = JSON.stringify(Object.fromEntries(Object.entries(part).map(([k, v]) => [k, +v.toFixed(4)])));
+  log(`aenv ${JSON.stringify(part)}`);
+} });
+$('env-a').append(envA.el);
+const fVals = { a: 0.001, d: 0.8, s: 0.15, r: 1.5, curve: 0.2 };
+const envF = createEnvelopeEditor({ values: fVals, ranges: { a: P('fenv.a'), d: P('fenv.d'), s: P('fenv.s'), r: P('fenv.r'), curve: P('fenv.curve') }, accent: 'var(--a-violet)',
+  onChange: (part) => { Object.assign(fVals, part); $('env-f-out').textContent = JSON.stringify(part); log(`fenv ${JSON.stringify(part)}`); } });
+$('env-f').append(envF.el);
+for (const k of ['a', 'd', 's', 'r', 'curve']) {
+  envKnobs[k] = createKnob({ param: P(`aenv.${k}`), value: envVals[k], size: 'sm', accent: 'var(--a-amber)', onChange: (v) => { envVals[k] = v; envA.setValues({ [k]: v }); } });
+  $('env-knobs').append(envKnobs[k].el);
+}
+window.__aurora.envA = envA;
+
+// Simulated envelopes (same curve math as src/dsp/env.js) → setPlayhead
+function makeSim(vals) {
+  return { vals, level: 0, stage: 'idle', t: 0, from: 0 };
+}
+function simGate(sim, on) {
+  if (on) { sim.stage = 'attack'; sim.t = 0; sim.from = sim.level; }
+  else if (sim.stage !== 'idle') { sim.stage = 'release'; sim.t = 0; sim.from = sim.level; }
+}
+function simStep(sim, dt) {
+  const v = sim.vals;
+  const kA = envAttackK(v.curve), kD = envDecayK(v.curve);
+  sim.t += dt;
+  switch (sim.stage) {
+    case 'attack': { const T = Math.max(0.001, v.a * (1 - sim.from)); const p = Math.min(1, sim.t / T); sim.level = sim.from + (1 - sim.from) * envShape(p, kA); if (p >= 1) { sim.stage = 'decay'; sim.t = 0; } break; }
+    case 'decay': { const p = Math.min(1, sim.t / Math.max(0.002, v.d)); sim.level = 1 + (v.s - 1) * envShape(p, kD); if (p >= 1) { sim.stage = 'sustain'; } break; }
+    case 'sustain': sim.level = v.s; break;
+    case 'release': { const p = Math.min(1, sim.t / Math.max(0.003, v.r)); sim.level = sim.from * (1 - envShape(p, kD)); if (p >= 1) { sim.stage = 'idle'; sim.level = 0; } break; }
+    default: sim.level = 0;
+  }
+}
+const simA = makeSim(envVals), simF = makeSim(fVals);
+let lastT = performance.now();
+(function simLoop(t) {
+  const dt = Math.min(0.1, (t - lastT) / 1000); lastT = t;
+  simStep(simA, dt); simStep(simF, dt);
+  envA.setPlayhead(simA.level, simA.stage === 'idle' ? null : simA.stage);
+  envF.setPlayhead(simF.level, simF.stage === 'idle' ? null : simF.stage);
+  requestAnimationFrame(simLoop);
+})(lastT);
+
+// ── Preview sound (tiny WebAudio poly synth, only for this gallery) ──
+let ac = null;
+const voices = new Map();
+function soundOn(note, vel) {
+  if (!ac) return;
+  const now = ac.currentTime;
+  const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = mtof(note);
+  const o2 = ac.createOscillator(); o2.type = 'sawtooth'; o2.frequency.value = mtof(note); o2.detune.value = 9;
+  const f = ac.createBiquadFilter(); f.type = 'lowpass'; f.Q.value = 2;
+  const cut = modCut.getValue();
+  f.frequency.setValueAtTime(cut, now);
+  f.frequency.setTargetAtTime(Math.min(16000, cut * 5), now, Math.max(0.002, fVals.a / 3));
+  f.frequency.setTargetAtTime(cut * (1 + 4 * fVals.s), now + fVals.a, fVals.d / 3);
+  const g = ac.createGain(); g.gain.value = 0;
+  const peak = 0.12 * (0.3 + 0.7 * vel);
+  g.gain.setTargetAtTime(peak, now, Math.max(0.001, envVals.a / 3));
+  g.gain.setTargetAtTime(peak * envVals.s, now + envVals.a, envVals.d / 3);
+  o.connect(f); o2.connect(f); f.connect(g); g.connect(ac.destination);
+  o.start(now); o2.start(now);
+  voices.get(note)?.stop();
+  voices.set(note, { stop() { const t = ac.currentTime; g.gain.cancelScheduledValues(t); g.gain.setTargetAtTime(0, t, Math.max(0.005, envVals.r / 4)); o.stop(t + envVals.r * 2 + 0.1); o2.stop(t + envVals.r * 2 + 0.1); } });
+}
+function soundOff(note) { const v = voices.get(note); if (v) { v.stop(); voices.delete(note); } }
+$('sound-btn').onclick = async (e) => {
+  if (!ac) { ac = new AudioContext(); await ac.resume(); e.target.textContent = '試聽 Preview sound: on'; e.target.classList.add('on'); }
+  else { await ac.close(); ac = null; voices.clear(); e.target.textContent = '試聽 Preview sound: off'; e.target.classList.remove('on'); }
+};
+
+// ── Keyboard ──
+const kbOut = $('kb-out');
+const held = new Set();
+const sustainHeld = new Set();
+function noteOn(note, vel, src) {
+  held.add(note); kb.setActive(held); soundOn(note, vel);
+  if (held.size === 1) { simGate(simA, true); simGate(simF, true); }
+  kbOut.textContent = `noteOn ${note} (${noteName(note)}) vel ${vel.toFixed(2)} · ${src}`;
+  log(`noteOn ${noteName(note)} vel=${vel.toFixed(2)} [${src}]`);
+}
+function noteOff(note, src) {
+  held.delete(note); kb.setActive(held); soundOff(note);
+  if (!held.size) { simGate(simA, false); simGate(simF, false); }
+  kbOut.textContent = `noteOff ${note} (${noteName(note)}) · ${src}`;
+}
+const kb = createKeyboard({ low: 36, high: 96, fit: true, onNoteOn: (n, v) => noteOn(n, v, 'mouse/touch'), onNoteOff: (n) => noteOff(n, 'mouse/touch') });
+$('kb').append(kb.el);
+window.__aurora.kb = kb;
+
+const scaleRoot = createSelect({ param: { id: 'scale.root', type: 'enum', options: ['0','1','2','3','4','5','6','7','8','9','10','11'], labels: ['C','C♯','D','E♭','E','F','F♯','G','A♭','A','B♭','B'], zh: '調性', label: 'Key', def: '0' }, accent: 'var(--a-teal)',
+  onChange: () => applyScale() });
+const scaleType = createSelect({ param: P('scale.type'), accent: 'var(--a-teal)', onChange: () => applyScale() });
+function applyScale() {
+  const root = +scaleRoot.getValue(); const iv = SCALES[scaleType.getValue()];
+  kb.setScale(root, iv); log(`setScale(${root}, ${iv ? `[${iv}]` : 'null'})`);
+}
+const range = createSelect({ param: { id: 'range', type: 'enum', options: ['25', '37', '49', '61', '88'], labels: ['25', '37', '49', '61', '88'], zh: '鍵數', label: 'Keys', def: '61' }, accent: 'var(--a-teal)', variant: 'dropdown',
+  onChange: (v) => { const r = { 25: [48, 72], 37: [48, 84], 49: [36, 84], 61: [36, 96], 88: [21, 108] }[v]; kb.setRange(r[0], r[1]); log(`setRange(${r})`); } });
+for (const s of [scaleRoot, scaleType, range]) { s.el.style.minWidth = '130px'; $('kb-controls').append(s.el); }
+
+const qwState = $('qw-state');
+let hintsOn = true;
+const qw = attachQwerty({
+  onNoteOn: (n, v) => noteOn(n, v, 'qwerty'),
+  onNoteOff: (n) => noteOff(n, 'qwerty'),
+  onOctave: (d, base) => { updQw(); log(`octave ${d > 0 ? '+1' : '-1'} → base ${noteName(base)}`); },
+  onVelocity: () => updQw(),
+});
+function updQw() {
+  qwState.textContent = `Octave ${noteName(qw.getBaseNote())} · Vel ${Math.round(qw.getVelocity() * 127)}`;
+  kb.setQwertyHints(hintsOn ? qw.getBaseNote() : null);
+}
+updQw();
+$('hint-btn').classList.add('on');
+$('hint-btn').onclick = (e) => { hintsOn = !hintsOn; e.target.classList.toggle('on', hintsOn); updQw(); };
+
+$('midi-btn').onclick = async () => {
+  $('midi-state').textContent = 'MIDI: requesting…';
+  const m = await attachMidi({
+    onNoteOn: (n, v) => noteOn(n, v, 'midi'),
+    onNoteOff: (n) => noteOff(n, 'midi'),
+    onController: (k, v) => { kbOut.textContent = `controller ${k} = ${v.toFixed(3)}`; },
+    onDevicesChange: (names) => { $('midi-state').textContent = `MIDI: ${names.length ? names.join(', ') : 'no devices'}`; },
+  });
+  if (!m.supported) $('midi-state').textContent = `MIDI: ${m.error}`;
+  window.__aurora.midi = m;
+};
+log('ready');
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "aurora-synth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "lan": "node tools/serve.mjs --lan",
+    "test": "node tools/test.mjs",
+    "render": "node tools/render.mjs"
+  }
+}
