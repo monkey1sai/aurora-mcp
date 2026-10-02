@@ -1,0 +1,7 @@
+{
+  "endpoint": "http://127.0.0.1:8789/mcp",
+  "era": "modern",
+  "newJobsAccepted": 13,
+  "denial": "DAILY_RENDER_BUDGET: public daily render quota reached; use local MCP or retry tomorrow UTC",
+  "mode": "actual local workerd admission; no audio render or remote write"
+}

@@ -1,0 +1,178 @@
+TAP version 13
+# (node:38948) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: cloud job validates actual WAV, refuses replacement and removes expired state
+ok 1 - cloud job validates actual WAV, refuses replacement and removes expired state
+  ---
+  duration_ms: 266.9687
+  type: 'test'
+  ...
+# Subtest: a slow PUT cannot commit past expiry, and a simultaneous PUT is rejected
+ok 2 - a slow PUT cannot commit past expiry, and a simultaneous PUT is rejected
+  ---
+  duration_ms: 43.4204
+  type: 'test'
+  ...
+# Subtest: global daily admission refuses byte, job and request overflow; resets on next UTC day
+ok 3 - global daily admission refuses byte, job and request overflow; resets on next UTC day
+  ---
+  duration_ms: 358.7639
+  type: 'test'
+  ...
+# (node:21512) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: five creative axes produce explicit and independently editable musical decisions
+ok 4 - five creative axes produce explicit and independently editable musical decisions
+  ---
+  duration_ms: 6.622
+  type: 'test'
+  ...
+# Subtest: seeded project, automation and WAV are reproducible; changing a noise seed changes the WAV
+ok 5 - seeded project, automation and WAV are reproducible; changing a noise seed changes the WAV
+  ---
+  duration_ms: 411.3021
+  type: 'test'
+  ...
+# Subtest: all nine SFX recipes validate and generate finite, non-silent stereo WAV
+ok 6 - all nine SFX recipes validate and generate finite, non-silent stereo WAV
+  ---
+  duration_ms: 180.3482
+  type: 'test'
+  ...
+# Subtest: all factory presets, complete songs, tours and Jam styles retain valid editable contracts
+ok 7 - all factory presets, complete songs, tours and Jam styles retain valid editable contracts
+  ---
+  duration_ms: 230.2197
+  type: 'test'
+  ...
+# Subtest: moods, macro-aware morph, randomization and evolution use website implementations
+ok 8 - moods, macro-aware morph, randomization and evolution use website implementations
+  ---
+  duration_ms: 28.7224
+  type: 'test'
+  ...
+# Subtest: renderer handles multipart music and sequencer ramps, with explicit tail warnings
+ok 9 - renderer handles multipart music and sequencer ramps, with explicit tail warnings
+  ---
+  duration_ms: 331.8631
+  type: 'test'
+  ...
+# Subtest: reject unknown params, wrong scope, invalid ranges, malformed notes, oversize work and stale revision before rendering
+ok 10 - reject unknown params, wrong scope, invalid ranges, malformed notes, oversize work and stale revision before rendering
+  ---
+  duration_ms: 3.1158
+  type: 'test'
+  ...
+# Subtest: global tempo and scale are preserved outside patch, and custom patches retain macro definitions
+ok 11 - global tempo and scale are preserved outside patch, and custom patches retain macro definitions
+  ---
+  duration_ms: 0.9064
+  type: 'test'
+  ...
+# Subtest: original Init and custom macros round-trip through creation without losing globals or mappings
+ok 12 - original Init and custom macros round-trip through creation without losing globals or mappings
+  ---
+  duration_ms: 6.0269
+  type: 'test'
+  ...
+# Subtest: browser rooms are explicit, deduplicate retries and report queue vs applied vs revoked states
+ok 13 - browser rooms are explicit, deduplicate retries and report queue vs applied vs revoked states
+  ---
+  duration_ms: 2.2413
+  type: 'test'
+  ...
+# Subtest: stop cancels older queued play and apply commands instead of replaying them
+ok 14 - stop cancels older queued play and apply commands instead of replaying them
+  ---
+  duration_ms: 1.4906
+  type: 'test'
+  ...
+# Subtest: stop remains available after filling the bounded command history
+ok 15 - stop remains available after filling the bounded command history
+  ---
+  duration_ms: 17.669
+  type: 'test'
+  ...
+# Subtest: Morph preserves global macro mappings without baking global values into a patch
+ok 16 - Morph preserves global macro mappings without baking global values into a patch
+  ---
+  duration_ms: 1.5312
+  type: 'test'
+  ...
+# (node:49608) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: revoking while browser poll is pending cannot apply stale commands
+ok 17 - revoking while browser poll is pending cannot apply stale commands
+  ---
+  duration_ms: 1.9087
+  type: 'test'
+  ...
+# Subtest: stop or room revocation during audio decode prevents source.start
+ok 18 - stop or room revocation during audio decode prevents source.start
+  ---
+  duration_ms: 2.1398
+  type: 'test'
+  ...
+# Subtest: expired browser rooms release all admission slots
+ok 19 - expired browser rooms release all admission slots
+  ---
+  duration_ms: 0.8576
+  type: 'test'
+  ...
+# Subtest: stop cancels commands already fetched in another browser batch
+ok 20 - stop cancels commands already fetched in another browser batch
+  ---
+  duration_ms: 4.1149
+  type: 'test'
+  ...
+# Subtest: public admission budget bounds jobs, bytes and requests and fails closed
+ok 21 - public admission budget bounds jobs, bytes and requests and fails closed
+  ---
+  duration_ms: 9.3078
+  type: 'test'
+  ...
+# Subtest: cloud upload is exact 16-bit WAV, immutable, and cannot resurrect an expired job
+ok 22 - cloud upload is exact 16-bit WAV, immutable, and cannot resurrect an expired job
+  ---
+  duration_ms: 253.5772
+  type: 'test'
+  ...
+# (node:49340) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:49340) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: official SDK HTTP client legacy discovers and invokes creation, render, resources, prompts and download
+ok 23 - official SDK HTTP client legacy discovers and invokes creation, render, resources, prompts and download
+  ---
+  duration_ms: 1824.8477
+  type: 'test'
+  ...
+# (node:49340) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: official SDK HTTP client auto discovers and invokes creation, render, resources, prompts and download
+ok 24 - official SDK HTTP client auto discovers and invokes creation, render, resources, prompts and download
+  ---
+  duration_ms: 1649.5826
+  type: 'test'
+  ...
+# Subtest: official SDK stdio client completes handshake, composition and actual WAV resource read
+ok 25 - official SDK stdio client completes handshake, composition and actual WAV resource read
+  ---
+  duration_ms: 1328.3475
+  type: 'test'
+  ...
+# Subtest: worker watchdog and cancellation terminate rendering without claiming a ready artifact
+ok 26 - worker watchdog and cancellation terminate rendering without claiming a ready artifact
+  ---
+  duration_ms: 38.0964
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5257.3161

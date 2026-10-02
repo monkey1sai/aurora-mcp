@@ -1,0 +1,330 @@
+{
+  "mode": "quick",
+  "seconds": 4.9,
+  "rows": [
+    {
+      "suite": "modules",
+      "name": "src/dsp/params.js",
+      "status": "PASS",
+      "detail": "27 exports: CHORDS, CHORD_IDS, DEFAULTS, FILTER_TYPES, GROUPS, MOD_DESTS, MOD_SLOTS, MOD_SOURCES, … · 4 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/util.js",
+      "status": "PASS",
+      "detail": "19 exports: CR, DENORMAL, PI, PI2, Rng, centsToRatio, clamp, dbToGain, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/env.js",
+      "status": "PASS",
+      "detail": "9 exports: ENV_ATTACK, ENV_DECAY, ENV_IDLE, ENV_RELEASE, ENV_STAGE_NAMES, ENV_SUSTAIN, Env, attackK, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/lfo.js",
+      "status": "PASS",
+      "detail": "8 exports: LFO_RAMP, LFO_SAW, LFO_SH, LFO_SINE, LFO_SMOOTH, LFO_SQUARE, LFO_TRI, Lfo · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/filter.js",
+      "status": "PASS",
+      "detail": "3 exports: SVFilter, VoiceFilter, filterResponse · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/wavetables.js",
+      "status": "PASS",
+      "detail": "14 exports: WAVETABLE_REF_HZ, WT_FRAMES, WT_GUARD_PRE, WT_HARMONICS, WT_LEVELS, WT_LEVEL_BASE, WT_LEVEL_HARM, WT_LEVEL_SIZE, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/osc.js",
+      "status": "PASS",
+      "detail": "1 exports: OscEngine · 16 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/fm.js",
+      "status": "PASS",
+      "detail": "4 exports: FM_ALGORITHMS, FmEngine, feedbackBeta, fmSin · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/phys.js",
+      "status": "PASS",
+      "detail": "1 exports: PhysEngine · 4 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/noise.js",
+      "status": "PASS",
+      "detail": "1 exports: NoiseEngine · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/drive.js",
+      "status": "PASS",
+      "detail": "1 exports: Drive · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/chorus.js",
+      "status": "PASS",
+      "detail": "1 exports: Chorus · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/phaser.js",
+      "status": "PASS",
+      "detail": "1 exports: Phaser · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/delay.js",
+      "status": "PASS",
+      "detail": "1 exports: Delay · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/reverb.js",
+      "status": "PASS",
+      "detail": "1 exports: Reverb · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/eq.js",
+      "status": "PASS",
+      "detail": "1 exports: EQ · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/comp.js",
+      "status": "PASS",
+      "detail": "1 exports: Comp · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/limiter.js",
+      "status": "PASS",
+      "detail": "1 exports: Limiter · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/fxchain.js",
+      "status": "PASS",
+      "detail": "9 exports: Chorus, Comp, Delay, Drive, EQ, FxChain, Limiter, Phaser, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/voice.js",
+      "status": "PASS",
+      "detail": "13 exports: PM_INT, PM_KIND, PM_MAX, PM_MIN, SRC_NONE, SYNC_BEATS, VOICE_GAIN, Voice, … · 3 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/performance.js",
+      "status": "PASS",
+      "detail": "7 exports: ARP_CHORD, ARP_DOWN, ARP_ORDER, ARP_RANDOM, ARP_UP, ARP_UPDOWN, Performance · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/sequencer.js",
+      "status": "PASS",
+      "detail": "1 exports: Sequencer · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/synth.js",
+      "status": "PASS",
+      "detail": "3 exports: MAX_POLY, Synth, renderOffline · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/index.js",
+      "status": "PASS",
+      "detail": "3 exports: CATEGORIES, PRESETS, categoryOf · 9 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/ensemble.js",
+      "status": "PASS",
+      "detail": "3 exports: ENSEMBLE_MAX_PARTS, Ensemble, SafetyBus · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/common.js",
+      "status": "PASS",
+      "detail": "9 exports: Oversampler2x, designHalfband, nextPow2, rbjHighShelf, rbjLowShelf, rbjLowpass, rbjPeak, readHermite, … · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/arp.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/bass.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/bell.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/drum.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/fx.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/keys.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/lead.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/pad.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/pluck.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/strings.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "purity",
+      "name": "25/25 DSP files clean",
+      "status": "PASS",
+      "detail": "no Math.random / browser or Node globals / timers; relative .js imports that resolve"
+    },
+    {
+      "suite": "syntax",
+      "name": "node --check (148 files)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "syntax",
+      "name": "import graph (100 files under src/)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "syntax",
+      "name": "index.html (7 local refs)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "params",
+      "name": "schema (235 params, 57 mod dests)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "magic",
+      "name": "moods: every mood × every preset (valid, audible, bounded, diminishing)",
+      "status": "PASS",
+      "detail": "4800 applications on 100 presets × 16 moods · no-op at 0.6 (nothing to change): steady: 3, motion: 1"
+    },
+    {
+      "suite": "magic",
+      "name": "moods: text requests (zh + en)",
+      "status": "PASS",
+      "detail": "11 phrases"
+    },
+    {
+      "suite": "magic",
+      "name": "store: transient / animate / commit / revert / undo",
+      "status": "PASS",
+      "detail": "transient, commit, revert, animate (FX fades, take-over, undo mid-animation), drift isolation, blend"
+    },
+    {
+      "suite": "magic",
+      "name": "morph (A/B) + auto-evolve targets",
+      "status": "PASS",
+      "detail": "120 random preset pairs × 26 points · evolve 14.1 targets/preset"
+    },
+    {
+      "suite": "ui",
+      "name": "store: preset switch keeps unsaved edits undoable (UF-01)",
+      "status": "PASS",
+      "detail": "edit → switch → undo ×2 → redo ×2"
+    },
+    {
+      "suite": "ui",
+      "name": "store: macro knobs are undoable and mark the patch modified (UF-02)",
+      "status": "PASS",
+      "detail": "knob, XY drag (1 step), engine follow, master volume"
+    },
+    {
+      "suite": "ui",
+      "name": "store: Init patch — undo back to Init is clean (UF-13)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "ui",
+      "name": "store: silent demo apply/restore leaves the dirty flag alone",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "ui",
+      "name": "library: batch import + storage failure (UF-04, UF-05)",
+      "status": "PASS",
+      "detail": "300 presets → 1 write, 1 event"
+    },
+    {
+      "suite": "ui",
+      "name": "midi: unplug releases notes and latched sustain / bend / wheel (UF-10)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "ui",
+      "name": "a11y: unlabeled controls get words, not ids (UX-04)",
+      "status": "PASS",
+      "detail": "235 params"
+    },
+    {
+      "suite": "ui",
+      "name": "help: jargon explanations point at real params",
+      "status": "PASS",
+      "detail": "50 entries cover 79 params"
+    },
+    {
+      "suite": "ui",
+      "name": "css: phone dock keeps octave / hold; short screens compact the dock column",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

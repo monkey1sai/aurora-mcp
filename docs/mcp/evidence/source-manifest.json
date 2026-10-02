@@ -1,0 +1,192 @@
+{
+  "upstreamCommit": "aa204456bfbfff49f79322bfea4673f22d4b4de3",
+  "byteBasis": "UTF-8 text with CRLF normalized to LF",
+  "scope": "Reviewed local MCP implementation; not evidence of deployment",
+  "sources": [
+    {
+      "file": "README.md",
+      "bytes": 19187,
+      "sha256": "cc3ac47a6ac8bb96d7c9f4df47588945b4fd218e518a24f81ee187d356062b51"
+    },
+    {
+      "file": "css/studio.css",
+      "bytes": 5847,
+      "sha256": "dc864d3bfe69553a54b1692a525cbd8903b3b58c430240257139a896bac1e8f1"
+    },
+    {
+      "file": "docs/mcp/FINAL_ACCEPTANCE.md",
+      "bytes": 3721,
+      "sha256": "fe24dbd592f170220d93a476f239a00955719ae9e381b0ae98f8b736d960fc71"
+    },
+    {
+      "file": "docs/mcp/MCP.md",
+      "bytes": 7216,
+      "sha256": "ff02274088f34dbe6c87169df26e7a5a6a2aaf0f14cb60467f07f418899c5514"
+    },
+    {
+      "file": "docs/mcp/VERIFICATION.md",
+      "bytes": 3638,
+      "sha256": "5f14efa1f5e6ee6bc841200d5aba9acc7d2044f1a3429fc164ab28e0113bd5b0"
+    },
+    {
+      "file": "mcp/benchmark.mjs",
+      "bytes": 738,
+      "sha256": "11b1d2dbee0e47319a8c80c99dc59f95175a8745b358c4656f7858548c4ab2d3"
+    },
+    {
+      "file": "mcp/cloud-worker.mjs",
+      "bytes": 11461,
+      "sha256": "8acc4eae5918c4ca4bef90fa60cc435ed90e200246c6262467d568c1610106af"
+    },
+    {
+      "file": "mcp/http.mjs",
+      "bytes": 5268,
+      "sha256": "e3456e67f55ebb82a6d346a062df466ca08b51fd8ade9dafc3f2dac46416cdd9"
+    },
+    {
+      "file": "mcp/node-adapter.mjs",
+      "bytes": 5933,
+      "sha256": "3f4e4dbd3c6d132361c8b7e9936ba1aa7950f18309cd45904c0ea9c2bbe5a3c2"
+    },
+    {
+      "file": "mcp/probe.mjs",
+      "bytes": 1346,
+      "sha256": "1f66de508e8dad756c07a18850d696d5a227f11e7a221fa66271898ef423b786"
+    },
+    {
+      "file": "mcp/render-worker.mjs",
+      "bytes": 463,
+      "sha256": "d72bdf6b2594e49ddae7ccff7c682851133efb4557e2cb8450c8e598103a00fc"
+    },
+    {
+      "file": "mcp/room-probe.mjs",
+      "bytes": 1167,
+      "sha256": "5a91b5f4177c4ccd394cef52cacfba4acc755d758281cdba837192a73988e543"
+    },
+    {
+      "file": "mcp/rooms.mjs",
+      "bytes": 2320,
+      "sha256": "599e215baf1f85bd5be9b89c0207435b6a42c0c2a9b3e76d06626762193c1eaf"
+    },
+    {
+      "file": "mcp/schemas.mjs",
+      "bytes": 4596,
+      "sha256": "1c5cc65f35f9a6659ccda97fdd3680c99d30d646ace43dc6f4fb3328f9803282"
+    },
+    {
+      "file": "mcp/server.mjs",
+      "bytes": 12672,
+      "sha256": "3cf0b084972dc247bcb882ef8e12a556091feb72b5785c80edcf49f2cf12991d"
+    },
+    {
+      "file": "mcp/stdio.mjs",
+      "bytes": 386,
+      "sha256": "9f2860ecc4ffb7523d01c32170ffcf2c97d725e00252ecd7483b2b643a361b24"
+    },
+    {
+      "file": "mcp/test/cloud.test.mjs",
+      "bytes": 3438,
+      "sha256": "c66b5c43ddbabe42f7724f4c87aa6ab63bc7727349dd76d14baf664c501e8ccc"
+    },
+    {
+      "file": "mcp/test/creation.test.mjs",
+      "bytes": 9377,
+      "sha256": "4a428fb87560d496b7f1eb11b1bfebb40555a3cf1c58917b7756839ce0514e13"
+    },
+    {
+      "file": "mcp/test/lifecycle.test.mjs",
+      "bytes": 5474,
+      "sha256": "5c9beda06968a77109b9b962b72261102520bd5a3770b5456efc181b1dd6258d"
+    },
+    {
+      "file": "mcp/test/protocol.test.mjs",
+      "bytes": 4286,
+      "sha256": "929ba3ab2cfa0f294b2b7ad5159aa31fc8d73832e2dc32b0751e98d27f564dd0"
+    },
+    {
+      "file": "mcp/verify-artifact.mjs",
+      "bytes": 1520,
+      "sha256": "82c9a574a5463648dc08274b2d2475dec59d691b19426fb41c80a81ed8afbbb2"
+    },
+    {
+      "file": "mcp/verify-budget.mjs",
+      "bytes": 1536,
+      "sha256": "91fdb00ed49c72aa8466c824f94a3b41d96fab3343d2cd9fa61388344bebebc9"
+    },
+    {
+      "file": "mcp/verify-cloud.mjs",
+      "bytes": 2590,
+      "sha256": "e07dfb97009f3f3acc1c55b3741cb070c0903093b75221bcb99d4fed860ccebf"
+    },
+    {
+      "file": "package-lock.json",
+      "bytes": 7825,
+      "sha256": "27aa86521bdf844066d4af7ead95364a8c76cb507401b2708a2240c2b6f547ea"
+    },
+    {
+      "file": "package.json",
+      "bytes": 953,
+      "sha256": "b7fbf0e7bacc0bf2f02d48e7dc22162f72adf64556e56616aa47a2936793edac"
+    },
+    {
+      "file": "src/creation/compose.js",
+      "bytes": 11745,
+      "sha256": "a0f631f0937190d7bf4d0c3471557412a192d72f17e8525638d7ac7defa83478"
+    },
+    {
+      "file": "src/creation/project.js",
+      "bytes": 12480,
+      "sha256": "8ab4b8bd55a30042f4fdf6c4fe436ca388485d5ac14ed9db06971c0da608c55c"
+    },
+    {
+      "file": "src/creation/render-worker.js",
+      "bytes": 515,
+      "sha256": "da7f4bb15cb28f5549c62d9b7a4e0aa6f456d0d9851481f5bfcc1e6d96dc01b5"
+    },
+    {
+      "file": "src/creation/render.js",
+      "bytes": 7287,
+      "sha256": "f857820303edad4caca0d828973e6b276eefab71b9aee35250fa50bfff7a70f8"
+    },
+    {
+      "file": "src/creation/studio.js",
+      "bytes": 17017,
+      "sha256": "cc3446b8b08f884a8cd608a42efc7c12490e2178c087dabf9c472841358d099b"
+    },
+    {
+      "file": "src/demo/morph.js",
+      "bytes": 2987,
+      "sha256": "4f98fe35f9ecc4056c4d9035a64db61988244e73cff8163aadb13858c9b71377"
+    },
+    {
+      "file": "src/ui/demo/morph.js",
+      "bytes": 22328,
+      "sha256": "7f75872bcb47b2fdc2a1f92f09f31ade71d12e7c1f12ed97a9f712f2e364d82e"
+    },
+    {
+      "file": "src/ui/main.js",
+      "bytes": 40191,
+      "sha256": "9ff8ca9a4066b557285a962b574afe2606448f780b21c42c8107846dbc12654f"
+    },
+    {
+      "file": "studio.html",
+      "bytes": 6678,
+      "sha256": "baf343918bbb3801d3a0b4000f53ff5216c86c1c41df3a15e7b18842ba4b7594"
+    },
+    {
+      "file": "tools/build-mcp-site.mjs",
+      "bytes": 1171,
+      "sha256": "ab0638bd0f5843f10d0bcc469aafaf4d57d907ae6ac08a5844ab22a40716c1ff"
+    },
+    {
+      "file": "tools/write-mcp-manifest.mjs",
+      "bytes": 1593,
+      "sha256": "c594bfb84a6f4f41efc68bbacfa707e058668dd1dea7e30d19ea0c6f7fe24f57"
+    },
+    {
+      "file": "wrangler.mcp.jsonc",
+      "bytes": 813,
+      "sha256": "b36453298ab1cbcb029f170d4e798828fa62f051293cfc0f95635cf30222b6fc"
+    }
+  ]
+}

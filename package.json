@@ -1,5 +1,5 @@
 {
-  "name": "aurora-synth",
+  "name": "aurora-mcp",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,16 +8,27 @@
     "lan": "node tools/serve.mjs --lan",
     "test": "node tools/test.mjs",
     "render": "node tools/render.mjs",
-    "build": "node tools/build-site.mjs",
-    "deploy": "node tools/build-site.mjs && npx wrangler deploy"
+    "build": "node tools/build-mcp-site.mjs",
+    "mcp:stdio": "node mcp/stdio.mjs",
+    "mcp:http": "node mcp/http.mjs",
+    "test:mcp": "node --test mcp/test/*.test.mjs",
+    "deploy": "npx wrangler@4.133.0 deploy --config wrangler.mcp.jsonc",
+    "mcp:cloud:dev": "npx wrangler@4.133.0 dev --config wrangler.mcp.jsonc --local"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pixbvr/aurora-synth.git"
+    "url": "https://github.com/monkey1sai/aurora-mcp.git"
   },
-  "homepage": "https://aurora.pixbvr.com",
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.2.0",
+    "@modelcontextprotocol/node": "2.1.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.2.0"
+  },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }

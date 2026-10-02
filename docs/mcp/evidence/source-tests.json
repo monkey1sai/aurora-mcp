@@ -1,0 +1,3472 @@
+{
+  "mode": "quick",
+  "seconds": 86.3,
+  "rows": [
+    {
+      "suite": "tools",
+      "name": "analyze: FFT vs direct DFT",
+      "status": "PASS",
+      "detail": "max error 3.3e-13"
+    },
+    {
+      "suite": "tools",
+      "name": "analyze: BS.1770 loudness references",
+      "status": "PASS",
+      "detail": "0 dBFS 997 Hz stereo 0.000 LUFS (ref 0) · −20 dBFS -20.000 (ref −20) · L only -3.010 (ref −3.01) · @44.1k 0.003"
+    },
+    {
+      "suite": "tools",
+      "name": "analyze: true peak (fs/4 sine at 45°)",
+      "status": "PASS",
+      "detail": "sample peak 0.707 → true peak 1.0113 (ideal 1.0)"
+    },
+    {
+      "suite": "tools",
+      "name": "analyze: metrics on a synthetic note",
+      "status": "PASS",
+      "detail": "peak -6.02 dBFS · attack 0.04s (ref 0.04) · release T60 1.01s (ref 1.0) · peak freq 439.65 Hz · corr 1"
+    },
+    {
+      "suite": "tools",
+      "name": "wav: 16/24/32-bit round trip",
+      "status": "PASS",
+      "detail": "max error 16-bit 6.9e-5 · 24-bit 1.2e-7 · float 0"
+    },
+    {
+      "suite": "tools",
+      "name": "png: encode/decode + spectrogram",
+      "status": "PASS",
+      "detail": "lossless round trip true · spectrogram 400×160"
+    },
+    {
+      "suite": "tools",
+      "name": "phrases: sequencer format & timing",
+      "status": "PASS",
+      "detail": "12 phrases: keys, pad, bass, lead, pluck, bell, arp, fx, drum, scale, single, strings"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/params.js",
+      "status": "PASS",
+      "detail": "27 exports: CHORDS, CHORD_IDS, DEFAULTS, FILTER_TYPES, GROUPS, MOD_DESTS, MOD_SLOTS, MOD_SOURCES, … · 4 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/util.js",
+      "status": "PASS",
+      "detail": "19 exports: CR, DENORMAL, PI, PI2, Rng, centsToRatio, clamp, dbToGain, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/env.js",
+      "status": "PASS",
+      "detail": "9 exports: ENV_ATTACK, ENV_DECAY, ENV_IDLE, ENV_RELEASE, ENV_STAGE_NAMES, ENV_SUSTAIN, Env, attackK, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/lfo.js",
+      "status": "PASS",
+      "detail": "8 exports: LFO_RAMP, LFO_SAW, LFO_SH, LFO_SINE, LFO_SMOOTH, LFO_SQUARE, LFO_TRI, Lfo · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/filter.js",
+      "status": "PASS",
+      "detail": "3 exports: SVFilter, VoiceFilter, filterResponse · 3 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/wavetables.js",
+      "status": "PASS",
+      "detail": "14 exports: WAVETABLE_REF_HZ, WT_FRAMES, WT_GUARD_PRE, WT_HARMONICS, WT_LEVELS, WT_LEVEL_BASE, WT_LEVEL_HARM, WT_LEVEL_SIZE, … · 4 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/osc.js",
+      "status": "PASS",
+      "detail": "1 exports: OscEngine · 19 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/fm.js",
+      "status": "PASS",
+      "detail": "4 exports: FM_ALGORITHMS, FmEngine, feedbackBeta, fmSin · 3 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/phys.js",
+      "status": "PASS",
+      "detail": "1 exports: PhysEngine · 6 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/engines/noise.js",
+      "status": "PASS",
+      "detail": "1 exports: NoiseEngine · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/drive.js",
+      "status": "PASS",
+      "detail": "1 exports: Drive · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/chorus.js",
+      "status": "PASS",
+      "detail": "1 exports: Chorus · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/phaser.js",
+      "status": "PASS",
+      "detail": "1 exports: Phaser · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/delay.js",
+      "status": "PASS",
+      "detail": "1 exports: Delay · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/reverb.js",
+      "status": "PASS",
+      "detail": "1 exports: Reverb · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/eq.js",
+      "status": "PASS",
+      "detail": "1 exports: EQ · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/comp.js",
+      "status": "PASS",
+      "detail": "1 exports: Comp · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/limiter.js",
+      "status": "PASS",
+      "detail": "1 exports: Limiter · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/fxchain.js",
+      "status": "PASS",
+      "detail": "9 exports: Chorus, Comp, Delay, Drive, EQ, FxChain, Limiter, Phaser, … · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/voice.js",
+      "status": "PASS",
+      "detail": "13 exports: PM_INT, PM_KIND, PM_MAX, PM_MIN, SRC_NONE, SYNC_BEATS, VOICE_GAIN, Voice, … · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/performance.js",
+      "status": "PASS",
+      "detail": "7 exports: ARP_CHORD, ARP_DOWN, ARP_ORDER, ARP_RANDOM, ARP_UP, ARP_UPDOWN, Performance · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/sequencer.js",
+      "status": "PASS",
+      "detail": "1 exports: Sequencer · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/synth.js",
+      "status": "PASS",
+      "detail": "3 exports: MAX_POLY, Synth, renderOffline · 2 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/index.js",
+      "status": "PASS",
+      "detail": "3 exports: CATEGORIES, PRESETS, categoryOf · 14 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/ensemble.js",
+      "status": "PASS",
+      "detail": "3 exports: ENSEMBLE_MAX_PARTS, Ensemble, SafetyBus · 1 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/dsp/fx/common.js",
+      "status": "PASS",
+      "detail": "9 exports: Oversampler2x, designHalfband, nextPow2, rbjHighShelf, rbjLowShelf, rbjLowpass, rbjPeak, readHermite, … · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/arp.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/bass.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/bell.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/drum.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/fx.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/keys.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/lead.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/pad.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/pluck.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "modules",
+      "name": "src/presets/strings.js",
+      "status": "PASS",
+      "detail": "1 exports: default · 0 ms"
+    },
+    {
+      "suite": "purity",
+      "name": "25/25 DSP files clean",
+      "status": "PASS",
+      "detail": "no Math.random / browser or Node globals / timers; relative .js imports that resolve"
+    },
+    {
+      "suite": "syntax",
+      "name": "node --check (148 files)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "syntax",
+      "name": "import graph (100 files under src/)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "syntax",
+      "name": "index.html (7 local refs)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "params",
+      "name": "schema (235 params, 57 mod dests)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "presets",
+      "name": "catalog: 100 presets in 10 categories",
+      "status": "PASS",
+      "detail": "keys 10 · pad 10 · bass 10 · lead 10 · pluck 10 · bell 10 · strings 10 · arp 10 · fx 10 · drum 10  |  demo phrases: keys 11 · pluck 14 · pad 15 · bass 12 · lead 13 · bell 4 · arp 13 · strings 3 · fx 7 · drum 8"
+    },
+    {
+      "suite": "engines",
+      "name": "osc tuning",
+      "status": "PASS",
+      "detail": "worst 0.05 cents (n33@96k) over 21 notes × 44.1/48/96 kHz"
+    },
+    {
+      "suite": "engines",
+      "name": "osc with prefix 'osc2'",
+      "status": "PASS",
+      "detail": "peak 1.54"
+    },
+    {
+      "suite": "engines",
+      "name": "osc aliasing (inharmonic/harmonic @44.1k, C6/C7/G7)",
+      "status": "INFO",
+      "detail": "classic saw: -41/-35/-64 dB · classic square: -53/-34/-94 dB · wavetable analog: -84/-80/-26 dB · classic sync 0.5: -62/-56/-50 dB"
+    },
+    {
+      "suite": "engines",
+      "name": "osc CPU per voice @48k",
+      "status": "INFO",
+      "detail": "classic saw ×1 0 ns/smp (0.00% core) · classic saw ×7 156 ns/smp (0.75% core) · wavetable ×7 156 ns/smp (0.75% core)"
+    },
+    {
+      "suite": "engines",
+      "name": "fm tuning",
+      "status": "PASS",
+      "detail": "worst 0.02 cents (n33@44.1k) over 21 notes × 44.1/48/96 kHz"
+    },
+    {
+      "suite": "engines",
+      "name": "fm CPU per voice @48k",
+      "status": "INFO",
+      "detail": "algo 1 167 ns/smp (0.80% core) · algo 8 + fb 156 ns/smp (0.75% core)"
+    },
+    {
+      "suite": "engines",
+      "name": "fm loudness vs osc saw (full voice)",
+      "status": "INFO",
+      "detail": "default +3.6 LU, PLR -1.0 dB (saw PLR 3.4 dB; momentary-max LUFS, C4, equal level, FX/filter off)"
+    },
+    {
+      "suite": "engines",
+      "name": "phys tuning",
+      "status": "PASS",
+      "detail": "worst -0.17 cents (n36@44.1k) over 18 notes × 44.1/48/96 kHz (string fundamental)"
+    },
+    {
+      "suite": "engines",
+      "name": "phys CPU per voice @48k",
+      "status": "INFO",
+      "detail": "string/pluck 167 ns/smp (0.80% core) · bell/mallet 0 ns/smp (0.00% core) · plate/bow 323 ns/smp (1.55% core)"
+    },
+    {
+      "suite": "engines",
+      "name": "phys loudness vs osc saw (full voice)",
+      "status": "INFO",
+      "detail": "string/pluck -5.7 LU, PLR 12.3 dB · bar/mallet +0.1 LU, PLR 7.1 dB · string/bow -0.3 LU, PLR 4.0 dB (saw PLR 3.4 dB; momentary-max LUFS, C4, equal level, FX/filter off)"
+    },
+    {
+      "suite": "engines",
+      "name": "noise CPU per voice @48k",
+      "status": "INFO",
+      "detail": "noise 0 ns/smp (0.00% core)"
+    },
+    {
+      "suite": "engines",
+      "name": "noise loudness vs osc saw (full voice)",
+      "status": "INFO",
+      "detail": "white +3.3 LU, PLR 1.8 dB (saw PLR 3.4 dB; momentary-max LUFS, C4, equal level, FX/filter off)"
+    },
+    {
+      "suite": "engines",
+      "name": "phys string/pluck",
+      "status": "PASS",
+      "detail": "19 renders · peak 0.99 · |DC| 0.0083 · inactive 0.29s after off · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys string/mallet",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.10 · |DC| 0.0016 · inactive 0.28s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys string/bow",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.02 · |DC| 0.0005 · inactive 0.63s after off · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys string/breath",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.17 · |DC| 0.0001 · inactive 0.63s after off · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bar/pluck",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.07 · |DC| 0.0074 · inactive 0.38s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bar/mallet",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.04 · |DC| 0.0075 · inactive 0.39s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bar/bow",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.12 · |DC| 0.0047 · inactive 0.62s after off · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bar/breath",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.15 · |DC| 0.0020 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bell/pluck",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.04 · |DC| 0.0006 · inactive 0.34s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bell/mallet",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.17 · |DC| 0.0021 · inactive 0.35s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bell/bow",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.45 · |DC| 0.0082 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys bell/breath",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.06 · |DC| 0.0009 · inactive 0.62s after off · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys glass/pluck",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.01 · |DC| 0.0061 · inactive 0.36s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys glass/mallet",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.11 · |DC| 0.0060 · inactive 0.37s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys glass/bow",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.18 · |DC| 0.0006 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys glass/breath",
+      "status": "PASS",
+      "detail": "19 renders · peak 0.88 · |DC| 0.0010 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys membrane/pluck",
+      "status": "PASS",
+      "detail": "19 renders · peak 0.96 · |DC| 0.0027 · inactive 0.33s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys membrane/mallet",
+      "status": "PASS",
+      "detail": "19 renders · peak 0.99 · |DC| 0.0042 · inactive 0.34s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys membrane/bow",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.12 · |DC| 0.0042 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys membrane/breath",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.05 · |DC| 0.0004 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys plate/pluck",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.73 @rapid/n84/48k/rapid-mod · |DC| 0.0037 · inactive 0.33s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys plate/mallet",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.54 @rapid/n84/48k/rapid-mod · |DC| 0.0056 · inactive 0.34s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys plate/bow",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.16 · |DC| 0.0043 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "phys plate/breath",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.16 · |DC| 0.0007 · inactive 0.62s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc classic",
+      "status": "PASS",
+      "detail": "52 renders · peak 2.58 @rand1/n108/48k · |DC| 0.1064 · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/analog",
+      "status": "PASS",
+      "detail": "25 renders · peak 2.98 @max/n60/48k · |DC| 0.1081 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/harmonic",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.49 · |DC| 0.1064 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/vowels",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.04 · |DC| 0.0229 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/pulse",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.83 @min/n24/48k · |DC| 0.1010 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/organ",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.41 · |DC| 0.1059 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/glass",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.42 · |DC| 0.0888 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/sync",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.69 @min/n24/48k · |DC| 0.0601 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/digital",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.49 · |DC| 0.1064 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/strings",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.45 · |DC| 0.0490 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "osc wavetable/growl",
+      "status": "PASS",
+      "detail": "25 renders · peak 1.92 @max/n60/48k · |DC| 0.0745 · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 1",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.20 · |DC| 0.0002 · inactive 0.45s after off · 0.2s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 2",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.41 · |DC| 0.0003 · inactive 0.45s after off · 0.3s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 3",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.07 · |DC| 0.0004 · inactive 0.45s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 4",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.16 · |DC| 0.0004 · inactive 0.45s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 5",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.16 · |DC| 0.0005 · inactive 0.45s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 6",
+      "status": "PASS",
+      "detail": "19 renders · peak 0.97 · |DC| 0.0005 · inactive 0.45s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 7",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.00 · |DC| 0.0005 · inactive 0.45s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "fm algo 8",
+      "status": "PASS",
+      "detail": "19 renders · peak 1.25 · |DC| 0.0005 · inactive 0.45s after off · 0.1s"
+    },
+    {
+      "suite": "engines",
+      "name": "noise noise",
+      "status": "PASS",
+      "detail": "19 renders · peak 2.19 @min/n60/96k · |DC| 0.0196 · 0.1s"
+    },
+    {
+      "suite": "filters",
+      "name": "filterResponse() output",
+      "status": "PASS",
+      "detail": "8 types × 3 cutoffs × 3 res"
+    },
+    {
+      "suite": "filters",
+      "name": "UI curve vs measured (res 0.3, bands > −24 dB)",
+      "status": "PASS",
+      "detail": "worst deviation per type: ladder24 -0.2dB@1.0k · ladder12 -0.1dB@3.2k · lp -0.2dB@3.2k · bp -0.6dB@50 · hp +0.5dB@397 · notch +0.7dB@1.0k · formant +1.4dB@250 · comb +1.3dB@39"
+    },
+    {
+      "suite": "filters",
+      "name": "ladder24 self-oscillation @ res 1",
+      "status": "PASS",
+      "detail": "sustains at -9.8 dBFS (drift 0.00 dB over 0.5 s)"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter ladder24",
+      "status": "PASS",
+      "detail": "7 renders · peak 0.78 · |DC| 0.0158 · 0.1s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter ladder12",
+      "status": "PASS",
+      "detail": "7 renders · peak 0.85 · |DC| 0.0105 · 0.1s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter lp",
+      "status": "PASS",
+      "detail": "7 renders · peak 1.66 @fastmod · |DC| 0.0062 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter bp",
+      "status": "PASS",
+      "detail": "7 renders · peak 1.00 · |DC| 0.0033 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter hp",
+      "status": "PASS",
+      "detail": "7 renders · peak 2.11 @fastmod · |DC| 0.0052 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter notch",
+      "status": "PASS",
+      "detail": "7 renders · peak 1.00 · |DC| 0.0011 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter formant",
+      "status": "PASS",
+      "detail": "7 renders · peak 0.80 · |DC| 0.0003 · 0.1s"
+    },
+    {
+      "suite": "filters",
+      "name": "VoiceFilter comb",
+      "status": "PASS",
+      "detail": "7 renders · peak 1.15 · |DC| 0.0056 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "SVFilter lp",
+      "status": "PASS",
+      "detail": "4 renders · peak 3.83 @fastmod · |DC| 0.0110 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "SVFilter hp",
+      "status": "PASS",
+      "detail": "4 renders · peak 4.27 @fastmod · |DC| 0.0106 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "SVFilter bp",
+      "status": "PASS",
+      "detail": "4 renders · peak 1.22 · |DC| 0.0033 · 0.0s"
+    },
+    {
+      "suite": "filters",
+      "name": "SVFilter notch",
+      "status": "PASS",
+      "detail": "4 renders · peak 0.77 · |DC| 0.0010 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "default delay+reverb tail → −80 dBFS",
+      "status": "PASS",
+      "detail": "silent 3.27 s after input stops · tailActive() false after 5.27 s"
+    },
+    {
+      "suite": "fx",
+      "name": "no float32 subnormals in FX buffers during tails (§2)",
+      "status": "PASS",
+      "detail": "Float32 buffers scanned while tailActive(): reverb 7 · delay 7 · chorus 7 · phaser 7"
+    },
+    {
+      "suite": "fx",
+      "name": "FxChain CPU @48k (stereo)",
+      "status": "INFO",
+      "detail": "bypass 0.00% core · reverb 8.60% core · all on 7.00% core"
+    },
+    {
+      "suite": "fx",
+      "name": "all on · defaults",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.32 · |DC| 0.0000 · 0.8s"
+    },
+    {
+      "suite": "fx",
+      "name": "all on · max",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.40 · |DC| 0.0000 · 0.8s"
+    },
+    {
+      "suite": "fx",
+      "name": "all on · min",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.31 · |DC| 0.0000 · 1.2s"
+    },
+    {
+      "suite": "fx",
+      "name": "all on · random 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.66 · |DC| 0.0000 · 0.3s"
+    },
+    {
+      "suite": "fx",
+      "name": "drive soft · amount 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.63 · |DC| 0.0000 · 0.5s"
+    },
+    {
+      "suite": "fx",
+      "name": "drive tube · amount 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.59 · |DC| 0.0000 · 0.4s"
+    },
+    {
+      "suite": "fx",
+      "name": "drive fold · amount 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.78 · |DC| 0.0001 · 0.4s"
+    },
+    {
+      "suite": "fx",
+      "name": "drive crush · amount 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.62 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "chorus chorus · depth 1 fb .9",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.46 · |DC| 0.0001 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "chorus ensemble · depth 1 fb .9",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.44 · |DC| 0.0004 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "chorus flanger · depth 1 fb .9",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.82 · |DC| 0.0001 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "phaser 4 stages · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 1.05 · |DC| 0.0003 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "phaser 6 stages · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 1.07 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "phaser 8 stages · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 1.00 · |DC| 0.0001 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "phaser 12 stages · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 1.00 · |DC| 0.0001 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay off @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.44 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/2 @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.46 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/4 @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.45 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/4D @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.44 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/4T @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.44 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/8 @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.46 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/8D @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.45 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/8T @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.44 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 1/16 @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.49 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "delay 3/16 @240bpm · fb .95",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.45 · |DC| 0.0000 · 0.0s"
+    },
+    {
+      "suite": "fx",
+      "name": "reverb huge · shimmer 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.19 · |DC| 0.0000 · 0.1s"
+    },
+    {
+      "suite": "fx",
+      "name": "reverb tiny",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.25 · |DC| 0.0000 · 0.2s"
+    },
+    {
+      "suite": "fx",
+      "name": "eq ±12 · glue 1",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.64 · |DC| 0.0001 · 0.1s"
+    },
+    {
+      "suite": "fx",
+      "name": "toggle effects on/off every 21 ms",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.34 · |DC| 0.0001 · 0.3s"
+    },
+    {
+      "suite": "fx",
+      "name": "random FX params every block",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.48 · |DC| 0.0010 · 1.0s"
+    },
+    {
+      "suite": "synth",
+      "name": "stress: 16 voices, all engines max, +6 dB, drive → limiter ≤ 1.0",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.97 · |DC| 0.0002 · peak -0.30 dBFS · 1.1s"
+    },
+    {
+      "suite": "synth",
+      "name": "voice stealing & mono/legato",
+      "status": "PASS",
+      "detail": "4 renders · peak 0.92 · |DC| 0.0004 · 1.0s"
+    },
+    {
+      "suite": "synth",
+      "name": "voice stealing keeps new notes (legato chords, pedal, slow attack, full pool, arp tie)",
+      "status": "PASS",
+      "detail": "0 renders · peak 0.00 · |DC| 0.0000 · 2.0s"
+    },
+    {
+      "suite": "synth",
+      "name": "phys: model switch mid-note (no click) · modal bow/breath under pitch modulation (bounded)",
+      "status": "PASS",
+      "detail": "4 renders · peak 0.29 · |DC| 0.0002 · 0.5s"
+    },
+    {
+      "suite": "synth",
+      "name": "sample-rate independence: noise / breath level in the audible band at 96 & 192 kHz",
+      "status": "PASS",
+      "detail": "15 renders · peak 0.24 · |DC| 0.0002 · Δ dB @96/192k: white -0.0/-0.1 · brown +0.2/-0.2 · color −0.3 -0.0/-0.1 · color +1 +0.1/+0.2 · phys string breath +0.1/-0.7 · 0.9s"
+    },
+    {
+      "suite": "synth",
+      "name": "fuzz: random patches × pluck phrase",
+      "status": "PASS",
+      "detail": "8 renders · peak 0.16 · |DC| 0.0001 · 2.2s"
+    },
+    {
+      "suite": "synth",
+      "name": "rapid automation (all mod-able params every 128 samples)",
+      "status": "PASS",
+      "detail": "1 renders · peak 0.88 · |DC| 0.0005 · 0.6s"
+    },
+    {
+      "suite": "synth",
+      "name": "Synth API (params, macros, controllers, state, sustain, panic, sequencer)",
+      "status": "PASS",
+      "detail": "default patch C4 peak -16.6 dBFS (spec ≈ −12)"
+    },
+    {
+      "suite": "synth",
+      "name": "allocation in audio path (bytes per 128 samples)",
+      "status": "PASS",
+      "detail": "osc 7 B · fm 5 B · phys 5 B · noise 5 B · filter:ladder24 7 B · filter:ladder12 7 B · filter:lp 7 B · filter:bp 4 B · filter:hp 4 B · filter:notch 4 B · filter:formant 4 B · filter:comb 4 B · SVFilter 7 B · FxChain 4 B · Synth (8 voices, all FX) 19 B · 0 GCs in 4 s"
+    },
+    {
+      "suite": "presets",
+      "name": "Moonlit Suitcase",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.8× real time",
+      "data": {
+        "name": "Moonlit Suitcase",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -3.08,
+        "lufs": -19.19,
+        "dc": 0.000065,
+        "nan": 0,
+        "centroid": 606,
+        "tail": 4.49,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 13.601826870551909,
+        "width": 0.5652,
+        "rtf": 2.8409090909090913
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Ivory Hall Grand",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Ivory Hall Grand",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -2.8,
+        "lufs": -19.85,
+        "dc": 0.000004,
+        "nan": 0,
+        "centroid": 1569,
+        "tail": 4.79,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 18.92,
+        "width": 0.4457,
+        "rtf": 4.926108374384236
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Felt Lullaby",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Felt Lullaby",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -4.8,
+        "lufs": -19.15,
+        "dc": 0.000003,
+        "nan": 0,
+        "centroid": 693,
+        "tail": 3.54,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 11.96,
+        "width": 0.2632,
+        "rtf": 4.576659038901602
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Platinum Ballad",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Platinum Ballad",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -1.94,
+        "lufs": -20.07,
+        "dc": 0.00008,
+        "nan": 0,
+        "centroid": 1193,
+        "tail": 2.5,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.38182687055191,
+        "width": 0.6808,
+        "rtf": 5.319148936170213
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Amber Reeds",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.5× real time",
+      "data": {
+        "name": "Amber Reeds",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -3.71,
+        "lufs": -19.37,
+        "dc": 0.000008,
+        "nan": 0,
+        "centroid": 682,
+        "tail": 0.73,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 5.68,
+        "width": 0.1016,
+        "rtf": 3.4602076124567476
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Gospel Rotary",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 4.0× real time",
+      "data": {
+        "name": "Gospel Rotary",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -4.75,
+        "lufs": -18.45,
+        "dc": 0.000007,
+        "nan": 0,
+        "centroid": 881,
+        "tail": 1.85,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 7.08,
+        "width": 0.4212,
+        "rtf": 3.992015968063872
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Strut Clav",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Strut Clav",
+        "category": "keys",
+        "phrase": "pluck",
+        "peakDb": -5.23,
+        "lufs": -19.98,
+        "dc": 0.000003,
+        "nan": 0,
+        "centroid": 1584,
+        "tail": 0.64,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 4.768,
+        "width": 0.5144,
+        "rtf": 4.132231404958678
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Versailles Harpsichord",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.5× real time",
+      "data": {
+        "name": "Versailles Harpsichord",
+        "category": "keys",
+        "phrase": "pluck",
+        "peakDb": -5.02,
+        "lufs": -18.83,
+        "dc": 0.000009,
+        "nan": 0,
+        "centroid": 1531,
+        "tail": 4.08,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 8.08,
+        "width": 0.3323,
+        "rtf": 3.4602076124567476
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Sunset Poly",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.8× real time",
+      "data": {
+        "name": "Sunset Poly",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -4.76,
+        "lufs": -19.38,
+        "dc": 0.000018,
+        "nan": 0,
+        "centroid": 1950,
+        "tail": 3.46,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.291826870551908,
+        "width": 0.6603,
+        "rtf": 3.766478342749529
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Faded Summer",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.8× real time",
+      "data": {
+        "name": "Faded Summer",
+        "category": "keys",
+        "phrase": "keys",
+        "peakDb": -2.59,
+        "lufs": -19.19,
+        "dc": 0.000019,
+        "nan": 0,
+        "centroid": 777,
+        "tail": 5.13,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.821677587736527,
+        "width": 0.2944,
+        "rtf": 2.781641168289291
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Aurora Pad",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.8× real time",
+      "data": {
+        "name": "Aurora Pad",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -6.98,
+        "lufs": -18.6,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 2000,
+        "tail": 9.11,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 40.484071498318244,
+        "width": 0.7529,
+        "rtf": 2.7777777777777777
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Velvet Dusk",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.7× real time",
+      "data": {
+        "name": "Velvet Dusk",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.28,
+        "lufs": -19.16,
+        "dc": 0.000007,
+        "nan": 0,
+        "centroid": 954,
+        "tail": 3.23,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 22.35496429797733,
+        "width": 0.6461,
+        "rtf": 3.6563071297989027
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Seraphim Voices",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.8× real time",
+      "data": {
+        "name": "Seraphim Voices",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.58,
+        "lufs": -18.64,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 1249,
+        "tail": 7.54,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 28.06,
+        "width": 0.6945,
+        "rtf": 2.8409090909090913
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Prism Halo",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.3× real time",
+      "data": {
+        "name": "Prism Halo",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.92,
+        "lufs": -19.51,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1961,
+        "tail": 7.68,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 44.60902598653876,
+        "width": 0.704,
+        "rtf": 3.278688524590164
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Event Horizon",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.6× real time",
+      "data": {
+        "name": "Event Horizon",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.45,
+        "lufs": -18.37,
+        "dc": 0.000004,
+        "nan": 0,
+        "centroid": 782,
+        "tail": 8.92,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 36.7,
+        "width": 0.7483,
+        "rtf": 2.6143790849673203
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Kaleidoscope",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Kaleidoscope",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -4.44,
+        "lufs": -17.58,
+        "dc": 0.000002,
+        "nan": 0,
+        "centroid": 2022,
+        "tail": 4.55,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 21.68235398683015,
+        "width": 0.7132,
+        "rtf": 4
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Zephyr",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.0× real time",
+      "data": {
+        "name": "Zephyr",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -8.54,
+        "lufs": -19.04,
+        "dc": 0.000002,
+        "nan": 0,
+        "centroid": 2121,
+        "tail": 6.45,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 23.9,
+        "width": 0.638,
+        "rtf": 3.048780487804878
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Bowed Nocturne",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.9× real time",
+      "data": {
+        "name": "Bowed Nocturne",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.01,
+        "lufs": -18.75,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1007,
+        "tail": 8.6,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 39.149928595954655,
+        "width": 0.4404,
+        "rtf": 2.906976744186047
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Starfall Brass",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.8× real time",
+      "data": {
+        "name": "Starfall Brass",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.31,
+        "lufs": -18.15,
+        "dc": 0.000011,
+        "nan": 0,
+        "centroid": 1665,
+        "tail": 4.18,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 17.17654682481227,
+        "width": 0.5808,
+        "rtf": 3.766478342749529
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "First Light",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.1× real time",
+      "data": {
+        "name": "First Light",
+        "category": "pad",
+        "phrase": "pad",
+        "peakDb": -7.06,
+        "lufs": -18.61,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1898,
+        "tail": 13.25,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 58.0529439648804,
+        "width": 0.7437,
+        "rtf": 3.125
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Tidal Reese",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Tidal Reese",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -12.35,
+        "lufs": -20.06,
+        "dc": 0.000008,
+        "nan": 0,
+        "centroid": 516,
+        "tail": 0.15,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 2.5,
+        "width": 0.2102,
+        "rtf": 12.738853503184714
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Deep Bass",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Deep Bass",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -8.89,
+        "lufs": -18.31,
+        "dc": 0.000017,
+        "nan": 0,
+        "centroid": 305,
+        "tail": 0.12,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 1.95,
+        "width": 0,
+        "rtf": 16
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Acid Serpent",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Acid Serpent",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -8.58,
+        "lufs": -20.33,
+        "dc": 0.000093,
+        "nan": 0,
+        "centroid": 629,
+        "tail": 2.28,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 5.217356543142167,
+        "width": 0.0767,
+        "rtf": 11.627906976744187
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Leviathan Growl",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Leviathan Growl",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -11.46,
+        "lufs": -18.29,
+        "dc": 0.000071,
+        "nan": 0,
+        "centroid": 730,
+        "tail": 0.3,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 3,
+        "width": 0,
+        "rtf": 25.641025641025642
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Seismic Wobble",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Seismic Wobble",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -11.19,
+        "lufs": -19.84,
+        "dc": 0.000076,
+        "nan": 0,
+        "centroid": 458,
+        "tail": 0.29,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 3,
+        "width": 0,
+        "rtf": 21.27659574468085
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Chrome Slap",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Chrome Slap",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -10.06,
+        "lufs": -18.78,
+        "dc": 0.000169,
+        "nan": 0,
+        "centroid": 661,
+        "tail": 0.07,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 2.1,
+        "width": 0,
+        "rtf": 64.51612903225806
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Walnut Upright",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Walnut Upright",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -7.5,
+        "lufs": -18.42,
+        "dc": 0.00007,
+        "nan": 0,
+        "centroid": 292,
+        "tail": 0.71,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 4.76,
+        "width": 0.1087,
+        "rtf": 6.410256410256411
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Rubber Pulse",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Rubber Pulse",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -7.76,
+        "lufs": -19.52,
+        "dc": 0.000134,
+        "nan": 0,
+        "centroid": 684,
+        "tail": 0.08,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 1.9,
+        "width": 0,
+        "rtf": 18.181818181818183
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Warehouse Organ",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Warehouse Organ",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -7.2,
+        "lufs": -18.86,
+        "dc": 0.000003,
+        "nan": 0,
+        "centroid": 669,
+        "tail": 0.09,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 1.85,
+        "width": 0.0075,
+        "rtf": 18.34862385321101
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Abyssal Sub",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Abyssal Sub",
+        "category": "bass",
+        "phrase": "bass",
+        "peakDb": -10.3,
+        "lufs": -19.08,
+        "dc": 0.000041,
+        "nan": 0,
+        "centroid": 99,
+        "tail": 0.14,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 2.1,
+        "width": 0,
+        "rtf": 14.184397163120568
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Polaris Sync",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Polaris Sync",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -12.36,
+        "lufs": -18.91,
+        "dc": 0.000002,
+        "nan": 0,
+        "centroid": 3630,
+        "tail": 4.11,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.16187620466663,
+        "width": 0.4954,
+        "rtf": 10.638297872340425
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Stellar Supersaw",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Stellar Supersaw",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -8.65,
+        "lufs": -19.11,
+        "dc": 0.000009,
+        "nan": 0,
+        "centroid": 3946,
+        "tail": 3.55,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.033294870517707,
+        "width": 0.5554,
+        "rtf": 4.576659038901602
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Monolith Solo",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Monolith Solo",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -12.59,
+        "lufs": -18.66,
+        "dc": 0.000006,
+        "nan": 0,
+        "centroid": 3955,
+        "tail": 2.45,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.186313713864834,
+        "width": 0.1254,
+        "rtf": 9.852216748768472
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Cartridge Hero",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Cartridge Hero",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -9.77,
+        "lufs": -19.1,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 4578,
+        "tail": 1.51,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 7.094987147271838,
+        "width": 0.1402,
+        "rtf": 14.285714285714285
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Meadow Whistle",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Meadow Whistle",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -11.51,
+        "lufs": -18.92,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 2510,
+        "tail": 3.83,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.409974294543677,
+        "width": 0.3375,
+        "rtf": 12.738853503184714
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Vowel Siren",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Vowel Siren",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -9.51,
+        "lufs": -20.28,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1289,
+        "tail": 2.71,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.082480720907757,
+        "width": 0.4338,
+        "rtf": 10.638297872340425
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Solar Brass",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Solar Brass",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -12.46,
+        "lufs": -19.12,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 2024,
+        "tail": 4.52,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.901806635701469,
+        "width": 0.3053,
+        "rtf": 10.638297872340425
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Molten Scream",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Molten Scream",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -12.47,
+        "lufs": -18.97,
+        "dc": 0.000006,
+        "nan": 0,
+        "centroid": 3020,
+        "tail": 2.71,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.788425987957972,
+        "width": 0.3481,
+        "rtf": 9.174311926605505
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Bamboo Dizi",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Bamboo Dizi",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -8.99,
+        "lufs": -18.5,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 3536,
+        "tail": 2.76,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 11.849760917850475,
+        "width": 0.2345,
+        "rtf": 12.820512820512821
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Horizon Throw",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Horizon Throw",
+        "category": "lead",
+        "phrase": "lead",
+        "peakDb": -8.27,
+        "lufs": -19.08,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 2472,
+        "tail": 12.82,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 23.805390098142333,
+        "width": 0.6135,
+        "rtf": 9.803921568627452
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Starlight Harp",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.9× real time",
+      "data": {
+        "name": "Starlight Harp",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -6.09,
+        "lufs": -18.78,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 1134,
+        "tail": 5.17,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 32.397287001620995,
+        "width": 0.5367,
+        "rtf": 3.875968992248062
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Nylon Serenade",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Nylon Serenade",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -5.75,
+        "lufs": -19.79,
+        "dc": 0.000002,
+        "nan": 0,
+        "centroid": 755,
+        "tail": 1.63,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 13.02,
+        "width": 0.274,
+        "rtf": 5.813953488372094
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Jade Guzheng",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Jade Guzheng",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -4.4,
+        "lufs": -19.64,
+        "dc": 0.000002,
+        "nan": 0,
+        "centroid": 1187,
+        "tail": 2.38,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 19.5470565337953,
+        "width": 0.2894,
+        "rtf": 4.132231404958678
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Dewdrop Kalimba",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Dewdrop Kalimba",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -5.33,
+        "lufs": -18.89,
+        "dc": 0.000145,
+        "nan": 0,
+        "centroid": 659,
+        "tail": 1.92,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 15.929974723534645,
+        "width": 0.3596,
+        "rtf": 6.0790273556231
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Sunrise Anthem",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Sunrise Anthem",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -1.85,
+        "lufs": -19,
+        "dc": 0.000093,
+        "nan": 0,
+        "centroid": 2025,
+        "tail": 3.24,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 13.18865613439081,
+        "width": 0.5241,
+        "rtf": 4.264392324093817
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Pizzicato Hall",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Pizzicato Hall",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -3.1,
+        "lufs": -19.96,
+        "dc": 0.000013,
+        "nan": 0,
+        "centroid": 572,
+        "tail": 2.48,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.92,
+        "width": 0.6414,
+        "rtf": 5.571030640668524
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Prism Shards",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.6× real time",
+      "data": {
+        "name": "Prism Shards",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -4.01,
+        "lufs": -18.37,
+        "dc": 0.00003,
+        "nan": 0,
+        "centroid": 1999,
+        "tail": 3.03,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 11.868656134390811,
+        "width": 0.5367,
+        "rtf": 3.558718861209964
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Golden Twelve",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.1× real time",
+      "data": {
+        "name": "Golden Twelve",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -5.32,
+        "lufs": -19.22,
+        "dc": 0.000004,
+        "nan": 0,
+        "centroid": 1193,
+        "tail": 1.82,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 16.08,
+        "width": 0.6216,
+        "rtf": 3.1201248049921997
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Cassette Bloom",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.7× real time",
+      "data": {
+        "name": "Cassette Bloom",
+        "category": "pluck",
+        "phrase": "keys",
+        "peakDb": -3.37,
+        "lufs": -20.02,
+        "dc": 0.000022,
+        "nan": 0,
+        "centroid": 665,
+        "tail": 2.37,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.241677587736529,
+        "width": 0.3519,
+        "rtf": 3.663003663003663
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Bamboo Bloop",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.7× real time",
+      "data": {
+        "name": "Bamboo Bloop",
+        "category": "pluck",
+        "phrase": "pluck",
+        "peakDb": -1.52,
+        "lufs": -18.36,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 644,
+        "tail": 1.24,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 8.124547833603499,
+        "width": 0.2687,
+        "rtf": 2.7247956403269757
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Celestial Carillon",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.7× real time",
+      "data": {
+        "name": "Celestial Carillon",
+        "category": "bell",
+        "phrase": "bell",
+        "peakDb": -4.01,
+        "lufs": -18.41,
+        "dc": 0.000023,
+        "nan": 0,
+        "centroid": 1310,
+        "tail": 5.95,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 41.8,
+        "width": 0.4485,
+        "rtf": 3.663003663003663
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Midnight Vibraphone",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Midnight Vibraphone",
+        "category": "bell",
+        "phrase": "keys",
+        "peakDb": -2.74,
+        "lufs": -19.88,
+        "dc": 0.000071,
+        "nan": 0,
+        "centroid": 544,
+        "tail": 1.17,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.08,
+        "width": 0.3787,
+        "rtf": 9.132420091324201
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Rosewood Marimba",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Rosewood Marimba",
+        "category": "bell",
+        "phrase": "pluck",
+        "peakDb": -5.65,
+        "lufs": -19.45,
+        "dc": 0.00008,
+        "nan": 0,
+        "centroid": 576,
+        "tail": 1.35,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 9.74,
+        "width": 0.2473,
+        "rtf": 7.117437722419928
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Glass Harmonica",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Glass Harmonica",
+        "category": "bell",
+        "phrase": "pad",
+        "peakDb": -8.47,
+        "lufs": -18.83,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1372,
+        "tail": 4.85,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 22,
+        "width": 0.2874,
+        "rtf": 5.555555555555555
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Clockwork Music Box",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.3× real time",
+      "data": {
+        "name": "Clockwork Music Box",
+        "category": "bell",
+        "phrase": "bell",
+        "peakDb": -5.63,
+        "lufs": -19.51,
+        "dc": 0.000003,
+        "nan": 0,
+        "centroid": 1935,
+        "tail": 0.98,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 17.46,
+        "width": 0.318,
+        "rtf": 3.278688524590164
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Sugar Plum Celesta",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.3× real time",
+      "data": {
+        "name": "Sugar Plum Celesta",
+        "category": "bell",
+        "phrase": "bell",
+        "peakDb": -5.28,
+        "lufs": -18.62,
+        "dc": 0.000011,
+        "nan": 0,
+        "centroid": 936,
+        "tail": 2.22,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.64,
+        "width": 0.3788,
+        "rtf": 3.278688524590164
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Ombak Gamelan",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.3× real time",
+      "data": {
+        "name": "Ombak Gamelan",
+        "category": "bell",
+        "phrase": "pluck",
+        "peakDb": -4.69,
+        "lufs": -19.07,
+        "dc": 0.00011,
+        "nan": 0,
+        "centroid": 1300,
+        "tail": 2.42,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 18.92,
+        "width": 0.3187,
+        "rtf": 3.278688524590164
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Himalayan Singing Bowl",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Himalayan Singing Bowl",
+        "category": "bell",
+        "phrase": "bell",
+        "peakDb": -10.19,
+        "lufs": -19.68,
+        "dc": 0.00001,
+        "nan": 0,
+        "centroid": 466,
+        "tail": 4.91,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 49.5,
+        "width": 0.2555,
+        "rtf": 4.566210045662101
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Frost Lantern",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.7× real time",
+      "data": {
+        "name": "Frost Lantern",
+        "category": "bell",
+        "phrase": "pad",
+        "peakDb": -7.4,
+        "lufs": -18.58,
+        "dc": 0.000014,
+        "nan": 0,
+        "centroid": 1514,
+        "tail": 7.64,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 35.30407149831824,
+        "width": 0.5642,
+        "rtf": 3.6563071297989027
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Wind Chime Garden",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Wind Chime Garden",
+        "category": "bell",
+        "phrase": "arp",
+        "peakDb": -7.16,
+        "lufs": -20.11,
+        "dc": 0.000046,
+        "nan": 0,
+        "centroid": 1402,
+        "tail": 3.48,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 32.4,
+        "width": 0.4357,
+        "rtf": 11.627906976744187
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Aurora Symphony",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.9× real time",
+      "data": {
+        "name": "Aurora Symphony",
+        "category": "strings",
+        "phrase": "strings",
+        "peakDb": -6.85,
+        "lufs": -18.41,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 2082,
+        "tail": 7.53,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.379999999999999,
+        "width": 0.6643,
+        "rtf": 2.906976744186047
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Rosewood Cello",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.8× real time",
+      "data": {
+        "name": "Rosewood Cello",
+        "category": "strings",
+        "phrase": "strings",
+        "peakDb": -7.57,
+        "lufs": -18.93,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 1139,
+        "tail": 2.48,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.64,
+        "width": 0.5662,
+        "rtf": 3.7593984962406015
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Autumn Moon Erhu",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Autumn Moon Erhu",
+        "category": "strings",
+        "phrase": "lead",
+        "peakDb": -6.39,
+        "lufs": -19.15,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 2546,
+        "tail": 2.73,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.672480720907757,
+        "width": 0.2755,
+        "rtf": 11.627906976744187
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Gilded Fanfare",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.3× real time",
+      "data": {
+        "name": "Gilded Fanfare",
+        "category": "strings",
+        "phrase": "keys",
+        "peakDb": -8.64,
+        "lufs": -19.31,
+        "dc": 0.000009,
+        "nan": 0,
+        "centroid": 1312,
+        "tail": 2.58,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 8.17,
+        "width": 0.4461,
+        "rtf": 3.284072249589491
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Twilight Horn",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Twilight Horn",
+        "category": "strings",
+        "phrase": "pad",
+        "peakDb": -7.47,
+        "lufs": -18.22,
+        "dc": 0.000002,
+        "nan": 0,
+        "centroid": 1030,
+        "tail": 4.12,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.57,
+        "width": 0.3252,
+        "rtf": 4.576659038901602
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Andes Pan Flute",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Andes Pan Flute",
+        "category": "strings",
+        "phrase": "lead",
+        "peakDb": -7.27,
+        "lufs": -18.77,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1791,
+        "tail": 3.46,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 13.347957535538203,
+        "width": 0.3937,
+        "rtf": 11.627906976744187
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Ebony Clarinet",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Ebony Clarinet",
+        "category": "strings",
+        "phrase": "lead",
+        "peakDb": -14.8,
+        "lufs": -19.16,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 2372,
+        "tail": 1.47,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 5.92,
+        "width": 0.164,
+        "rtf": 12.820512820512821
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Vesper Choir",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.7× real time",
+      "data": {
+        "name": "Vesper Choir",
+        "category": "strings",
+        "phrase": "strings",
+        "peakDb": -7.47,
+        "lufs": -18.47,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 893,
+        "tail": 7.25,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 18.75,
+        "width": 0.7864,
+        "rtf": 3.6563071297989027
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "String Machine '79",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "String Machine '79",
+        "category": "strings",
+        "phrase": "pad",
+        "peakDb": -6.96,
+        "lufs": -19.51,
+        "dc": 0.000005,
+        "nan": 0,
+        "centroid": 1490,
+        "tail": 2.38,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.86,
+        "width": 0.968,
+        "rtf": 5.1020408163265305
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Storm Ostinato",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Storm Ostinato",
+        "category": "strings",
+        "phrase": "arp",
+        "peakDb": -6.98,
+        "lufs": -19.86,
+        "dc": 0.000057,
+        "nan": 0,
+        "centroid": 2173,
+        "tail": 2.3,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 9.591446071165521,
+        "width": 0.5316,
+        "rtf": 9.852216748768472
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Borealis Sequencer",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Borealis Sequencer",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -5.88,
+        "lufs": -19.37,
+        "dc": 0.000194,
+        "nan": 0,
+        "centroid": 3266,
+        "tail": 3.56,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 13.225415591923255,
+        "width": 0.4504,
+        "rtf": 8
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Hyperion Gate",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Hyperion Gate",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -5.89,
+        "lufs": -19.82,
+        "dc": 0.000015,
+        "nan": 0,
+        "centroid": 4012,
+        "tail": 2.94,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.889964612948503,
+        "width": 0.5304,
+        "rtf": 5.555555555555555
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Snowglobe Cascade",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Snowglobe Cascade",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -7.33,
+        "lufs": -18.16,
+        "dc": 0.000078,
+        "nan": 0,
+        "centroid": 1839,
+        "tail": 5.23,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 22.01941239209809,
+        "width": 0.4643,
+        "rtf": 6.389776357827476
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Paper Lantern Echoes",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Paper Lantern Echoes",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -3.06,
+        "lufs": -19.12,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1469,
+        "tail": 3.58,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 18.325415591923257,
+        "width": 0.3651,
+        "rtf": 8
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Firefly Constellation",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Firefly Constellation",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -7.14,
+        "lufs": -18.38,
+        "dc": 0.000003,
+        "nan": 0,
+        "centroid": 2401,
+        "tail": 6.96,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 31.44385618977472,
+        "width": 0.5375,
+        "rtf": 8.51063829787234
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Midnight Freeway",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Midnight Freeway",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -8.64,
+        "lufs": -19.85,
+        "dc": 0.00003,
+        "nan": 0,
+        "centroid": 772,
+        "tail": 1.82,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 4.791446071165522,
+        "width": 0.1941,
+        "rtf": 14.184397163120568
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Pixel Quest",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Pixel Quest",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -11.8,
+        "lufs": -18.73,
+        "dc": 0.000333,
+        "nan": 0,
+        "centroid": 2647,
+        "tail": 1.44,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 6.182489289393198,
+        "width": 0.1685,
+        "rtf": 14.184397163120568
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Moonlit Carousel",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Moonlit Carousel",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -6.71,
+        "lufs": -19.81,
+        "dc": 0.000179,
+        "nan": 0,
+        "centroid": 856,
+        "tail": 3.5,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.824412989287557,
+        "width": 0.5374,
+        "rtf": 6.097560975609756
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Obsidian Techno",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Obsidian Techno",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -7.99,
+        "lufs": -19.68,
+        "dc": 0.000052,
+        "nan": 0,
+        "centroid": 1270,
+        "tail": 3.14,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.525415591923256,
+        "width": 0.4902,
+        "rtf": 7.518796992481203
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Velvet Dub Stabs",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Velvet Dub Stabs",
+        "category": "arp",
+        "phrase": "arp",
+        "peakDb": -4.11,
+        "lufs": -18.74,
+        "dc": 0.000006,
+        "nan": 0,
+        "centroid": 2808,
+        "tail": 4.72,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.727289855137153,
+        "width": 0.6725,
+        "rtf": 6.097560975609756
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Singularity",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.5× real time",
+      "data": {
+        "name": "Singularity",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -6.14,
+        "lufs": -18.87,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 2330,
+        "tail": 5.9,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 25.72588318946412,
+        "width": 0.6916,
+        "rtf": 3.4602076124567476
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Gravity Well",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.0× real time",
+      "data": {
+        "name": "Gravity Well",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -7.79,
+        "lufs": -19.4,
+        "dc": 0.000022,
+        "nan": 0,
+        "centroid": 598,
+        "tail": 3.4,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 22,
+        "width": 0.2548,
+        "rtf": 2.976190476190476
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Lunar Tide",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Lunar Tide",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -7.62,
+        "lufs": -20,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 1681,
+        "tail": 4.2,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 28.1,
+        "width": 0.9703,
+        "rtf": 4.273504273504273
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Howling Canyon",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Howling Canyon",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -5.86,
+        "lufs": -17.71,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 2091,
+        "tail": 4.98,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 22,
+        "width": 1.0165,
+        "rtf": 6.734006734006734
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Photon Blaster",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Photon Blaster",
+        "category": "fx",
+        "phrase": "pluck",
+        "peakDb": -5.05,
+        "lufs": -19.35,
+        "dc": 0.000328,
+        "nan": 0,
+        "centroid": 2378,
+        "tail": 3.43,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 12.584373848489204,
+        "width": 0.6738,
+        "rtf": 4
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Numbers Station",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.3× real time",
+      "data": {
+        "name": "Numbers Station",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -5.08,
+        "lufs": -19.19,
+        "dc": 0.000003,
+        "nan": 0,
+        "centroid": 3967,
+        "tail": 2.7,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 14.124412989287558,
+        "width": 0.2636,
+        "rtf": 3.284072249589491
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Data Corruption",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Data Corruption",
+        "category": "fx",
+        "phrase": "arp",
+        "peakDb": -3.84,
+        "lufs": -19.37,
+        "dc": 0.00001,
+        "nan": 0,
+        "centroid": 4502,
+        "tail": 2.54,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 9.06096404744368,
+        "width": 0.6674,
+        "rtf": 4.415011037527593
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Glass Rain",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Glass Rain",
+        "category": "fx",
+        "phrase": "pad",
+        "peakDb": -1.68,
+        "lufs": -17.71,
+        "dc": 0.000339,
+        "nan": 0,
+        "centroid": 2511,
+        "tail": 4.71,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 15.331223223482997,
+        "width": 0.7554,
+        "rtf": 8.547008547008547
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Derelict Starship",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.4× real time",
+      "data": {
+        "name": "Derelict Starship",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -2.77,
+        "lufs": -17.62,
+        "dc": 0.000014,
+        "nan": 0,
+        "centroid": 1054,
+        "tail": 8.5,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 38.35176637892824,
+        "width": 0.7305,
+        "rtf": 2.3696682464454977
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Stardust Nebula",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Stardust Nebula",
+        "category": "fx",
+        "phrase": "fx",
+        "peakDb": -3.38,
+        "lufs": -17.58,
+        "dc": 0.000004,
+        "nan": 0,
+        "centroid": 2446,
+        "tail": 10.59,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 52.98771237954945,
+        "width": 0.8057,
+        "rtf": 4
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Thunder Taiko",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Thunder Taiko",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -3.8,
+        "lufs": -18.05,
+        "dc": 0.00001,
+        "nan": 0,
+        "centroid": 775,
+        "tail": 3.18,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 21.42,
+        "width": 0.2564,
+        "rtf": 5.555555555555555
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Tectonic 808",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Tectonic 808",
+        "category": "drum",
+        "phrase": "bass",
+        "peakDb": -7.71,
+        "lufs": -18.47,
+        "dc": 0.00005,
+        "nan": 0,
+        "centroid": 394,
+        "tail": 0.43,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 3.75,
+        "width": 0.0044,
+        "rtf": 16
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Anvil Kick",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Anvil Kick",
+        "category": "drum",
+        "phrase": "bass",
+        "peakDb": -6.59,
+        "lufs": -19.4,
+        "dc": 0.000022,
+        "nan": 0,
+        "centroid": 455,
+        "tail": 0.48,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 5.859999999999999,
+        "width": 0.0201,
+        "rtf": 4.273504273504273
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Cobalt Snare",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.7× real time",
+      "data": {
+        "name": "Cobalt Snare",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -3.65,
+        "lufs": -18.85,
+        "dc": 0.000018,
+        "nan": 0,
+        "centroid": 4289,
+        "tail": 1.02,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 6.08,
+        "width": 0.2575,
+        "rtf": 2.7210884353741496
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Stadium Clap",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 2.8× real time",
+      "data": {
+        "name": "Stadium Clap",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -4.1,
+        "lufs": -19.78,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 3114,
+        "tail": 0.71,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 6.759520979985269,
+        "width": 0.676,
+        "rtf": 2.8449502133712663
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Quicksilver Hats",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Quicksilver Hats",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -3.03,
+        "lufs": -18.2,
+        "dc": 0.000001,
+        "nan": 0,
+        "centroid": 9734,
+        "tail": 0.3,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 5.12,
+        "width": 0.443,
+        "rtf": 5.347593582887701
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Bronze Ride",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Bronze Ride",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -6.57,
+        "lufs": -18.67,
+        "dc": 0.000043,
+        "nan": 0,
+        "centroid": 7813,
+        "tail": 1.46,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 15.02,
+        "width": 0.3198,
+        "rtf": 4
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Varanasi Tabla",
+      "status": "PASS",
+      "detail": "",
+      "data": {
+        "name": "Varanasi Tabla",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -7.55,
+        "lufs": -17.77,
+        "dc": 0.000005,
+        "nan": 0,
+        "centroid": 508,
+        "tail": 1.23,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 9.32,
+        "width": 0.1638,
+        "rtf": 8
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Copper Cowbell",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.0× real time",
+      "data": {
+        "name": "Copper Cowbell",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -3.26,
+        "lufs": -18.29,
+        "dc": 0.000014,
+        "nan": 0,
+        "centroid": 1499,
+        "tail": 2.56,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 10.27941239209809,
+        "width": 0.2395,
+        "rtf": 2.976190476190476
+      }
+    },
+    {
+      "suite": "presets",
+      "name": "Sandstorm Shaker",
+      "status": "WARN",
+      "detail": "! 8-voice chord only 3.4× real time",
+      "data": {
+        "name": "Sandstorm Shaker",
+        "category": "drum",
+        "phrase": "drum",
+        "peakDb": -6.14,
+        "lufs": -18.57,
+        "dc": 0,
+        "nan": 0,
+        "centroid": 8504,
+        "tail": 0.44,
+        "truncated": false,
+        "voicesFreed": true,
+        "allowed": 4.12,
+        "width": 0.7376,
+        "rtf": 3.367003367003367
+      }
+    },
+    {
+      "suite": "worklet",
+      "name": "AudioWorkletProcessor 'aurora-synth' (shimmed)",
+      "status": "PASS",
+      "detail": "28 state msgs/s · playing peak -9.3 dBFS · -240 dBFS 100 ms after panic"
+    },
+    {
+      "suite": "songs",
+      "name": "song aurora-dreams",
+      "status": "PASS",
+      "detail": "-18.92 LUFS · peak -8.01 dBFS (pre-limit -8.01) · 6 parts · 16 voices peak · CPU mean 39 % / peak 65 % of a core · 2.5× RT",
+      "data": {
+        "song": "aurora-dreams",
+        "lufs": -18.92,
+        "peakDb": -8.01,
+        "voicesPeak": 16,
+        "cpuPeak": 0.6542553191489362,
+        "cpuMean": 0.3891573689673066,
+        "rtf": 2.461011768302002
+      }
+    },
+    {
+      "suite": "songs",
+      "name": "song neon-nights",
+      "status": "PASS",
+      "detail": "-17.39 LUFS · peak -2.21 dBFS (pre-limit -2.21) · 6 parts · 13 voices peak · CPU mean 78 % / peak 97 % of a core · 1.4× RT",
+      "data": {
+        "song": "neon-nights",
+        "lufs": -17.39,
+        "peakDb": -2.21,
+        "voicesPeak": 13,
+        "cpuPeak": 0.9654255319148937,
+        "cpuMean": 0.7809762202753444,
+        "rtf": 1.3826346365206468
+      }
+    },
+    {
+      "suite": "songs",
+      "name": "song lofi-rain",
+      "status": "PASS",
+      "detail": "-17.56 LUFS · peak -2.42 dBFS (pre-limit -2.42) · 6 parts · 13 voices peak · CPU mean 66 % / peak 112 % of a core · 1.6× RT",
+      "data": {
+        "song": "lofi-rain",
+        "lufs": -17.56,
+        "peakDb": -2.42,
+        "voicesPeak": 13,
+        "cpuPeak": 1.1230053191489362,
+        "cpuMean": 0.6572251773049645,
+        "rtf": 1.5633967210759756
+      }
+    },
+    {
+      "suite": "songs",
+      "name": "song crystal-caves",
+      "status": "PASS",
+      "detail": "-19.35 LUFS · peak -5.28 dBFS (pre-limit -5.28) · 6 parts · 16 voices peak · CPU mean 70 % / peak 103 % of a core · 1.4× RT",
+      "data": {
+        "song": "crystal-caves",
+        "lufs": -19.35,
+        "peakDb": -5.28,
+        "voicesPeak": 16,
+        "cpuPeak": 1.0272606382978724,
+        "cpuMean": 0.6952016843971633,
+        "rtf": 1.4105132386054817
+      }
+    },
+    {
+      "suite": "songs",
+      "name": "song pulse-city",
+      "status": "PASS",
+      "detail": "-20.27 LUFS · peak -7.72 dBFS (pre-limit -7.72) · 6 parts · 6 voices peak · CPU mean 30 % / peak 41 % of a core · 3.1× RT",
+      "data": {
+        "song": "pulse-city",
+        "lufs": -20.27,
+        "peakDb": -7.72,
+        "voicesPeak": 6,
+        "cpuPeak": 0.40691489361702127,
+        "cpuMean": 0.30497245440729487,
+        "rtf": 3.0918229741326466
+      }
+    },
+    {
+      "suite": "songs",
+      "name": "song silk-road",
+      "status": "PASS",
+      "detail": "-18.49 LUFS · peak -1.95 dBFS (pre-limit -1.95) · 6 parts · 21 voices peak · CPU mean 74 % / peak 115 % of a core · 1.5× RT",
+      "data": {
+        "song": "silk-road",
+        "lufs": -18.49,
+        "peakDb": -1.95,
+        "voicesPeak": 21,
+        "cpuPeak": 1.1549202127659575,
+        "cpuMean": 0.7386303191489362,
+        "rtf": 1.4809320446542296
+      }
+    },
+    {
+      "suite": "songs",
+      "name": "ensemble: 5 parts sample-synchronous (odd block sizes, loops)",
+      "status": "PASS",
+      "detail": "352556 samples · max |Δ| between parts 0"
+    },
+    {
+      "suite": "songs",
+      "name": "ensemble: queue → seamless switch at the loop end",
+      "status": "PASS",
+      "detail": "loop boundary sample 93994 · switch 93993 · next 189993"
+    },
+    {
+      "suite": "songs",
+      "name": "ensemble: lazy part pool (one Synth per N calls; load waits)",
+      "status": "PASS",
+      "detail": "3-part song started after 9 calls · construction ≈9.3 ms/part"
+    },
+    {
+      "suite": "songs",
+      "name": "ensemble: stop tails / hard stop / one-shot end / mute / solo / reuse",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "songs",
+      "name": "ensemble: SafetyBus ceiling + bypass + comb-free crossfades",
+      "status": "PASS",
+      "detail": "peak -0.30 dBFS while engaged · 1 kHz dip at disengage -0.0 dB · at engage from silence -0.0 dB"
+    },
+    {
+      "suite": "songs",
+      "name": "ensemble: allocation in the audio path",
+      "status": "PASS",
+      "detail": "ensemble + safety bus + getState@30 Hz: 146 B per 128 samples (5 osc parts, all FX; a bare Synth + sequencer ≈ 30 B) · song \"aurora-dreams\": 5527 B (from its part Synths)"
+    },
+    {
+      "suite": "songs",
+      "name": "worklet: song messages (songLoad/Play/Part/Queue/Stop)",
+      "status": "PASS",
+      "detail": "song+synth peak -0.3 dBFS · 6 parts · section 夜幕低垂"
+    },
+    {
+      "suite": "songs",
+      "name": "songlib + resolve (helpers, errors, purity)",
+      "status": "PASS",
+      "detail": "41 helpers · 6 songs"
+    },
+    {
+      "suite": "magic",
+      "name": "moods: every mood × every preset (valid, audible, bounded, diminishing)",
+      "status": "PASS",
+      "detail": "4800 applications on 100 presets × 16 moods · no-op at 0.6 (nothing to change): steady: 3, motion: 1"
+    },
+    {
+      "suite": "magic",
+      "name": "moods: text requests (zh + en)",
+      "status": "PASS",
+      "detail": "11 phrases"
+    },
+    {
+      "suite": "magic",
+      "name": "store: transient / animate / commit / revert / undo",
+      "status": "PASS",
+      "detail": "transient, commit, revert, animate (FX fades, take-over, undo mid-animation), drift isolation, blend"
+    },
+    {
+      "suite": "magic",
+      "name": "morph (A/B) + auto-evolve targets",
+      "status": "PASS",
+      "detail": "120 random preset pairs × 26 points · evolve 14.1 targets/preset"
+    },
+    {
+      "suite": "compat",
+      "name": "DSP at 16 kHz (10 presets covering every engine/filter/FX)",
+      "status": "PASS",
+      "detail": "max peak -3.7 dBFS · 1.1 s"
+    },
+    {
+      "suite": "compat",
+      "name": "DSP at 192 kHz (10 presets covering every engine/filter/FX)",
+      "status": "PASS",
+      "detail": "max peak -2.6 dBFS · 10.6 s"
+    },
+    {
+      "suite": "compat",
+      "name": "https: self-signed certificate (X.509 v3, ECDSA P-256)",
+      "status": "PASS",
+      "detail": "DNS:localhost, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, IP Address:192.168.1.23 · 398 days · 19 ms"
+    },
+    {
+      "suite": "compat",
+      "name": "https: dev server — TLS and http→https redirect on one port",
+      "status": "FAIL",
+      "detail": "✗ plain http → 403 (expected a redirect)"
+    },
+    {
+      "suite": "compat",
+      "name": "https: certificate cache (.cert/) and user certificate priority",
+      "status": "PASS",
+      "detail": "generate → reuse → regenerate on new IP / expiry · key 0600 · user cert wins"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: secure-context gate (http://<LAN-IP> has no AudioWorklet)",
+      "status": "PASS",
+      "detail": "需要 https 或 localhost 才能發聲（目前是 http://192.168.1.23:5173）"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: iOS ring/silent switch — audio session + silent unlock",
+      "status": "PASS",
+      "detail": "audioSession → playback · silent WAV 4454 B · element only on iPhone/iPad without audioSession"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: MIDI connects without a surprise permission prompt",
+      "status": "PASS",
+      "detail": "granted → auto-connect · prompt/unknown → wait for a click · change events followed"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: screen wake lock while something plays",
+      "status": "PASS",
+      "detail": "acquire once · release when nothing plays · re-acquire on visible · no-op without the API"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: fullscreen helpers (webkit prefix, iPhone has none)",
+      "status": "PASS",
+      "detail": "standard · webkit · none → button hidden"
+    },
+    {
+      "suite": "compat",
+      "name": "audio.js: createAudio() — 48 kHz cap, secure-context error, iOS session, statechange",
+      "status": "PASS",
+      "detail": "192k → 48k · 44.1k kept · explicit 96k kept · audioSession=playback · statechange → onContextState · insecure → clear error"
+    },
+    {
+      "suite": "compat",
+      "name": "library: malformed saved data never stops the boot",
+      "status": "PASS",
+      "detail": "6 malformed shapes load cleanly (tags → string arrays, junk dropped)"
+    },
+    {
+      "suite": "ui",
+      "name": "store: preset switch keeps unsaved edits undoable (UF-01)",
+      "status": "PASS",
+      "detail": "edit → switch → undo ×2 → redo ×2"
+    },
+    {
+      "suite": "ui",
+      "name": "store: macro knobs are undoable and mark the patch modified (UF-02)",
+      "status": "PASS",
+      "detail": "knob, XY drag (1 step), engine follow, master volume"
+    },
+    {
+      "suite": "ui",
+      "name": "store: Init patch — undo back to Init is clean (UF-13)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "ui",
+      "name": "store: silent demo apply/restore leaves the dirty flag alone",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "ui",
+      "name": "library: batch import + storage failure (UF-04, UF-05)",
+      "status": "PASS",
+      "detail": "300 presets → 1 write, 1 event"
+    },
+    {
+      "suite": "ui",
+      "name": "midi: unplug releases notes and latched sustain / bend / wheel (UF-10)",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "suite": "ui",
+      "name": "a11y: unlabeled controls get words, not ids (UX-04)",
+      "status": "PASS",
+      "detail": "235 params"
+    },
+    {
+      "suite": "ui",
+      "name": "help: jargon explanations point at real params",
+      "status": "PASS",
+      "detail": "50 entries cover 79 params"
+    },
+    {
+      "suite": "ui",
+      "name": "css: phone dock keeps octave / hold; short screens compact the dock column",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

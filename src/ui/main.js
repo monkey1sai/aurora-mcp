@@ -124,6 +124,10 @@ async function boot() {
       midi: () => connectMidi(true),
       retryAudio: () => startAudio(),
       menu: anchor => openMenu(anchor, [
+        { label: 'MCP 創作室 / Creation Studio', icon: 'save', onClick: () => {
+          try { sessionStorage.setItem('aurora.mcp.fromSynth', JSON.stringify({ patch: store.toPatch(), globals: store.globals() })); } catch { /* studio can still open */ }
+          location.href = 'studio.html';
+        } },
         // compact (phone) layout hides these top-bar buttons: offer them here
         ...(matchMedia('(max-width: 899px)').matches ? [
           { label: t('save'), icon: 'save', onClick: () => openSave() },
@@ -677,6 +681,19 @@ async function boot() {
     splash.classList.add('is-ready');
   }
   topbar.setAudioStatus('off');
+
+  // expose for debugging in the console
+  try {
+    const raw = sessionStorage.getItem('aurora.mcp.toSynth');
+    if (raw) {
+      sessionStorage.removeItem('aurora.mcp.toSynth');
+      const { validatePatch, validateParams } = await import('../creation/project.js');
+      const value = JSON.parse(raw);
+      validatePatch(value.patch); validateParams(value.globals || {}, 'global');
+      store.loadPreset(value.patch, { source: 'mcp-studio', record: true, dirty: true });
+      if (value.globals) store.setMany(value.globals);
+    }
+  } catch (e) { toast('MCP studio import: ' + e.message, { kind: 'warn' }); }
 
   // expose for debugging in the console
   globalThis.aurora = { store, library, get audio() { return audio; }, editor, startDemo, stopDemo, get center() { return center; } };

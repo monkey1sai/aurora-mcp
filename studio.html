@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AURORA — 創作室 · MCP</title>
+  <meta name="description" content="以五個創作變量設計音樂、音色與音效，預聽並下載 WAV。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23121b22'/%3E%3Cpath d='M7 29L20 9l13 20M12 23h16' stroke='%23e4bb78' fill='none' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/studio.css">
+</head>
+<body>
+  <header class="masthead"><a class="wordmark" href="studio.html">AURORA<span>創作室 / CREATION STUDIO</span></a><nav><a href="index.html">完整合成器 ↗</a><a href="https://github.com/monkey1sai/aurora-mcp" target="_blank" rel="noopener">原始碼</a><a href="#connection">MCP 接入</a></nav></header>
+  <main>
+    <section class="intro"><p class="eyebrow">A MOTIF CAN BECOME A WORLD</p><h1>讓聲音，<em>有自己的故事。</em></h1><p>從四個音，到一整個場景。用五個創作變量，設計音樂、氛圍與音效。<br>人與 AI 使用同一份作品，保留每一次變化。</p></section>
+    <section class="workspace" aria-label="聲音創作">
+      <div class="score">
+        <div class="score-head"><div><span class="eyebrow">01 / YOUR COMPOSITION</span><h2 id="project-title">尚未開始</h2></div><span id="project-meta" class="stamp">五個變量 · 無限探索</span></div>
+        <canvas id="score" width="1000" height="220" aria-label="音符與力度預覽"></canvas>
+        <div class="transport"><button id="preview" class="primary">▶ 生成並預聽</button><button id="stop">■ 停止</button><button id="cancel" disabled>取消渲染</button><button id="download-wav" disabled>↓ WAV</button><button id="download-project">↓ 專案 JSON</button><button id="download-preset">↓ 音色 JSON</button><button id="open-synth">送至完整合成器 ↗</button></div>
+        <p id="status" role="status" aria-live="polite">選一個創作方向，調整下方變量，再開始預聽。</p><pre id="metrics" aria-label="音訊資訊"></pre>
+      </div>
+      <aside class="direction"><p class="eyebrow">02 / CREATIVE DIRECTION</p><label>作品名稱<input id="title" value="我的第一個聲音" maxlength="100"></label><label>創作方向<select id="kind"><option value="music">音樂 · 動機發展</option><option value="sound">音色 · 單音試聽</option><option value="sfx">場景音效</option><option value="jam">音樂 · 多聲部 Jam</option></select></label><label id="recipe-label">音效配方<select id="recipe"></select></label><label id="style-label">Jam 風格<select id="style"></select></label><div class="inline"><label>可重現的 Seed<input id="seed" type="number" value="42" min="1" max="4294967295"></label><label>音效秒數<input id="seconds" type="number" value="2" min="0.1" max="30" step="0.1"></label></div><button id="create" class="primary">建立／重建作品</button><p class="quiet">靈感來自貝多芬式的動機發展。這五個變量是創作工具設計，並非歷史引述。</p></aside>
+    </section>
+    <section id="axes" class="axes" aria-label="五個創作變量"></section>
+    <section class="tools-grid">
+      <article><span class="eyebrow">03 / SOUND DESIGN</span><h2>繼續雕刻音色</h2><label>魔法調音<select id="mood"></select></label><div class="inline"><button id="apply-mood">套用情緒</button><button id="evolve">加入演化</button></div><label>向另一個音色變形<select id="morph-target"></select></label><label>變形比例 <output id="morph-value">0.50</output><input id="morph-position" type="range" min="0" max="1" value="0.5" step="0.01"></label><div class="inline"><button id="morph">套用 Morph</button><button id="mutate">微調變異</button><button id="random">隨機音色</button></div></article>
+      <article><span class="eyebrow">04 / START FROM A SCORE</span><h2>聽見不同的可能</h2><label>網站示範歌曲<select id="song"></select></label><label>匯入長度<select id="song-length"><option value="8">前 8 拍</option><option value="16">前 16 拍</option><option value="full">完整歌曲</option></select></label><button id="load-song">載入可編輯編曲</button><label>聲音設計導覽<select id="tour"></select></label><div class="inline"><button id="load-tour">取得最終音色</button><button id="load-tour-timeline">載入完整變化</button></div></article>
+      <article><span class="eyebrow">05 / KEEP YOUR WORK</span><h2>每一次修改，都能回頭</h2><div class="inline"><button id="undo">↶ 上一步</button><button id="redo">↷ 下一步</button><button id="commit">保留版本</button><button id="revert">還原保留版本</button></div><label>匯入 AI 或自己的專案<input id="import" type="file" accept=".json,application/json"></label><label>匯出取樣率<select id="sample-rate"><option value="24000">24 kHz · 預聽與輕量輸出</option><option value="44100">44.1 kHz</option><option value="48000">48 kHz · 影片／遊戲</option></select></label><label>尾音秒數<input id="tail" type="number" min="0" max="8" value="2" step="0.25"></label><p class="quiet">WAV：立體聲、24-bit PCM。使用場景由你决定；若尾音超出預算，會淡出並明確標示。</p></article>
+    </section>
+    <details class="project-editor"><summary>完整專案編輯器 · 聲部、音符、Macro、控制器與自動化</summary><p>可編輯全部合成器參數與八個調變路由。參數使用原生單位；載入前會驗證。</p><textarea id="project-json" spellcheck="false" aria-label="專案 JSON" rows="18"></textarea><button id="apply-json">驗證並套用 JSON</button></details>
+    <section id="connection" class="connection"><div><span class="eyebrow">FOR HUMANS & MACHINES</span><h2>讓 AI 也進入你的創作室。</h2><p>支援標準 MCP 的 AI 可查音色、發展動機、編曲與匯出。<br>瀏覽器控制需要你主動啟用；隨時可停用。</p></div><div><label>MCP 端點<input id="endpoint" readonly></label><button id="connect-browser">啟用本機 AI 控制</button><button id="disconnect-browser" disabled>停用 AI 控制</button><p id="room-status" class="quiet">尚未啟用瀏覽器控制。</p><p id="cloud-job" class="quiet"></p></div></section>
+  </main>
+  <footer>AURORA / 五個創作變量，從想像到聲音。<span>合成器引擎 MIT · © 2026 pixbvr · MCP fork monkey1sai</span></footer>
+  <script type="module" src="src/creation/studio.js"></script>
+</body></html>

@@ -1,0 +1,29 @@
+{
+  "song": "Neon Nights",
+  "elapsedMs": 46625.0166,
+  "peakProcessRssBytes": 223490048,
+  "artifact": {
+    "id": "6476e18e-00ee-466f-a35c-61b8096ca978",
+    "status": "artifact-ready",
+    "bytes": 24214202,
+    "hash": "a0e45540fc0833c91c8d52d13a42d54e82a6c54c2fc7d5eb260ce9a56a1fd7bc",
+    "expiresAt": 1790947425787,
+    "metrics": {
+      "peakDbFS": -4.552204223421903,
+      "rmsDbFS": -20.429266445176808,
+      "renderMs": 46265.4636,
+      "frames": 4035693,
+      "sampleRate": 24000,
+      "seconds": 168.15384615384616,
+      "tracks": 6,
+      "seed": 42,
+      "engineVersion": "pixbvr/aurora-synth@aa204456",
+      "warnings": [
+        "TAIL_FADED_AT_BUDGET: increase tailSeconds for a longer natural decay"
+      ]
+    },
+    "wavPath": "C:\\.llmcode\\aurora-synth\\.wrangler\\forks\\aurora-mcp\\renders\\mcp\\6476e18e-00ee-466f-a35c-61b8096ca978.wav",
+    "projectPath": "C:\\.llmcode\\aurora-synth\\.wrangler\\forks\\aurora-mcp\\renders\\mcp\\6476e18e-00ee-466f-a35c-61b8096ca978.json",
+    "resourceUri": "aurora://artifacts/6476e18e-00ee-466f-a35c-61b8096ca978/wav"
+  }
+}

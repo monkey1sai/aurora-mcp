@@ -1,0 +1,78 @@
+{
+  "mode": "quick",
+  "seconds": 10.3,
+  "rows": [
+    {
+      "suite": "compat",
+      "name": "DSP at 16 kHz (10 presets covering every engine/filter/FX)",
+      "status": "PASS",
+      "detail": "max peak -3.7 dBFS · 1.4 s"
+    },
+    {
+      "suite": "compat",
+      "name": "DSP at 192 kHz (10 presets covering every engine/filter/FX)",
+      "status": "PASS",
+      "detail": "max peak -2.6 dBFS · 7.2 s"
+    },
+    {
+      "suite": "compat",
+      "name": "https: self-signed certificate (X.509 v3, ECDSA P-256)",
+      "status": "PASS",
+      "detail": "DNS:localhost, IP Address:127.0.0.1, IP Address:0:0:0:0:0:0:0:1, IP Address:192.168.1.23 · 398 days · 10 ms"
+    },
+    {
+      "suite": "compat",
+      "name": "https: dev server — TLS and http→https redirect on one port",
+      "status": "PASS",
+      "detail": "https 200 · http → 308 https://192.168.1.23:PORT/src/ui/main.js?x=1 · .cert 403 · 24 parallel OK"
+    },
+    {
+      "suite": "compat",
+      "name": "https: certificate cache (.cert/) and user certificate priority",
+      "status": "PASS",
+      "detail": "generate → reuse → regenerate on new IP / expiry · key 0600 · user cert wins"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: secure-context gate (http://<LAN-IP> has no AudioWorklet)",
+      "status": "PASS",
+      "detail": "需要 https 或 localhost 才能發聲（目前是 http://192.168.1.23:5173）"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: iOS ring/silent switch — audio session + silent unlock",
+      "status": "PASS",
+      "detail": "audioSession → playback · silent WAV 4454 B · element only on iPhone/iPad without audioSession"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: MIDI connects without a surprise permission prompt",
+      "status": "PASS",
+      "detail": "granted → auto-connect · prompt/unknown → wait for a click · change events followed"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: screen wake lock while something plays",
+      "status": "PASS",
+      "detail": "acquire once · release when nothing plays · re-acquire on visible · no-op without the API"
+    },
+    {
+      "suite": "compat",
+      "name": "compat: fullscreen helpers (webkit prefix, iPhone has none)",
+      "status": "PASS",
+      "detail": "standard · webkit · none → button hidden"
+    },
+    {
+      "suite": "compat",
+      "name": "audio.js: createAudio() — 48 kHz cap, secure-context error, iOS session, statechange",
+      "status": "PASS",
+      "detail": "192k → 48k · 44.1k kept · explicit 96k kept · audioSession=playback · statechange → onContextState · insecure → clear error"
+    },
+    {
+      "suite": "compat",
+      "name": "library: malformed saved data never stops the boot",
+      "status": "PASS",
+      "detail": "6 malformed shapes load cleanly (tags → string arrays, junk dropped)"
+    }
+  ]
+}

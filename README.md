@@ -1,4 +1,21 @@
-# AURORA 極光
+# AURORA MCP · 極光創作室
+
+這是 [pixbvr/aurora-synth](https://github.com/pixbvr/aurora-synth) 的獨立 fork，基於 `aa204456bfbfff49f79322bfea4673f22d4b4de3`。保留完整合成器，新增標準 MCP server、五軸創作模型、音樂／音效編輯及 WAV 匯出。
+
+**目前發布狀態：本機實作與驗收；尚未部署新的公開 MCP endpoint。** 原公開站 `https://aurora-synth.xshiujj.workers.dev/` 不代表本 fork 已發布。
+
+- `npm ci --ignore-scripts`：安裝固定版本的 MCP runtime 與測試依賴。
+- `npm run mcp:stdio`：AI client 透過 stdio 操作，Node worker 自動產生 WAV。
+- `npm run mcp:http`：開啟 loopback `http://127.0.0.1:8788/mcp`；創作室位於 `/studio.html`，完整合成器位於 `/index.html`。
+- `npm run test:mcp`：創作、音訊、SDK 協定及取消／到期回歸。
+- `npm run build`：產生 `dist/`，僅包含網站資產。
+- `npm run mcp:cloud:dev`：本機 Cloudflare workerd。雲端 adapter 回報 `queued`；使用者開啟 renderUrl 後按鈕渲染及上傳，AI 再取得 WAV。**這個模式需要人工操作，不能視為無人值守雲端渲染。**
+
+接入設定、工具覆蓋、五個變量及部署界線見 [MCP 使用與架構](docs/mcp/MCP.md)；實測結果見 [驗收記錄](docs/mcp/VERIFICATION.md)。Node 22.22.0 是本次實測版本；其他 Node 版本尚未驗收。
+
+以下保留上游合成器說明；其中上游網址與零依賴描述針對原始靜態合成器。本 fork 的 MCP server 使用固定版本 npm 依賴。
+
+## 上游 AURORA 極光
 
 在瀏覽器裡執行的混合式合成器：好聽、好看、好上手，也夠深入做聲音設計。還會自己演奏、自己調音色：打開「示範中心」，聽六首多聲部示範曲、看旋鈕在音色導覽裡自己轉動、讓它即興伴奏，或把整個畫面交給劇院模式。
 

@@ -1,0 +1,30 @@
+{
+  "status": "artifact-ready",
+  "expiresAt": 1790946842745,
+  "renderer": "user-browser",
+  "downloadUrl": "http://127.0.0.1:8789/jobs/eb966635-c415-44eb-9f79-5e468c3cec4e/audio",
+  "metrics": {
+    "peakDbFS": -32.712785977214835,
+    "rmsDbFS": -54.95598589434096,
+    "renderMs": 277.59999999962747,
+    "frames": 18000,
+    "sampleRate": 24000,
+    "seconds": 0.75,
+    "tracks": 1,
+    "seed": 42,
+    "engineVersion": "pixbvr/aurora-synth@aa204456",
+    "warnings": [
+      "TAIL_FADED_AT_BUDGET: increase tailSeconds for a longer natural decay"
+    ],
+    "source": "user-browser; metadata is client-reported",
+    "verifiedWav": {
+      "sampleRate": 24000,
+      "bitDepth": 24,
+      "frames": 18000
+    }
+  },
+  "sha256": "31c8346f971cbb6288ef8f0daa8311776cfdbdf43a8a77b52acda14bd332e2b0",
+  "bytes": 108044,
+  "evidence": "SDK result + downloaded byte hash; browser performed render; local workerd only",
+  "replacementStatus": 409
+}
