@@ -47,112 +47,112 @@
   "results": [
     {
       "tool": "search_presets",
-      "ms": 1008,
+      "ms": 395,
       "note": "1 matches"
     },
     {
       "tool": "step_preset",
-      "ms": 396,
+      "ms": 416,
       "note": "Velvet Dusk"
     },
     {
       "tool": "get_preset",
-      "ms": 435,
+      "ms": 371,
       "note": "Aurora Pad"
     },
     {
       "tool": "create_project",
-      "ms": 520,
+      "ms": 378,
       "note": "revision 0"
     },
     {
       "tool": "export_preset",
-      "ms": 404,
+      "ms": 408,
       "note": "aurora-preset"
     },
     {
       "tool": "import_preset",
-      "ms": 457,
+      "ms": 425,
       "note": "1 preset, 0 warnings"
     },
     {
       "tool": "manage_library",
-      "ms": 441,
+      "ms": 496,
       "note": "u:Parity"
     },
     {
       "tool": "manage_library",
-      "ms": 442,
+      "ms": 441,
       "note": "favourite true"
     },
     {
       "tool": "get_parameter_help",
-      "ms": 415,
+      "ms": 433,
       "note": "1.15 kHz, 36%"
     },
     {
       "tool": "compare_patches",
-      "ms": 443,
+      "ms": 484,
       "note": "119 changed"
     },
     {
       "tool": "get_song_info",
-      "ms": 448,
+      "ms": 435,
       "note": "6 sections"
     },
     {
       "tool": "get_tour_info",
-      "ms": 461,
+      "ms": 420,
       "note": "14 steps"
     },
     {
       "tool": "get_catalog",
-      "ms": 421,
+      "ms": 423,
       "note": "100 tagged presets"
     },
     {
       "tool": "apply_mood",
-      "ms": 486,
+      "ms": 478,
       "note": "15 changes"
     },
     {
       "tool": "apply_phrase",
-      "ms": 431,
+      "ms": 454,
       "note": "4 macro ramps"
     },
     {
       "tool": "evolve_sound",
-      "ms": 420,
+      "ms": 381,
       "note": "768 events"
     },
     {
       "tool": "morph_patch",
-      "ms": 497,
+      "ms": 447,
       "note": "Aurora Pad morph"
     },
     {
       "tool": "generate_jam",
-      "ms": 403,
+      "ms": 397,
       "note": "check ok=true, 4 tracks"
     },
     {
       "tool": "apply_phrase",
-      "ms": 387,
+      "ms": 373,
       "note": "16 beats"
     },
     {
       "tool": "morph_patch",
-      "ms": 412,
+      "ms": 429,
       "note": "random B Moonlit Suitcase"
     },
     {
       "tool": "auto_morph",
-      "ms": 438,
+      "ms": 441,
       "note": "54 sweep events, B Moonlit Suitcase"
     },
     {
       "tool": "freeze_sound",
-      "ms": 571,
+      "ms": 526,
       "note": "automation baked"
     },
     {
@@ -162,14 +162,14 @@
     },
     {
       "tool": "theater_program",
-      "ms": 396,
+      "ms": 386,
       "note": "100 items, 2539 s"
     },
     {
       "tool": "theater_program",
-      "ms": 390,
+      "ms": 439,
       "note": "medley 3 tracks, 76 s"
     }
   ],
-  "at": "2026-10-07T02:08:16.603Z"
+  "at": "2026-10-07T02:56:15.364Z"
 }

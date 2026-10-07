@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-07T03:01:54.381Z",
+  "endpoint": "https://aurora-mcp.xshiujj.workers.dev/mcp",
+  "deployedVersion": "610c9c87-8bf0-4403-982a-7414da4e3bf1",
+  "commit": "ce73eb3",
+  "job": "98565fbc-c7ee-4968-bc8a-3eeb034d35a7",
+  "options": {
+    "sampleRate": 24000,
+    "bitDepth": 16,
+    "tailSeconds": 4
+  },
+  "status": "artifact-ready",
+  "bytes": 17184044,
+  "jobSha256": "4fc69f679a3fe83be119a763b5c9474253bd894fc2e08cce5fc6fc76a8ebbb65",
+  "downloadSha256": "4fc69f679a3fe83be119a763b5c9474253bd894fc2e08cce5fc6fc76a8ebbb65",
+  "downloadMatchesJob": true,
+  "browserRenderMs": 152073.60000000894,
+  "verifiedWav": {
+    "sampleRate": 24000,
+    "bitDepth": 16,
+    "frames": 4296000
+  },
+  "versusNode": {
+    "sameFrames": true,
+    "differingSamples": 310,
+    "maxAbsDiffLsb16": 1,
+    "differenceRelativeDb": -111
+  }
+}
