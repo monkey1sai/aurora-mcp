@@ -46,19 +46,23 @@ HTTP 範例：先 `npm run mcp:http`，在支援 URL 型 MCP 的宿主新增 `ht
 
 ## 功能覆蓋
 
-公開 Cloudflare 提供 27 tools；Node loopback 另有 `browser_command`，共 28 tools。
+公開 Cloudflare 提供 36 tools；Node loopback 另有 `browser_command`，共 37 tools。
 
 | 網站能力 | MCP 對應 | 範圍 |
 |---|---|---|
 | 音色、235 原生參數、4 Macro、8 調變路由 | get_catalog/get_parameter_schema/get_preset、set_parameters/set_macros/set_track | 含全部引擎、濾波、包絡、FX；global 與 patch 分開儲存 |
 | 動機作曲與多聲部 | create_project/compose_music/generate_jam、add_track/remove_track/resize_project | 最多8聲部；7 Jam風格 |
 | 場景音效 | design_sound_effect | impact/whoosh/riser/downer/ambience/ui/alarm/footstep/laser；可繼續改參數 |
-| 魔法調音、Morph、突變／隨機、演化 | apply_mood/morph_patch/mutate_patch/evolve_sound | 重用網站共用運算，演化輸出為明確自動化 |
-| 示範曲、聲音導覽、音色樂句 | load_demo_song/load_tour/apply_phrase | 6完整曲／明確節錄、6導覽最終或時間軸 |
+| 魔法調音、Morph、突變／隨機、演化 | apply_mood/morph_patch/mutate_patch/evolve_sound | 重用網站共用運算；apply_mood 回傳網站變更摘要；Morph B 可為原廠音色或任意 patch；evolve_sound `algorithm:"website"` 使用網站自動演化（`src/demo/drift.js`）輸出明確自動化 |
+| 示範曲、聲音導覽、音色樂句 | load_demo_song/load_tour/apply_phrase、get_song_info/get_tour_info | 6完整曲／明確節錄、段落與聲部資訊；6導覽最終或時間軸、逐步雙語說明；apply_phrase `auto` 對應 ▶ 示範樂句，`macroRides` 加入示範巨集動作 |
+| Jam 面板選項 | generate_jam | variation（無盡模式下一段）、主奏音色／角色、鼓組開關、pad/bass/extra 伴奏（null 靜音），回傳網站樂理檢查 |
+| 音色瀏覽器、上一個／下一個 | search_presets/step_preset、get_catalog.details | 與網站相同的分類、標籤、多字搜尋及計數；details 含標籤、樂句說明、魔法範例、和弦、音階、Jam 預設 |
+| 我的音色、★收藏、匯入／匯出 JSON | manage_library/get_preset(library)、import_preset/export_preset | 使用者音色庫由 client 保存並傳入，server 不儲存；匯入使用網站 `parsePresetFile` 清理，匯出為 `aurora-preset` v1 |
+| 參數說明、A/B 比較 | get_parameter_help、compare_patches | 網站雙語說明與數值格式；逐項差異加網站變更排序 |
 | 復原、保留、匯入／匯出 | 回傳 immutable project、export_project；Studio history/commit/revert/import | project 為 client-owned，expectedRevision 只檢查傳入 snapshot，沒有中央協作鎖 |
 | 預聽、WAV | render_audio/get_render_result | Node自動render；Cloudflare排隊後由使用者瀏覽器render |
 | 當前頁面控制 | browser_command | 僅loopback、使用者啟用30分鐘、可撤銷；queued與applied/audio-running分開 |
-| 視覺、劇院、MIDI硬體與原始完整UI | 完整合成器頁面 | 不提供遠端MCP操控硬體或逐一視覺控制；Studio與完整合成器音色／globals可往返 |
+| 即時播放、表頭、Tap tempo、鍵盤／MIDI、視覺、劇院、導覽動畫 | 完整合成器頁面 | 需要瀏覽器音訊或輸入裝置，遠端 MCP 不提供；Studio與完整合成器音色／globals可往返 |
 
 四個 JSON resources：`aurora://axes`、`aurora://catalog`、`aurora://parameters`、`aurora://capabilities`。Prompt：`scene_sound`。
 

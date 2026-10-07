@@ -33,5 +33,8 @@ export const RenderOptions = z.object({ sampleRate: z.union([z.literal(16000), z
 export const Create = z.object({ title: z.string().min(1).max(100).optional(), kind: z.enum(['music', 'sound', 'sfx']).optional(), seed: i(1, 4294967295).optional(), axes: Axes.optional(), patch: Patch.optional() }).strict();
 export const ProjectInput = z.object({ project: Project }).strict();
 export const Index = i(0, 7).default(0);
+// Client-owned user preset library (website localStorage shape); contents are sanitised server-side like the website.
+export const Library = z.object({ presets: z.array(z.record(z.string(), z.unknown())).max(500).default([]), favourites: z.array(z.string().max(120)).max(600).default([]) }).strict();
+export const PresetFile = z.union([z.record(z.string(), z.unknown()), z.array(z.record(z.string(), z.unknown())).max(500)]);
 export const Output = z.object({ status: z.string(), data: z.record(z.string(), z.unknown()) }).strict();
 export const axisDescriptions = AXES;

@@ -1,11 +1,13 @@
 import { SCALES, DEFAULTS, PARAM_BY_ID, toNorm, fromNorm } from '../dsp/params.js';
 import { PRESETS } from '../presets/index.js';
-import { makeRng, generateJam, suggestBacking, roleForPreset, STYLE_IDS, JAM_SCALE_IDS } from '../demo/generator.js';
+import { makeRng, generateJam, suggestBacking, roleForPreset, checkJam, STYLE_IDS, JAM_SCALE_IDS } from '../demo/generator.js';
 import { MOODS, applyMoods, parseMoodText } from '../demo/moods.js';
 import { SONGS } from '../demo/songs/index.js';
 import { resolveSong } from '../demo/resolve.js';
 import { TOURS, startPatch, finalState, tourControlEvents, compileTour } from '../demo/tours/index.js';
-import { PHRASES } from '../../tools/phrases.mjs';
+import { PHRASES, DEMO_FOR_CATEGORY } from '../../tools/phrases.mjs';
+import { planMacroRides, withMacroRides } from '../ui/demo/automation.js';
+import { driftNoise, reflect, evolveTargets } from '../demo/drift.js';
 import { randomPatch, mutate, makeRng as patchRng } from '../ui/app/patchTools.js';
 import { morphPatch, presetValues } from '../demo/morph.js';
 import { AXES, copy, bounded, choice, fail, validateProject, createProject, edited, track, axesWithDefaults, patchFromPreset, presetCatalog } from './project.js';
@@ -72,7 +74,7 @@ export function moodProject(project, moods, amount = 0.6, index = 0) {
   return edited(project, p => { const t = track(p, index); Object.assign(t.patch.params, applyMoods({ ...DEFAULTS, ...t.patch.params }, entries, { category: t.patch.category })); });
 }
 export function morphProject(project, preset, position, index = 0) {
-  bounded(position, 0, 1, 'position'); const b = patchFromPreset(preset);
+  bounded(position, 0, 1, 'position'); const b = typeof preset === 'object' && preset ? copy(preset) : patchFromPreset(preset);
   return edited(project, p => {
     const t = track(p, index), a = t.patch;
     const m = morphPatch({ values: presetValues(a), macros: a.macros }, { values: presetValues(b), macros: b.macros }, position);
@@ -107,13 +109,37 @@ export function fromSong(song, title, axes = {}, seed = 42) {
   }));
   return validateProject(p);
 }
-export function jamProject({ style = 'ambient', seed = 42, axes = {}, title = 'Generated Jam' } = {}) {
-  choice(style, STYLE_IDS, 'style'); const p = createProject({ title, seed, axes }); choice(p.axes.harmony.scale, JAM_SCALE_IDS, 'jam.scale');
+const presetOrNull = (v, auto) => v === undefined ? auto : v === null || v === false ? null : PRESETS.find(p => p.name.toLowerCase() === String(v).toLowerCase()) || fail('NOT_FOUND', 'Unknown preset ' + v);
+/** Website Jam panel options: variation (endless-mode pass), lead preset/role, drums, pad/bass/extra backing (preset name, or null to mute). */
+export function jamSong({ style = 'ambient', seed = 42, axes = {}, title = 'Generated Jam', variation = 0, leadPreset, leadRole, drums = true, backing = {} } = {}) {
+  choice(style, STYLE_IDS, 'style'); bounded(variation, 0, 9999, 'variation', true); const p = createProject({ title, seed, axes }); choice(p.axes.harmony.scale, JAM_SCALE_IDS, 'jam.scale');
   choice(p.axes.rhythm.bars, [4, 8, 16], 'jam.bars (website generator supports 4, 8, 16)');
-  const leadPatch = p.tracks[0].patch, lead = { name: leadPatch.name, patch: leadPatch, role: roleForPreset(leadPatch) }, s = suggestBacking(style, PRESETS, { lead });
-  const song = generateJam({ style, seed, key: p.axes.harmony.root, scale: p.axes.harmony.scale, bpm: p.axes.rhythm.bpm, bars: p.axes.rhythm.bars, intensity: p.axes.rhythm.tension, lead,
-    backing: { drums: true, bass: s.bass, pad: s.pad, extra: s.extra ? { patch: s.extra, role: s.extraRole } : null } });
-  return fromSong(song, title, p.axes, seed);
+  const leadPatch = leadPreset ? patchFromPreset(leadPreset) : p.tracks[0].patch, lead = { name: leadPatch.name, patch: leadPatch, role: leadRole || roleForPreset(leadPatch) }, s = suggestBacking(style, PRESETS, { lead });
+  const extra = presetOrNull(backing.extra, s.extra);
+  const song = generateJam({ style, seed, variation, key: p.axes.harmony.root, scale: p.axes.harmony.scale, bpm: p.axes.rhythm.bpm, bars: p.axes.rhythm.bars, intensity: p.axes.rhythm.tension, lead,
+    backing: { drums, bass: presetOrNull(backing.bass, s.bass), pad: presetOrNull(backing.pad, s.pad), extra: extra ? { patch: extra, role: roleForPreset(extra) } : null } });
+  return { song, project: fromSong(song, title, p.axes, seed) };
+}
+export function jamProject(options = {}) { return jamSong(options).project; }
+export function jamReport(options = {}) {
+  const { song, project } = jamSong(options), c = checkJam(song);
+  return { project, check: { ok: c.ok, issues: c.issues.slice(0, 50), stats: c.stats }, parts: song.parts.map(t => ({ name: t.name, role: t.role })) };
+}
+/** Website auto-evolve: curated targets, two-octave drift noise and reflect bounds, sampled into replayable automation. */
+export function evolveWebsiteProject(project, { index = 0, intensity = 0.55, speed = 0.4, groups = { macros: true, timbre: true, space: false }, steps = 64 } = {}) {
+  bounded(intensity, 0, 1, 'intensity'); bounded(speed, 0, 1, 'speed'); bounded(steps, 2, 512, 'steps', true);
+  return edited(project, p => {
+    const t = track(p, index), values = { ...DEFAULTS, ...t.patch.params }, targets = evolveTargets(values, t.patch.macros, groups);
+    if (!targets.length) fail('INVALID_ARGUMENT', 'Nothing to evolve: enable a group whose engine or effect is on');
+    const seconds = p.lengthBeats * 60 / p.globals['global.bpm'], rate = 0.04 * 2 ** (speed * 4.4);
+    for (const g of targets) {
+      const param = PARAM_BY_ID[g.id], nb = toNorm(param, values[g.id]), macro = /^macro[1-4]$/.test(g.id);
+      for (let i = 0; i < steps; i++) {
+        const n = reflect(nb + driftNoise(seconds * i / steps * rate + (g.seed % 997) * 0.731, g.seed) * g.depth * intensity * 1.25, g.lo, g.hi), beat = p.lengthBeats * i / steps;
+        t.events.push(macro ? { beat, type: 'macro', index: +g.id.slice(5) - 1, value: Math.max(0, Math.min(1, n)) } : { beat, type: 'param', id: g.id, value: fromNorm(param, n) });
+      }
+    }
+  });
 }
 export function loadSong(id, excerptBeats) {
   const d = SONGS.find(s => s.id === id); if (!d) fail('NOT_FOUND', 'Unknown song ' + id);
@@ -135,9 +161,19 @@ export function loadTour(id, mode = 'final') {
   if (mode === 'timeline') for (const e of tourControlEvents(t, { rate: 16 })) events.push({ beat: e.time * p.globals['global.bpm'] / 60, type: e.type, values: e.values });
   p.tracks[0].events = events; return validateProject(p);
 }
-export function applyPhrase(project, phrase, index = 0) {
+/** Preset audition phrase; 'auto' picks the website ▶ demo phrase for the patch, macroRides adds its moving macro knobs. */
+export function applyPhrase(project, phrase = 'auto', index = 0, { macroRides = false, demoMacros } = {}) {
+  const t0 = track(project, index), factory = PRESETS.find(x => x.name === t0.patch.name);
+  if (phrase === 'auto') phrase = factory?.demo && PHRASES[factory.demo] ? factory.demo : DEMO_FOR_CATEGORY[t0.patch.category] || 'keys';
   const def = PHRASES[phrase]; if (!def) fail('NOT_FOUND', 'Unknown phrase ' + phrase);
-  return edited(project, p => { p.lengthBeats = def.lengthBeats; p.globals['global.bpm'] = def.bpm; track(p, index).events = copy(def.events); });
+  return edited(project, p => {
+    const t = track(p, index); p.lengthBeats = def.lengthBeats; p.globals['global.bpm'] = def.bpm; t.events = copy(def.events);
+    if (macroRides) {
+      const values = [1, 2, 3, 4].map(i => +(t.patch.params['macro' + i] ?? 0));
+      const rides = planMacroRides({ lengthBeats: def.lengthBeats, demoMacros: demoMacros ?? factory?.demoMacros ?? null, macros: t.patch.macros, values });
+      t.events = withMacroRides({ ...def, events: t.events, loop: false }, rides, values).events;
+    }
+  });
 }
 export function catalog() {
   return { axes: AXES, ...presetCatalog(), styles: STYLE_IDS, scales: Object.keys(SCALES), moods: MOODS.map(m => ({ id: m.id, zh: m.zh, en: m.en })),
