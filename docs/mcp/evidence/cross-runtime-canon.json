@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-07",
+  "project": "Canon in D (Pachelbel, c. 1700) — public domain; original arrangement; 8 tracks, 7564 events, 4085 automation events, 175 s content",
+  "options": { "sampleRate": 24000, "bitDepth": 16, "tailSeconds": 4 },
+  "browser": {
+    "path": "local workerd job → visible Chrome studio page (render-worker) → PUT upload → get_render_result",
+    "before_fix": "CANCELLED: fixed 60 s studio render budget (job accepted by MCP could not be completed)",
+    "after_fix": { "budgetSeconds": 537, "renderMs": 98162.5, "bytes": 17184044, "frames": 4296000, "sha256": "4fc69f679a3fe83be119a763b5c9474253bd894fc2e08cce5fc6fc76a8ebbb65", "downloadMatchesJobSha": true }
+  },
+  "node": { "path": "stdio MCP render_audio (AURORA_RENDER_TIMEOUT_MS=1200000)", "renderMs": 124746, "bytes": 17184044, "sha256": "6387735910143a34589ed3b7c44021d3c48e90352d2227ddb2baa87634d559ee" },
+  "comparison": { "byteIdentical": false, "differingSamples": 310, "differingShare": 0.000036, "maxAbsDiffLsb16": 1, "firstDifferenceSecond": 13.9512, "differenceRelativeDb": -111,
+    "interpretation": "Same length; differences are single 16-bit LSB flips from floating-point differences between the Node and Chrome JavaScript engines, 111 dB below the signal." }
+}

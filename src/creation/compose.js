@@ -5,11 +5,14 @@ import { MOODS, applyMoods, parseMoodText } from '../demo/moods.js';
 import { SONGS } from '../demo/songs/index.js';
 import { resolveSong } from '../demo/resolve.js';
 import { TOURS, startPatch, finalState, tourControlEvents, compileTour } from '../demo/tours/index.js';
-import { PHRASES, DEMO_FOR_CATEGORY } from '../../tools/phrases.mjs';
-import { planMacroRides, withMacroRides } from '../ui/demo/automation.js';
+import { PHRASES, DEMO_FOR_CATEGORY, getPhrase } from '../../tools/phrases.mjs';
+import { planMacroRides, withMacroRides, presetDemoSong } from '../ui/demo/automation.js';
 import { driftNoise, reflect, evolveTargets } from '../demo/drift.js';
 import { randomPatch, mutate, makeRng as patchRng } from '../ui/app/patchTools.js';
-import { morphPatch, presetValues } from '../demo/morph.js';
+import { morphPatch, presetValues, effectiveValues } from '../demo/morph.js';
+import { PATCH_IDS, STRUCTURAL, blendValues, structuralChange, sanitizeValue, diffFromDefaults } from '../ui/app/store.js';
+import { songDuration } from '../demo/resolve.js';
+import { CATEGORIES } from '../presets/index.js';
 import { AXES, copy, bounded, choice, fail, validateProject, createProject, edited, track, axesWithDefaults, patchFromPreset, presetCatalog } from './project.js';
 
 export function compose(project) {
@@ -81,13 +84,133 @@ export function morphProject(project, preset, position, index = 0) {
     t.patch = { name: (a.name || 'Patch').slice(0, 90) + ' morph', category: a.category || 'fx', params: m.values, macros: m.macros };
   });
 }
-export function mutateProject(project, { amount = 0.06, seed = project.seed, random = false, index = 0 } = {}) {
-  bounded(amount, 0, 1, 'amount'); bounded(seed, 1, 4294967295, 'seed', true);
+export const RANDOM_CATEGORIES = ['pad', 'lead', 'bass', 'pluck', 'keys', 'bell', 'strings', 'arp', 'fx'];
+/** category: 'track' keeps the track's category (original behaviour); 'any' lets the generator pick like the website with no browser filter; or a recipe id. */
+export function mutateProject(project, { amount = 0.06, seed = project.seed, random = false, index = 0, category = 'track' } = {}) {
+  bounded(amount, 0, 1, 'amount'); bounded(seed, 1, 4294967295, 'seed', true); choice(category, ['track', 'any', ...RANDOM_CATEGORIES], 'category');
   return edited(project, p => {
     const t = track(p, index), rng = patchRng(seed);
-    if (random) { const g = randomPatch({ rng, category: t.patch.category }); t.patch = { name: 'Random patch', category: t.patch.category, params: Object.fromEntries(Object.entries(g.params || g).filter(([id]) => PARAM_BY_ID[id]?.scope !== 'global')), macros: g.macros || [] }; }
+    if (random) {
+      const g = randomPatch({ rng, category: category === 'track' ? t.patch.category : category === 'any' ? undefined : category });
+      t.patch = { name: category === 'track' ? 'Random patch' : String(g.name || 'Random patch').slice(0, 100), category: category === 'track' ? t.patch.category : g.category, params: Object.fromEntries(Object.entries(g.params || g).filter(([id]) => PARAM_BY_ID[id]?.scope !== 'global')), macros: g.macros || [] };
+    }
     else Object.assign(t.patch.params, mutate({ ...DEFAULTS, ...t.patch.params }, { amount, rng }));
   });
+}
+/** Website 🎲 random B: any factory preset except A (and the current B), seeded instead of Math.random. */
+export function randomPreset(seed, exclude = []) {
+  bounded(seed, 1, 4294967295, 'seed', true);
+  const skip = new Set(exclude.filter(Boolean).map(n => String(n).toLowerCase())), pool = PRESETS.filter(p => !skip.has(p.name.toLowerCase()));
+  return pool[Math.floor(patchRng(seed).next() * pool.length) % pool.length].name;
+}
+const same = (a, b) => a === b || (typeof a === 'number' && typeof b === 'number' && Math.abs(a - b) < 1e-9);
+const r6 = v => typeof v === 'number' && !Number.isInteger(v) ? Math.round(v * 1e6) / 1e6 : v;
+/**
+ * Website auto-morph sweep as replayable automation: t = ½ − ½·cos(2π·phase) over `period` seconds, the effective
+ * (macro-baked) A/B blend written as 'params' events, and the website's engine duck (level → 0, switch, level back,
+ * ≈35 ms apart) around osc mode/table and physical model/exciter switches.
+ */
+export function autoMorphProject(project, b, { index = 0, period = 12, startBeat = 0, endBeat, steps = 24, start = 0 } = {}) {
+  bounded(period, 3, 40, 'period'); bounded(steps, 4, 128, 'steps', true); bounded(start, 0, 1, 'start');
+  return edited(project, p => {
+    const t = track(p, index), spb = 60 / p.globals['global.bpm'], end = endBeat ?? p.lengthBeats;
+    bounded(startBeat, 0, p.lengthBeats, 'startBeat'); bounded(end, startBeat, p.lengthBeats, 'endBeat');
+    const aEff = effectiveValues(presetValues(t.patch), t.patch.macros), bEff = effectiveValues(presetValues(b), b.macros);
+    const seconds = (end - startBeat) * spb, n = Math.max(1, Math.round(seconds / period * steps)), stepBeats = (end - startBeat) / n;
+    const phase0 = Math.acos(Math.max(-1, Math.min(1, 1 - 2 * start))) / (Math.PI * 2), duck = Math.min(0.035 / spb, stepBeats / 3);
+    const audible = (g, v) => v[`${g}.on`] && v[`${g}.level`] > 0.001, events = [];
+    let prev = presetValues(t.patch);
+    for (let i = 0; i <= n; i++) {
+      const beat = Math.min(end, startBeat + stepBeats * i), x = 0.5 - 0.5 * Math.cos((phase0 + (beat - startBeat) * spb / period) * Math.PI * 2);
+      const out = blendValues(aEff, bEff, x, PATCH_IDS, { dip: false }), changed = {};
+      for (const id of PATCH_IDS) if (!same(out[id], prev[id])) changed[id] = r6(out[id]);
+      if (!Object.keys(changed).length) continue;
+      const switching = Object.keys(STRUCTURAL).filter(g => (audible(g, prev) || audible(g, out)) && structuralChange(g, prev, out));
+      // duck ends exactly on the sample beat, so the sample (and a freeze there) holds the plain blend
+      if (switching.length && beat - 2 * duck >= 0) {
+        events.push({ beat: r6(beat - 2 * duck), type: 'params', values: Object.fromEntries(switching.map(g => [`${g}.level`, 0])) });
+        events.push({ beat: r6(beat - duck), type: 'params', values: { ...changed, ...Object.fromEntries(switching.map(g => [`${g}.level`, 0])) } });
+        events.push({ beat: r6(beat), type: 'params', values: Object.fromEntries(switching.map(g => [`${g}.level`, r6(out[`${g}.level`])])) });
+      } else events.push({ beat: r6(beat), type: 'params', values: changed });
+      prev = out;
+    }
+    t.events = [...t.events, ...events].sort((x, y) => x.beat - y.beat);
+  });
+}
+/**
+ * Website ❄ Freeze / Keep: bake what the engine would hold at `beat` (param, params, macro, ramp and ramp-macro with
+ * the sequencer's rules: a write cancels that parameter's ramp, a new ramp replaces it from the current value) into
+ * the track patch; `clear` removes the automation so the sound stays put, like stopping the evolution.
+ */
+export function freezeProject(project, { index = 0, beat, clear = true } = {}) {
+  return edited(project, p => {
+    const t = track(p, index); bounded(beat, 0, p.lengthBeats, 'beat');
+    const values = presetValues(t.patch), ramps = new Map(), isRamp = e => e.type === 'ramp' || e.type === 'ramp-macro';
+    const at = (id, x) => { const r = ramps.get(id); if (!r) return values[id]; const k = r.len > 0 ? Math.max(0, Math.min(1, (x - r.start) / r.len)) : 1; return sanitizeValue(PARAM_BY_ID[id], fromNorm(PARAM_BY_ID[id], r.from + (r.to - r.from) * k)); };
+    const cancel = (id, x) => { if (ramps.has(id)) { values[id] = at(id, x); ramps.delete(id); } };
+    const write = (id, v, x) => { const prm = PARAM_BY_ID[id]; if (!prm || prm.scope === 'global') return; cancel(id, x); values[id] = sanitizeValue(prm, v); };
+    const list = t.events.map((e, k) => ({ e, k })).filter(({ e }) => e.type !== 'on' && e.type !== 'ctrl' && e.beat <= beat)
+      .sort((a, b) => a.e.beat - b.e.beat || isRamp(a.e) - isRamp(b.e) || a.k - b.k);
+    for (const { e } of list) {
+      for (const [id, r] of ramps) if (e.beat >= r.start + r.len) cancel(id, r.start + r.len);
+      if (e.type === 'param') write(e.id, e.value, e.beat);
+      else if (e.type === 'params') for (const [id, v] of Object.entries(e.values)) write(id, v, e.beat);
+      else if (e.type === 'macro') write('macro' + (e.index + 1), e.value, e.beat);
+      else {
+        const id = e.type === 'ramp' ? e.id : 'macro' + (e.index + 1), prm = PARAM_BY_ID[id];
+        if (!prm || prm.scope === 'global' || prm.type === 'enum' || prm.type === 'bool') continue;
+        cancel(id, e.beat);
+        const from = toNorm(prm, e.from !== undefined ? e.from : values[id]), to = toNorm(prm, e.to);
+        if (!(e.beats > 0)) values[id] = sanitizeValue(prm, e.to); else ramps.set(id, { start: e.beat, len: e.beats, from, to });
+      }
+    }
+    for (const id of [...ramps.keys()]) cancel(id, beat);
+    t.patch.params = diffFromDefaults(values);
+    if (clear) t.events = t.events.filter(e => e.type === 'on' || e.type === 'ctrl');
+  });
+}
+const FADE_OUT = 0.65, FADE_IN = 0.9;
+/** Website theater order and dwell: all presets, one category or the demo songs; seeded shuffle; whole phrase passes for ≈secs. */
+export function theaterProgram({ source = 'all', secs = 24, shuffle = false, seed = 42 } = {}) {
+  choice(source, ['all', 'songs', ...CATEGORIES.map(c => c.id)], 'source'); bounded(secs, 20, 30, 'secs'); bounded(seed, 1, 4294967295, 'seed', true);
+  let list = source === 'songs' ? SONGS.slice() : source === 'all' ? PRESETS.slice() : PRESETS.filter(p => p.category === source);
+  if (shuffle) { const rng = patchRng(seed); for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(rng.next() * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; } }
+  let start = 0;
+  const items = list.map((item, index) => {
+    if (source === 'songs') { const seconds = songDuration(resolveSong(item, PRESETS)) + 1.2, x = { index, id: item.id, title: item.title, start, seconds }; start += seconds; return x; }
+    const demo = theaterDemo(item), pass = demo.song.lengthBeats * 60 / (demo.song.bpm || 120), passes = pass > secs * 1.5 ? 1 : Math.max(1, Math.round(secs / pass));
+    const x = { index, name: item.name, category: item.category, description: item.description || '', phrase: demo.id, passes, seconds: pass * passes, start, macroRides: demo.rides.length }; start += x.seconds; return x;
+  });
+  return { source, secs, shuffle, seed: shuffle ? seed : null, mode: source === 'songs' ? 'songs' : 'presets', fadeOut: FADE_OUT, fadeIn: FADE_IN, totalSeconds: start, items };
+}
+function theaterDemo(preset) {
+  const macros = preset.macros || [], values = [1, 2, 3, 4].map(i => +(preset.params?.['macro' + i] ?? 0));
+  return presetDemoSong({ phrases: { PHRASES, DEMO_FOR_CATEGORY, getPhrase }, meta: preset, demoMacros: preset.demoMacros, macros, values });
+}
+/** A renderable stretch of the preset theater: one track per preset playing its demo passes, with the website's output dip between presets. */
+export function theaterMedley(options = {}, { from = 0, count, bpm = 120, tailSeconds = 2 } = {}) {
+  const prog = theaterProgram(options); if (prog.mode !== 'presets') fail('INVALID_ARGUMENT', 'Medley renders preset theater; songs are separate multi-part projects (use load_demo_song)');
+  bounded(from, 0, prog.items.length - 1, 'from', true); bounded(bpm, 40, 240, 'bpm');
+  const room = 180 - tailSeconds, picked = [];
+  for (const it of prog.items.slice(from)) { if (picked.length >= Math.min(8, count ?? 8) || it.seconds + picked.reduce((s, x) => s + x.seconds, 0) > room) break; picked.push(it); }
+  if (!picked.length) fail('RESOURCE_LIMIT', 'The first preset does not fit 180 s');
+  const p = createProject({ title: 'Theater medley', axes: { rhythm: { bpm } } }), spb = 60 / bpm;
+  let at = 0;
+  p.tracks = picked.map(it => {
+    const preset = PRESETS.find(x => x.name === it.name), patch = patchFromPreset(preset.name), demo = theaterDemo(preset), k = bpm / (demo.song.bpm || 120), events = [];
+    const startBeat = at / spb, endBeat = (at + it.seconds) / spb, level = patch.params['amp.level'] ?? PARAM_BY_ID['amp.level'].def;
+    for (let pass = 0; pass < it.passes; pass++) for (const e of demo.song.events) {
+      const beat = startBeat + (pass * demo.song.lengthBeats + e.beat) * k; if (beat >= endBeat - 1e-6) continue;
+      if (e.type === 'on') events.push({ beat: r6(beat), type: 'on', note: e.note, vel: e.vel ?? 0.8, dur: r6(Math.min((e.dur ?? 1) * k, endBeat - beat)) });
+      else if (e.type === 'ramp-macro') events.push({ beat: r6(beat), type: 'ramp-macro', index: e.index, to: e.to, beats: r6(Math.min(e.beats * k, endBeat - beat)) });
+    }
+    events.push({ beat: r6(startBeat), type: 'param', id: 'amp.level', value: -36 }, { beat: r6(startBeat), type: 'ramp', id: 'amp.level', to: level, beats: r6(FADE_IN / spb) });
+    events.push({ beat: r6(Math.max(startBeat, endBeat - FADE_OUT / spb)), type: 'ramp', id: 'amp.level', to: -36, beats: r6(Math.min(FADE_OUT / spb, endBeat - startBeat)) });
+    at += it.seconds;
+    return { name: it.name.slice(0, 100), role: it.category, patch, gain: 0, pan: 0, mute: false, events: events.sort((x, y) => x.beat - y.beat) };
+  });
+  p.lengthBeats = r6(at / spb);
+  return { project: validateProject(p), items: picked, program: { ...prog, items: undefined, itemCount: prog.items.length } };
 }
 export function evolveProject(project, { index = 0, amount = 0.1, steps = 32 } = {}) {
   bounded(amount, 0, 0.5, 'amount'); bounded(steps, 2, 128, 'steps', true);

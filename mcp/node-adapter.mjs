@@ -8,8 +8,20 @@ import { fail, validateProject } from '../src/creation/project.js';
 import { renderPlan } from '../src/creation/render.js';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'renders', 'mcp');
-const TTL = 3600000, MAX_BYTES = 100000000;
-export function nodeAdapter({ baseUrl = '', timeoutMs = 60000, concurrency = 1, roomManager } = {}) {
+const TTL = 3600000;
+/** Render watchdog from AURORA_RENDER_TIMEOUT_MS (1 s – 30 min); default 60 s. A full 180 s, 8-track project can need several minutes. */
+export function renderTimeoutFromEnv(env = process.env) {
+  const raw = env.AURORA_RENDER_TIMEOUT_MS; if (raw === undefined || raw === '') return 60000;
+  const ms = Number(raw); if (!Number.isInteger(ms) || ms < 1000 || ms > 1800000) throw new Error('AURORA_RENDER_TIMEOUT_MS must be an integer from 1000 to 1800000');
+  return ms;
+}
+/** One-hour artifact budget (WAV + project JSON in renders/mcp) from AURORA_ARTIFACT_BUDGET_BYTES (60 MB – 10 GB); default 100 MB. One 180 s 48 kHz 24-bit WAV is ≈ 51.8 MB. */
+export function artifactBudgetFromEnv(env = process.env) {
+  const raw = env.AURORA_ARTIFACT_BUDGET_BYTES; if (raw === undefined || raw === '') return 100000000;
+  const bytes = Number(raw); if (!Number.isSafeInteger(bytes) || bytes < 60000000 || bytes > 10000000000) throw new Error('AURORA_ARTIFACT_BUDGET_BYTES must be an integer from 60000000 to 10000000000');
+  return bytes;
+}
+export function nodeAdapter({ baseUrl = '', timeoutMs = 60000, concurrency = 1, roomManager, maxBytes = 100000000 } = {}) {
   const artifacts = new Map(), active = new Set(); let diskBytes = 0, rendering = 0, closed = false;
   const purge = async () => {
     for (const [id, a] of artifacts) if (a.expiresAt < Date.now()) artifacts.delete(id);
@@ -30,7 +42,7 @@ export function nodeAdapter({ baseUrl = '', timeoutMs = 60000, concurrency = 1, 
       if (closed) fail('SHUTTING_DOWN', 'Renderer closed');
       if (rendering >= concurrency) fail('RENDER_BUSY', 'Renderer concurrency limit reached; retry after the current job');
       const projectBytes = Buffer.byteLength(JSON.stringify({ project, options }));
-      if (diskBytes + plan.bytes + projectBytes + 10000 > MAX_BYTES) fail('STORAGE_LIMIT', 'Artifact budget reached; wait for one-hour expiration');
+      if (diskBytes + plan.bytes + projectBytes + 10000 > maxBytes) fail('STORAGE_LIMIT', 'Artifact budget reached (' + Math.round(maxBytes / 1e6) + ' MB per hour); wait for one-hour expiration or raise AURORA_ARTIFACT_BUDGET_BYTES');
       const signal = ctx.signal;
       if (signal?.aborted) fail('CANCELLED', 'Render cancelled');
       rendering++;

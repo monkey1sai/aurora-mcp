@@ -30,6 +30,13 @@ try {
   await step('evolve_sound', { project, algorithm: 'website' }, d => `${d.project.tracks[0].events.length} events`);
   await step('morph_patch', { project, preset: 'Velvet Dusk', position: 0.5 }, d => d.project.tracks[0].patch.name);
   await step('generate_jam', { style: 'lofi', variation: 1, backing: { extra: null } }, d => `check ok=${d.check.ok}, ${d.project.tracks.length} tracks`);
+  const phrased = (await step('apply_phrase', { project, phrase: 'pad' }, d => `${d.project.lengthBeats} beats`)).project;
+  await step('morph_patch', { project: phrased, random: true, seed: 11, position: 0.4 }, d => `random B ${d.b}`);
+  const morphing = (await step('auto_morph', { project: phrased, random: true, seed: 11, period: 6 }, d => `${d.project.tracks[0].events.filter(e => e.type === 'params').length} sweep events, B ${d.b}`)).project;
+  await step('freeze_sound', { project: morphing, beat: 4 }, d => (assert.equal(d.project.tracks[0].events.filter(e => e.type !== 'on').length, 0), 'automation baked'));
+  await step('mutate_patch', { project, random: true, category: 'any', seed: 5 }, d => `${d.project.tracks[0].patch.category}: ${d.project.tracks[0].patch.name}`);
+  await step('theater_program', { source: 'all', shuffle: true, seed: 3 }, d => `${d.items.length} items, ${Math.round(d.totalSeconds)} s`);
+  await step('theater_program', { source: 'bell', medley: true, count: 3 }, d => `medley ${d.project.tracks.length} tracks, ${Math.round(d.project.lengthBeats * 0.5)} s`);
   const evidence = { endpoint, era: client.getProtocolEra?.(), render: cap.render, toolCount: tools.length, tools, results, at: new Date().toISOString() };
   if (process.argv[3]) await fs.writeFile(process.argv[3], JSON.stringify(evidence, null, 2));
   console.log(JSON.stringify(evidence, null, 2));

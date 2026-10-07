@@ -8,6 +8,13 @@ import * as L from '../../src/creation/library.js';
 import { evolveTargets as panelTargets, driftNoise as panelNoise } from '../../src/demo/drift.js';
 import { parsePresetFile } from '../../src/ui/app/patchTools.js';
 import { Project } from '../schemas.mjs';
+import { createHash } from 'node:crypto';
+import { renderProject, encodePcmWav } from '../../src/creation/render.js';
+import { presetValues, effectiveValues } from '../../src/demo/morph.js';
+import { PARAM_BY_ID, toNorm } from '../../src/dsp/params.js';
+import { PATCH_IDS } from '../../src/ui/app/store.js';
+const audioHash=x=>{const o=renderProject(x,{sampleRate:16000,tailSeconds:0});return createHash('sha256').update(Buffer.from(encodePcmWav(o.L,o.R,16000,16))).digest('hex');};
+const excerpt=(p,beats)=>P.edited(p,x=>{x.lengthBeats=beats;for(const t of x.tracks)t.events=t.events.filter(e=>e.beat<beats).map(e=>e.type==='on'?{...e,dur:Math.min(e.dur,beats-e.beat)}:e.beats!==undefined?{...e,beats:Math.min(e.beats,beats-e.beat)}:e);});
 const data=r=>{assert.notEqual(r.isError,true,JSON.stringify(r).slice(0,400));return r.structuredContent?.data||JSON.parse(r.content[0].text).data;};
 const NEW=['search_presets','step_preset','import_preset','export_preset','manage_library','get_parameter_help','compare_patches','get_song_info','get_tour_info'];
 test('preset browser search, chips, tags and stepping follow the website matching rules',()=>{
@@ -71,5 +78,59 @@ test('official SDK client discovers and invokes every website-parity tool and ex
     assert.equal((await call('morph_patch',{project,patch:(await call('get_preset',{name:'Velvet Dusk'})).patch,position:0.5})).project.revision,1);
     const jam=await call('generate_jam',{style:'house',variation:2,drums:true,backing:{extra:null}});assert.equal(typeof jam.check.ok,'boolean');Project.parse(jam.project);
     const bad=await client.callTool({name:'morph_patch',arguments:{project,position:0.5}});assert.equal(bad.isError,true);
+  }finally{await client.close();await app.close();}
+});
+test('params automation events reach the renderer in single- and multi-track projects (tour timelines were silent)',()=>{
+  const p=excerpt(C.loadTour('supersaw-pad','timeline'),16),strip=x=>P.edited(x,y=>{for(const t of y.tracks)t.events=t.events.filter(e=>e.type!=='params');});
+  const asParam=P.edited(p,y=>{y.tracks[0].events=y.tracks[0].events.flatMap(e=>e.type==='params'?Object.entries(e.values).map(([id,value])=>({beat:e.beat,type:'param',id,value})):[e]);});
+  assert.ok(p.tracks[0].events.some(e=>e.type==='params'));assert.notEqual(audioHash(p),audioHash(strip(p)));assert.equal(audioHash(p),audioHash(asParam));
+  const multi=P.addTrack(p,{...structuredClone(p.tracks[0]),name:'Dup',events:[]});assert.notEqual(audioHash(multi),audioHash(strip(multi)));
+});
+test('auto-morph, freeze, random B, random category and theater follow the website panels',()=>{
+  // applyPhrase sets the phrase tempo; pin 100 BPM so a 6 s period peaks exactly on beat 5
+  let p=P.setParameters(excerpt(C.applyPhrase(P.createProject({patch:P.patchFromPreset('Aurora Pad')}),'pad'),16),{'global.bpm':100});
+  const eff=patch=>effectiveValues(presetValues(patch),patch.macros);
+  const differ=(x,y)=>PATCH_IDS.filter(id=>!/^macro/.test(id)).filter(id=>{const q=PARAM_BY_ID[id];return q.type==='enum'||q.type==='bool'?x[id]!==y[id]:Math.abs(toNorm(q,x[id])-toNorm(q,y[id]))>0.01;});
+  assert.equal(C.randomPreset(7,['Aurora Pad']),C.randomPreset(7,['Aurora Pad']));assert.notEqual(C.randomPreset(7,['Aurora Pad']),'Aurora Pad');
+  for(const b of ['Velvet Dusk','Solar Brass','Moonlit Suitcase']){
+    const m=C.autoMorphProject(p,P.patchFromPreset(b),{period:6,steps:20,endBeat:16});Project.parse(m);assert.notEqual(audioHash(m),audioHash(p));
+    assert.deepEqual(differ(eff(C.freezeProject(m,{beat:5}).tracks[0].patch),eff(C.morphProject(p,b,1).tracks[0].patch)),[]);
+    assert.deepEqual(differ(eff(C.freezeProject(m,{beat:2.5}).tracks[0].patch),eff(C.morphProject(p,b,0.5-0.5*Math.cos(Math.PI/2)).tracks[0].patch)),[]);
+    assert.equal(C.freezeProject(m,{beat:5}).tracks[0].events.filter(e=>e.type!=='on').length,0);
+  }
+  let r=P.setParameters(p,{'filter.cutoff':1000});r=P.edited(r,x=>x.tracks[0].events.push({beat:0,type:'ramp',id:'filter.cutoff',to:8000,beats:8},{beat:6,type:'param',id:'filter.res',value:0.5}));
+  assert.ok(Math.abs(C.freezeProject(r,{beat:4}).tracks[0].patch.params['filter.cutoff']-Math.sqrt(1000*8000))<2);assert.equal(C.freezeProject(r,{beat:7}).tracks[0].patch.params['filter.res'],0.5);
+  const cut=P.edited(r,x=>x.tracks[0].events.push({beat:2,type:'param',id:'filter.cutoff',value:500}));assert.equal(C.freezeProject(cut,{beat:4}).tracks[0].patch.params['filter.cutoff'],500);
+  assert.equal(C.mutateProject(p,{random:true,seed:3,category:'bass'}).tracks[0].patch.category,'bass');assert.equal(C.mutateProject(p,{random:true,seed:3}).tracks[0].patch.category,'pad');
+  assert.throws(()=>C.mutateProject(p,{random:true,category:'drum'}),/category/);
+  const prog=C.theaterProgram({source:'pad'});assert.equal(prog.items.length,10);assert.ok(prog.items.every(i=>i.seconds>=10&&i.passes>=1));
+  assert.deepEqual(C.theaterProgram({source:'all',shuffle:true,seed:9}).items.map(i=>i.name),C.theaterProgram({source:'all',shuffle:true,seed:9}).items.map(i=>i.name));
+  assert.equal(C.theaterProgram({source:'songs'}).items.length,6);assert.throws(()=>C.theaterMedley({source:'songs'}),/songs/);
+  const med=C.theaterMedley({source:'bell'});Project.parse(med.project);assert.ok(med.project.tracks.length>=2&&med.project.lengthBeats*60/120<=178);
+  assert.ok(med.project.tracks.every(t=>t.events.some(e=>e.type==='ramp'&&e.id==='amp.level'&&e.to===-36)));
+});
+test('studio browser render budget scales with planned audio length and the Node watchdog is configurable',async()=>{
+  const p=P.createProject({axes:{rhythm:{bpm:96}}}),at=beats=>P.browserRenderBudget({...p,lengthBeats:beats},{tailSeconds:4});
+  assert.equal(at(4),60);assert.equal(at(280),537);assert.equal(P.browserRenderBudget({...p,lengthBeats:288},{tailSeconds:8}),564);assert.ok(at(280)*1000>60000);
+  const src=await import('node:fs/promises').then(f=>f.readFile(new URL('../../src/creation/studio.js',import.meta.url),'utf8'));assert.ok(!/,60000\)/.test(src)&&/browserRenderBudget\(project,options\)/.test(src));
+  const { renderTimeoutFromEnv, artifactBudgetFromEnv, nodeAdapter }=await import('../node-adapter.mjs');assert.equal(renderTimeoutFromEnv({}),60000);assert.equal(renderTimeoutFromEnv({AURORA_RENDER_TIMEOUT_MS:'600000'}),600000);assert.throws(()=>renderTimeoutFromEnv({AURORA_RENDER_TIMEOUT_MS:'10'}),/1000/);
+  assert.equal(artifactBudgetFromEnv({}),100000000);assert.equal(artifactBudgetFromEnv({AURORA_ARTIFACT_BUDGET_BYTES:'500000000'}),500000000);
+  for(const bad of ['1000','150000000.5','20000000000','abc'])assert.throws(()=>artifactBudgetFromEnv({AURORA_ARTIFACT_BUDGET_BYTES:bad}),/60000000/);
+  const tiny=nodeAdapter({maxBytes:1000});try{await assert.rejects(tiny.render(C.designSfx({type:'ui',seconds:0.2}),{sampleRate:16000,tailSeconds:0}),e=>e.code==='STORAGE_LIMIT'&&/1 MB|0 MB/.test(e.message));}finally{await tiny.close();}
+});
+test('official SDK client invokes auto_morph, freeze_sound, theater_program and the random options',async()=>{
+  const app=await startHttp({port:0}),client=new Client({name:'aurora-parity-2',version:'1.0.0'},{versionNegotiation:{mode:'auto'}});
+  try{
+    await client.connect(new StreamableHTTPClientTransport(new URL(app.url+'/mcp')));
+    const call=(name,args)=>client.callTool({name,arguments:args}).then(data);
+    for(const n of ['auto_morph','freeze_sound','theater_program'])assert.ok((await client.listTools()).tools.some(t=>t.name===n),n);
+    const project=excerpt(C.applyPhrase(P.createProject({patch:P.patchFromPreset('Aurora Pad')}),'pad'),8);
+    const rb=await call('morph_patch',{project,random:true,seed:11,position:0.4});assert.ok(rb.b&&rb.b!=='Aurora Pad');
+    const am=await call('auto_morph',{project,random:true,seed:11,period:4});assert.equal(am.b,rb.b);assert.ok(am.project.tracks[0].events.some(e=>e.type==='params'));
+    const fr=await call('freeze_sound',{project:am.project,beat:4});assert.equal(fr.project.tracks[0].events.filter(e=>e.type!=='on').length,0);
+    assert.equal((await call('mutate_patch',{project,random:true,category:'any',seed:5})).project.revision,project.revision+1);
+    assert.equal((await call('theater_program',{source:'lead'})).items.length,10);
+    const med=await call('theater_program',{source:'pluck',medley:true,count:3});assert.equal(med.project.tracks.length,3);
+    assert.equal((await client.callTool({name:'auto_morph',arguments:{project,preset:'Velvet Dusk',random:true}})).isError,true);
   }finally{await client.close();await app.close();}
 });

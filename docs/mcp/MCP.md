@@ -46,14 +46,16 @@ HTTP 範例：先 `npm run mcp:http`，在支援 URL 型 MCP 的宿主新增 `ht
 
 ## 功能覆蓋
 
-公開 Cloudflare 提供 36 tools；Node loopback 另有 `browser_command`，共 37 tools。
+公開 Cloudflare 提供 39 tools；Node loopback 另有 `browser_command`，共 40 tools。
 
 | 網站能力 | MCP 對應 | 範圍 |
 |---|---|---|
 | 音色、235 原生參數、4 Macro、8 調變路由 | get_catalog/get_parameter_schema/get_preset、set_parameters/set_macros/set_track | 含全部引擎、濾波、包絡、FX；global 與 patch 分開儲存 |
 | 動機作曲與多聲部 | create_project/compose_music/generate_jam、add_track/remove_track/resize_project | 最多8聲部；7 Jam風格 |
 | 場景音效 | design_sound_effect | impact/whoosh/riser/downer/ambience/ui/alarm/footstep/laser；可繼續改參數 |
-| 魔法調音、Morph、突變／隨機、演化 | apply_mood/morph_patch/mutate_patch/evolve_sound | 重用網站共用運算；apply_mood 回傳網站變更摘要；Morph B 可為原廠音色或任意 patch；evolve_sound `algorithm:"website"` 使用網站自動演化（`src/demo/drift.js`）輸出明確自動化 |
+| 魔法調音、Morph、突變／隨機、演化 | apply_mood/morph_patch/mutate_patch/evolve_sound | 重用網站共用運算；apply_mood 回傳網站變更摘要；Morph B 可為原廠音色、任意 patch 或 seeded 🎲 隨機 B；mutate_patch `category` 對應隨機音色分類；evolve_sound `algorithm:"website"` 使用網站自動演化（`src/demo/drift.js`）輸出明確自動化 |
+| 自動變形、凍結／保留 | auto_morph、freeze_sound | auto_morph 依網站餘弦週期（3–40 s）掃動 A⇄B，輸出 `params` 自動化並含引擎切換前後的 duck；freeze_sound 依 sequencer 規則（寫入取消 ramp、新 ramp 取代舊 ramp）把某拍的狀態寫回音色並移除自動化 |
+| 劇院模式 | theater_program | 全部音色／單一分類／示範曲連播、seeded 洗牌、每項依完整樂句次數決定停留；`medley` 產生可渲染的連續演出（最多 8 個音色、180 秒內），含示範巨集動作與切換時的輸出淡出淡入；示範曲連播只提供節目單 |
 | 示範曲、聲音導覽、音色樂句 | load_demo_song/load_tour/apply_phrase、get_song_info/get_tour_info | 6完整曲／明確節錄、段落與聲部資訊；6導覽最終或時間軸、逐步雙語說明；apply_phrase `auto` 對應 ▶ 示範樂句，`macroRides` 加入示範巨集動作 |
 | Jam 面板選項 | generate_jam | variation（無盡模式下一段）、主奏音色／角色、鼓組開關、pad/bass/extra 伴奏（null 靜音），回傳網站樂理檢查 |
 | 音色瀏覽器、上一個／下一個 | search_presets/step_preset、get_catalog.details | 與網站相同的分類、標籤、多字搜尋及計數；details 含標籤、樂句說明、魔法範例、和弦、音階、Jam 預設 |
@@ -62,7 +64,17 @@ HTTP 範例：先 `npm run mcp:http`，在支援 URL 型 MCP 的宿主新增 `ht
 | 復原、保留、匯入／匯出 | 回傳 immutable project、export_project；Studio history/commit/revert/import | project 為 client-owned，expectedRevision 只檢查傳入 snapshot，沒有中央協作鎖 |
 | 預聽、WAV | render_audio/get_render_result | Node自動render；Cloudflare排隊後由使用者瀏覽器render |
 | 當前頁面控制 | browser_command | 僅loopback、使用者啟用30分鐘、可撤銷；queued與applied/audio-running分開 |
-| 即時播放、表頭、Tap tempo、鍵盤／MIDI、視覺、劇院、導覽動畫 | 完整合成器頁面 | 需要瀏覽器音訊或輸入裝置，遠端 MCP 不提供；Studio與完整合成器音色／globals可往返 |
+| 即時播放、表頭、Tap tempo、鍵盤／MIDI、視覺、劇院畫面、導覽動畫 | 完整合成器頁面 | 需要瀏覽器音訊或輸入裝置，遠端 MCP 不提供；Studio與完整合成器音色／globals可往返 |
+
+`params` 自動化事件（含 `load_tour` timeline 與 `auto_morph`）由 renderer 拆成 sequencer 的 `param` 事件；修正前這類事件通過驗證但在渲染時被略過。
+
+## 壓力測試與名曲驗證
+
+`node mcp/stress/run.mjs <outDir> [--cloud <local workerd /mcp>] [--production <url>]` 用公有領域曲目（貝多芬《歡樂頌》、帕海貝爾《卡農》、葛利格《山魔王的大廳》、佩措爾德《G 大調小步舞曲》；只用旋律、原創編曲）經 MCP 建立、渲染並以純正弦參考旋律檢查音高（YIN）與起音時間；另測上限拒絕、並行、吞吐、預設 watchdog 與雲端大型專案。正式站只做列工具、驗證與必被拒的渲染請求，不建立 job、不佔每日配額。結果見 [stress-famous.json](evidence/stress-famous.json) 與 [cross-runtime-canon.json](evidence/cross-runtime-canon.json)。
+
+- Node 渲染 watchdog 預設 60 秒；`AURORA_RENDER_TIMEOUT_MS`（1000–1800000）可調。180 秒、8 聲部、48 kHz 專案實測約 172 秒，預設值會回 `RENDER_TIMEOUT`。
+- Node artifact 預算預設為同目錄 100 MB／1 小時，`AURORA_ARTIFACT_BUDGET_BYTES`（60000000–10000000000）可調；一個 48 kHz／24-bit 180 秒 WAV 約 51.8 MB，預設值下一小時內第二個同規格渲染會回 `STORAGE_LIMIT`。預算計入同一目錄所有未到期 artifact，多個 process 共用目錄時沒有跨 process 鎖。
+- Studio 瀏覽器渲染預算依作品長度計算（每秒音訊 3 秒，60 秒–10 分鐘），舊版固定 60 秒會讓 MCP 已接受的長篇 job 無法完成。
 
 四個 JSON resources：`aurora://axes`、`aurora://catalog`、`aurora://parameters`、`aurora://capabilities`。Prompt：`scene_sound`。
 
@@ -70,7 +82,7 @@ HTTP 範例：先 `npm run mcp:http`，在支援 URL 型 MCP 的宿主新增 `ht
 
 共用模型上限：180秒（含尾音）、48kHz、8 tracks、8192 events、4096 automation、1.5MB project JSON、52MB WAV。輸出立體 PCM 16/24-bit；支援16/24/44.1/48kHz。限幅至 -0.3dBFS；末尾淡出與可能截斷自然尾音會回報 warning。`loop` 使用起訖淡出，沒有保證無縫循環；RMS是renderer統計，並非LUFS。
 
-Node：每process一次render、60秒watchdog、可取消、worker old-generation256MB；ArrayBuffer仍由輸出／作品上限限制，這不是完整process記憶體硬上限。檔案位於`renders/mcp`，1小時到期，每分鐘清理同目錄符合UUID規則的任務檔；process關閉後沒有背景清理，下一次啟動/請求再清。總budget100MB包含WAV與JSON；多process共用目錄未提供跨process鎖或嚴格總額保證。API只讀目前process建立的artifact，重啟後舊artifact id不可讀。
+Node：每process一次render、watchdog預設60秒（`AURORA_RENDER_TIMEOUT_MS`可調）、可取消、worker old-generation256MB；ArrayBuffer仍由輸出／作品上限限制，這不是完整process記憶體硬上限。檔案位於`renders/mcp`，1小時到期，每分鐘清理同目錄符合UUID規則的任務檔；process關閉後沒有背景清理，下一次啟動/請求再清。總budget預設100MB包含WAV與JSON（`AURORA_ARTIFACT_BUDGET_BYTES`可調）；多process共用目錄未提供跨process鎖或嚴格總額保證。API只讀目前process建立的artifact，重啟後舊artifact id不可讀。
 
 Cloudflare：公開、匿名、無私人圖庫或OAuth。`render_audio`建立SQLite Durable Object job；瀏覽器顯式render並PUT WAV，WAV格式/長度與SHA256由server驗證，音訊內容與metrics來源仍是client，沒有證明其必定來自合成器。WAV上限32MB，超出須降低取樣率／位元深度／長度。每IP60 requests/min；AdmissionBudget全域每日（UTC）5000 requests、20 jobs、100MB預約音訊，失敗job不退回當日額度。Body讀取30秒逾時。每job1小時alarm到期刪除；UUID為未列出的公開連結，持有連結的人能取用，不適合私人素材。配額並不是整個Cloudflare帳戶的費用上限；生產發布前須確認運算模式與帳戶預算。
 

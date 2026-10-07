@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { createMcpHandler } from '@modelcontextprotocol/server';
 import { toNodeHandler } from '@modelcontextprotocol/node';
 import { createServer } from './server.mjs';
-import { nodeAdapter, ROOT } from './node-adapter.mjs';
+import { nodeAdapter, renderTimeoutFromEnv, artifactBudgetFromEnv, ROOT } from './node-adapter.mjs';
 import { createRooms } from './rooms.mjs';
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.wav': 'audio/wav', '.png': 'image/png' };
 export async function startHttp({ port = 8788 } = {}) {
@@ -44,7 +44,7 @@ export async function startHttp({ port = 8788 } = {}) {
   });
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(port, '127.0.0.1', resolve); });
   actualPort = server.address().port;
-  const url = 'http://127.0.0.1:' + actualPort; adapter = nodeAdapter({ baseUrl: url, roomManager: rooms });
+  const url = 'http://127.0.0.1:' + actualPort; adapter = nodeAdapter({ baseUrl: url, roomManager: rooms, timeoutMs: renderTimeoutFromEnv(), maxBytes: artifactBudgetFromEnv() });
   const handler = createMcpHandler(() => createServer(adapter), { legacy: 'stateless', maxRequestBodySize: 1500000 });
   endpoint = toNodeHandler(handler, { maxRequestBodySize: 1500000 });
   return { url, adapter, rooms, server, async close() { rooms.close(); await adapter.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); } };

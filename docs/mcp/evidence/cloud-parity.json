@@ -2,12 +2,13 @@
   "endpoint": "https://aurora-mcp.xshiujj.workers.dev/mcp",
   "era": "modern",
   "render": "browser-worker: user opens renderUrl, renders and uploads public expiring WAV",
-  "toolCount": 36,
+  "toolCount": 39,
   "tools": [
     "add_track",
     "apply_mood",
     "apply_phrase",
     "apply_timbre",
+    "auto_morph",
     "compare_patches",
     "compose_music",
     "create_project",
@@ -15,6 +16,7 @@
     "evolve_sound",
     "export_preset",
     "export_project",
+    "freeze_sound",
     "generate_jam",
     "get_capabilities",
     "get_catalog",
@@ -38,100 +40,136 @@
     "set_parameters",
     "set_track",
     "step_preset",
+    "theater_program",
     "update_axes",
     "validate_project"
   ],
   "results": [
     {
       "tool": "search_presets",
-      "ms": 520,
+      "ms": 1008,
       "note": "1 matches"
     },
     {
       "tool": "step_preset",
-      "ms": 500,
+      "ms": 396,
       "note": "Velvet Dusk"
     },
     {
       "tool": "get_preset",
-      "ms": 524,
+      "ms": 435,
       "note": "Aurora Pad"
     },
     {
       "tool": "create_project",
-      "ms": 473,
+      "ms": 520,
       "note": "revision 0"
     },
     {
       "tool": "export_preset",
-      "ms": 451,
+      "ms": 404,
       "note": "aurora-preset"
     },
     {
       "tool": "import_preset",
-      "ms": 460,
+      "ms": 457,
       "note": "1 preset, 0 warnings"
     },
     {
       "tool": "manage_library",
-      "ms": 534,
+      "ms": 441,
       "note": "u:Parity"
     },
     {
       "tool": "manage_library",
-      "ms": 446,
+      "ms": 442,
       "note": "favourite true"
     },
     {
       "tool": "get_parameter_help",
-      "ms": 518,
+      "ms": 415,
       "note": "1.15 kHz, 36%"
     },
     {
       "tool": "compare_patches",
-      "ms": 471,
+      "ms": 443,
       "note": "119 changed"
     },
     {
       "tool": "get_song_info",
-      "ms": 529,
+      "ms": 448,
       "note": "6 sections"
     },
     {
       "tool": "get_tour_info",
-      "ms": 426,
+      "ms": 461,
       "note": "14 steps"
     },
     {
       "tool": "get_catalog",
-      "ms": 462,
+      "ms": 421,
       "note": "100 tagged presets"
     },
     {
       "tool": "apply_mood",
-      "ms": 412,
+      "ms": 486,
       "note": "15 changes"
     },
     {
       "tool": "apply_phrase",
-      "ms": 419,
+      "ms": 431,
       "note": "4 macro ramps"
     },
     {
       "tool": "evolve_sound",
-      "ms": 474,
+      "ms": 420,
       "note": "768 events"
     },
     {
       "tool": "morph_patch",
-      "ms": 521,
+      "ms": 497,
       "note": "Aurora Pad morph"
     },
     {
       "tool": "generate_jam",
-      "ms": 516,
+      "ms": 403,
       "note": "check ok=true, 4 tracks"
+    },
+    {
+      "tool": "apply_phrase",
+      "ms": 387,
+      "note": "16 beats"
+    },
+    {
+      "tool": "morph_patch",
+      "ms": 412,
+      "note": "random B Moonlit Suitcase"
+    },
+    {
+      "tool": "auto_morph",
+      "ms": 438,
+      "note": "54 sweep events, B Moonlit Suitcase"
+    },
+    {
+      "tool": "freeze_sound",
+      "ms": 571,
+      "note": "automation baked"
+    },
+    {
+      "tool": "mutate_patch",
+      "ms": 383,
+      "note": "pad: Electric Ripple"
+    },
+    {
+      "tool": "theater_program",
+      "ms": 396,
+      "note": "100 items, 2539 s"
+    },
+    {
+      "tool": "theater_program",
+      "ms": 390,
+      "note": "medley 3 tracks, 76 s"
     }
   ],
-  "at": "2026-10-06T11:29:54.085Z"
+  "at": "2026-10-07T02:08:16.603Z"
 }

@@ -23,10 +23,12 @@ export function timedEvents(events, bpm) {
   }
   return out.sort((a, b) => a.time - b.time || (a.type === 'off' ? -1 : b.type === 'off' ? 1 : 0));
 }
+/** The sequencer only knows single-parameter writes: split each 'params' event into 'param' events at the same beat (order kept). */
+export const sequencerEvents = events => events.flatMap(e => e.type === 'params' ? Object.entries(e.values).map(([id, value]) => ({ beat: e.beat, type: 'param', id, value })) : [e]);
 export function songForProject(p) {
   validateProject(p);
   return { id: 'mcp-project', title: p.title, bpm: p.globals['global.bpm'], lengthBeats: p.lengthBeats, loop: false,
-    parts: p.tracks.map(t => ({ name: t.name, role: t.role, patch: { ...t.patch, params: { ...t.patch.params, 'scale.root': p.globals['scale.root'] ?? 0, 'scale.type': p.globals['scale.type'] ?? 'off' } }, gain: t.gain, pan: t.pan, mute: t.mute, events: t.events })) };
+    parts: p.tracks.map(t => ({ name: t.name, role: t.role, patch: { ...t.patch, params: { ...t.patch.params, 'scale.root': p.globals['scale.root'] ?? 0, 'scale.type': p.globals['scale.type'] ?? 'off' } }, gain: t.gain, pan: t.pan, mute: t.mute, events: sequencerEvents(t.events) })) };
 }
 export function renderProject(project, options = {}) {
   const plan = renderPlan(project, options), sr = plan.sampleRate, started = performance.now();
@@ -34,7 +36,7 @@ export function renderProject(project, options = {}) {
   if (project.tracks.length === 1) {
     const t = project.tracks[0], patch = { ...t.patch, params: { ...t.patch.params, ...project.globals } };
     // Same sequencer for one track and ensemble: ramps and note ordering match.
-    const events = [{ time: 0, type: 'seqLoad', song: { bpm: project.globals['global.bpm'], lengthBeats: project.lengthBeats, loop: false, events: t.events } }, { time: 0, type: 'seqPlay' }];
+    const events = [{ time: 0, type: 'seqLoad', song: { bpm: project.globals['global.bpm'], lengthBeats: project.lengthBeats, loop: false, events: sequencerEvents(t.events) } }, { time: 0, type: 'seqPlay' }];
     const result = renderOffline(patch, events, plan.seconds, sr, { seed: project.seed });
     L = result.L; R = result.R; synth = result.synth;
     const gain = t.mute ? 0 : 10 ** (t.gain / 20);

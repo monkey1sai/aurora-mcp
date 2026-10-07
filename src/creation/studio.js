@@ -1,4 +1,4 @@
-import { AXES, copy, createProject, validateProject, setParameters, axesWithDefaults, edited } from './project.js';
+import { AXES, copy, createProject, validateProject, setParameters, axesWithDefaults, edited, browserRenderBudget } from './project.js';
 import { compose, designSfx, jamProject, catalog, moodProject, morphProject, mutateProject, evolveProject, loadSong, loadTour } from './compose.js';
 const $ = id => document.getElementById(id), C = catalog(), history = [], future = [];
 let project = compose(createProject({ title: $('title').value })), committed = copy(project), wav = null, metrics = null, worker = null, context = null, source = null, renderId = 0, room = null, pollTimer = null, renderCancel = null, playEpoch = 0, commandEpoch = 0;
@@ -69,8 +69,9 @@ function render(exactOptions) {
   $('cancel').disabled=false;status('正在將 '+project.tracks.length+' 個聲部渲染成 WAV…');
   return new Promise((resolve,reject)=>{
     const w=new Worker(new URL('./render-worker.js',import.meta.url),{type:'module'});worker=w;
-    const timer=setTimeout(()=>{if(worker===w){cancel(false);}},60000);
-    renderCancel=()=>{clearTimeout(timer);reject(new Error('CANCELLED：渲染已取消或超過 60 秒預算。'));};
+    const budget=browserRenderBudget(project,options);
+    const timer=setTimeout(()=>{if(worker===w){cancel(false);}},budget*1000);
+    renderCancel=()=>{clearTimeout(timer);reject(new Error('CANCELLED：渲染已取消或超過 '+budget+' 秒預算。'));};
     w.onmessage=ev=>{if(id!==renderId)return;clearTimeout(timer);renderCancel=null;w.terminate();worker=null;$('cancel').disabled=true;const r=ev.data;if(r.status==='error'){reject(new Error(r.code+': '+r.message));return;}wav=r.wav;metrics=r.metrics;$('download-wav').disabled=false;$('metrics').textContent=JSON.stringify(metrics,null,2);status('WAV 已完成：'+metrics.seconds.toFixed(2)+' 秒。'+metrics.warnings.join(' · '));resolve(r);};
     w.onerror=e=>{clearTimeout(timer);renderCancel=null;w.terminate();worker=null;$('cancel').disabled=true;reject(new Error(e.message));};w.postMessage({id,project,options});
   });

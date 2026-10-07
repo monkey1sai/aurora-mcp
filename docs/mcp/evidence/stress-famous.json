@@ -1,0 +1,414 @@
+{
+  "at": "2026-10-07T02:19:37.042Z",
+  "node": "v22.22.0",
+  "repertoire": "public domain; melodies only; original arrangements",
+  "pieces": {
+    "ode-to-joy": {
+      "title": "Ode to Joy (Beethoven, 1824)",
+      "tracks": 7,
+      "events": 432,
+      "automation": 0,
+      "jsonBytes": 37580,
+      "seconds": 80.77,
+      "features": [
+        "apply_mood warmer + wider on Strings"
+      ],
+      "buildMs": 617,
+      "render": {
+        "status": "artifact-ready",
+        "renderMs": 34476,
+        "realtimeFactor": 2.43,
+        "bytes": 22165388,
+        "sha256": "d6b5e038e6fb0883018611f58fc638cbeaef610d31430196fa854c55ae0e2ee7",
+        "warnings": [
+          "TAIL_FADED_AT_BUDGET: increase tailSeconds for a longer natural decay"
+        ]
+      },
+      "audio": {
+        "sampleRate": 44100,
+        "bitDepth": 24,
+        "seconds": 83.769,
+        "peakDbFS": -8.44,
+        "lufs": -22.8,
+        "nonfinite": 0
+      }
+    },
+    "canon-in-d": {
+      "title": "Canon in D (Pachelbel, c. 1700)",
+      "tracks": 8,
+      "events": 7564,
+      "automation": 4085,
+      "jsonBytes": 956395,
+      "seconds": 175,
+      "features": [
+        "auto_morph Choir ⇄ Aurora Pad, 24 s period",
+        "evolve_sound website on Harp: 15 targets × 247 steps"
+      ],
+      "buildMs": 1016,
+      "render": {
+        "status": "artifact-ready",
+        "renderMs": 172422,
+        "realtimeFactor": 1.04,
+        "bytes": 51552044,
+        "sha256": "e4b6c1dcab889d2fa7f4247a291e4a868072c065123bce0f365e1e50c372e847",
+        "warnings": [
+          "TAIL_FADED_AT_BUDGET: increase tailSeconds for a longer natural decay"
+        ]
+      },
+      "audio": {
+        "sampleRate": 48000,
+        "bitDepth": 24,
+        "seconds": 179,
+        "peakDbFS": -8,
+        "lufs": -21.1,
+        "nonfinite": 0
+      }
+    },
+    "mountain-king": {
+      "title": "In the Hall of the Mountain King (Grieg, 1875)",
+      "tracks": 7,
+      "events": 1542,
+      "automation": 528,
+      "jsonBytes": 127370,
+      "seconds": 75.5,
+      "features": [
+        "evolve_sound website on Brass"
+      ],
+      "buildMs": 131,
+      "render": {
+        "status": "artifact-ready",
+        "renderMs": 34656,
+        "realtimeFactor": 2.27,
+        "bytes": 20771144,
+        "sha256": "aed7fba033db6bf4117d58143f256508fc66a5c78cbe7c7d19df797b2d0b213d",
+        "warnings": []
+      },
+      "audio": {
+        "sampleRate": 44100,
+        "bitDepth": 24,
+        "seconds": 78.5,
+        "peakDbFS": -6.06,
+        "lufs": -23.4,
+        "nonfinite": 0
+      }
+    },
+    "minuet-in-g": {
+      "title": "Minuet in G (Petzold, c. 1725)",
+      "tracks": 4,
+      "events": 307,
+      "automation": 36,
+      "jsonBytes": 43355,
+      "seconds": 51,
+      "features": [
+        "auto_morph harpsichord ⇄ Golden Twelve in the second pass",
+        "evolve_sound on Celesta, then freeze_sound at beat 72"
+      ],
+      "buildMs": 112,
+      "render": {
+        "status": "artifact-ready",
+        "renderMs": 18570,
+        "realtimeFactor": 2.91,
+        "bytes": 14288444,
+        "sha256": "b2d4edca83c7fa4790854d3023f09940835040840e61edf8f07ea712dfe05424",
+        "warnings": []
+      },
+      "audio": {
+        "sampleRate": 44100,
+        "bitDepth": 24,
+        "seconds": 54,
+        "peakDbFS": -3.62,
+        "lufs": -23.1,
+        "nonfinite": 0
+      }
+    }
+  },
+  "verification": {
+    "ode-to-joy": {
+      "renderMs": 798,
+      "checked": 62,
+      "pitchCents": {
+        "n": 62,
+        "mean": 0.030067535211089555,
+        "median": 0.02312245674073517,
+        "p95Abs": 0.07192278578141433,
+        "maxAbs": 0.07336992871707278
+      },
+      "onsetMs": {
+        "n": 62,
+        "mean": 2.4361559139784945,
+        "median": 2.375,
+        "p95Abs": 2.854166666666667,
+        "maxAbs": 2.958333333333333
+      },
+      "missingPitch": 0,
+      "missingOnset": 0,
+      "worst": [
+        {
+          "beat": 4,
+          "note": 69,
+          "expectedHz": 440,
+          "measuredHz": 440.0186476535259,
+          "cents": 0.07336992871707278,
+          "onsetMs": 2.5416666666666665
+        },
+        {
+          "beat": 19,
+          "note": 69,
+          "expectedHz": 440,
+          "measuredHz": 440.01862434510355,
+          "cents": 0.07327822275061109,
+          "onsetMs": 2.4375
+        },
+        {
+          "beat": 3,
+          "note": 69,
+          "expectedHz": 440,
+          "measuredHz": 440.01836668809545,
+          "cents": 0.07226448221463433,
+          "onsetMs": 2.458333333333333
+        }
+      ]
+    },
+    "canon-in-d": {
+      "renderMs": 644,
+      "checked": 32,
+      "pitchCents": {
+        "n": 32,
+        "mean": 0.1081445910562455,
+        "median": 0.09740614416874668,
+        "p95Abs": 0.20104174244045303,
+        "maxAbs": 0.20347365569380635
+      },
+      "onsetMs": {
+        "n": 32,
+        "mean": 2.237630208333333,
+        "median": 2.2291666666666665,
+        "p95Abs": 2.6458333333333335,
+        "maxAbs": 2.75
+      },
+      "missingPitch": 0,
+      "missingOnset": 0,
+      "worst": [
+        {
+          "beat": 63,
+          "note": 79,
+          "expectedHz": 783.9908719634986,
+          "measuredHz": 784.0830206036908,
+          "cents": 0.20347365569380635,
+          "onsetMs": 2.375
+        },
+        {
+          "beat": 60,
+          "note": 79,
+          "expectedHz": 783.9908719634986,
+          "measuredHz": 784.0819191809505,
+          "cents": 0.20104174244045303,
+          "onsetMs": 2.0625
+        },
+        {
+          "beat": 51,
+          "note": 79,
+          "expectedHz": 783.9908719634986,
+          "measuredHz": 784.0817534298993,
+          "cents": 0.20067576806093548,
+          "onsetMs": 2.1666666666666665
+        }
+      ]
+    },
+    "mountain-king": {
+      "renderMs": 1328,
+      "checked": 208,
+      "pitchCents": {
+        "n": 208,
+        "mean": 0.05024063445053377,
+        "median": 0.04054865080552584,
+        "p95Abs": 0.13879931928898873,
+        "maxAbs": 0.192571614788339
+      },
+      "onsetMs": {
+        "n": 208,
+        "mean": 2.437499999999999,
+        "median": 2.395833333333333,
+        "p95Abs": 2.875,
+        "maxAbs": 3.0833333333333335
+      },
+      "missingPitch": 0,
+      "missingOnset": 0,
+      "worst": [
+        {
+          "beat": 84.716875,
+          "note": 78,
+          "expectedHz": 739.9888454232689,
+          "measuredHz": 740.0711617182317,
+          "cents": 0.192571614788339,
+          "onsetMs": 2.2708333333333335
+        },
+        {
+          "beat": 44.537351,
+          "note": 78,
+          "expectedHz": 739.9888454232689,
+          "measuredHz": 740.0711314689321,
+          "cents": 0.19250085318975002,
+          "onsetMs": 2.6041666666666665
+        },
+        {
+          "beat": 138.44437,
+          "note": 78,
+          "expectedHz": 739.9888454232689,
+          "measuredHz": 740.0706802885794,
+          "cents": 0.19144541541670299,
+          "onsetMs": 2.5833333333333335
+        }
+      ]
+    },
+    "minuet-in-g": {
+      "renderMs": 663,
+      "checked": 64,
+      "pitchCents": {
+        "n": 64,
+        "mean": 0.07671430546332514,
+        "median": 0.07877563553333179,
+        "p95Abs": 0.1889636454447918,
+        "maxAbs": 0.20143409217501726
+      },
+      "onsetMs": {
+        "n": 64,
+        "mean": 2.2259114583333335,
+        "median": 2.1666666666666665,
+        "p95Abs": 2.5833333333333335,
+        "maxAbs": 2.6041666666666665
+      },
+      "missingPitch": 0,
+      "missingOnset": 0,
+      "worst": [
+        {
+          "beat": 9,
+          "note": 79,
+          "expectedHz": 783.9908719634986,
+          "measuredHz": 784.0820968775294,
+          "cents": 0.20143409217501726,
+          "onsetMs": 2.0416666666666665
+        },
+        {
+          "beat": 33,
+          "note": 79,
+          "expectedHz": 783.9908719634986,
+          "measuredHz": 784.0820496787906,
+          "cents": 0.20132987851345346,
+          "onsetMs": 2.1041666666666665
+        },
+        {
+          "beat": 8.5,
+          "note": 78,
+          "expectedHz": 739.9888454232689,
+          "measuredHz": 740.0712135787032,
+          "cents": 0.19269293097469034,
+          "onsetMs": 2.2291666666666665
+        }
+      ]
+    }
+  },
+  "stress": {
+    "limits": {
+      "ninth track": {
+        "refused": true,
+        "code": "RESOURCE_LIMIT",
+        "message": "Expected 1..8 tracks",
+        "ok": true
+      },
+      "events over 8192": {
+        "refused": true,
+        "code": "RESOURCE_LIMIT",
+        "message": "Maximum 8192 events",
+        "ok": true
+      },
+      "automation over 4096": {
+        "refused": true,
+        "code": "RESOURCE_LIMIT",
+        "message": "Maximum 4096 automation events",
+        "ok": true
+      },
+      "content over 180 s": {
+        "refused": true,
+        "code": "RESOURCE_LIMIT",
+        "message": "Content exceeds 180s; shorten bars or lengthBeats",
+        "ok": true
+      },
+      "content + tail over 180 s": {
+        "refused": true,
+        "code": "RESOURCE_LIMIT",
+        "message": "Content plus tail exceeds 180s; shorten project or tail",
+        "ok": true
+      },
+      "project JSON over 1.5 MB": {
+        "refused": true,
+        "code": "RESOURCE_LIMIT",
+        "message": "Project JSON exceeds byte limit",
+        "ok": true
+      },
+      "unsupported sample rate": {
+        "refused": true,
+        "code": "INPUT_VALIDATION",
+        "message": "Input validation error: Invalid arguments for tool render_audio: options.sampleRate: Invalid input",
+        "ok": true
+      },
+      "stale revision": {
+        "refused": true,
+        "code": "REVISION_CONFLICT",
+        "message": "Expected 0, current 12",
+        "ok": true
+      }
+    },
+    "concurrency": {
+      "ready": 1,
+      "busy": 1
+    },
+    "stdioThroughput": {
+      "n": 200,
+      "p50": 2.5,
+      "p95": 8.4,
+      "max": 9.1
+    },
+    "defaultWatchdog": {
+      "code": "RENDER_TIMEOUT",
+      "seconds": 60.7
+    },
+    "cloudLocalWorkerd": {
+      "endpoint": "http://127.0.0.1:8792/mcp",
+      "tools": 39,
+      "validateCanon": {
+        "ok": true,
+        "ms": 576,
+        "jsonBytes": 956395
+      },
+      "render48k24": {
+        "refused": true,
+        "message": "CLOUD_OUTPUT_LIMIT: choose 24000 Hz, 16-bit or a shorter project; cloud upload limit is 32 MB"
+      },
+      "queued": {
+        "status": "queued",
+        "id": "334239c0-b22d-413d-8432-2c66e4c42dcc",
+        "renderUrl": "http://127.0.0.1:8792/studio.html?job=334239c0-b22d-413d-8432-2c66e4c42dcc"
+      },
+      "burst": {
+        "requests": 75,
+        "ok": 55,
+        "rateLimited": 20,
+        "other": 0
+      }
+    },
+    "cloudProduction": {
+      "endpoint": "https://aurora-mcp.xshiujj.workers.dev/mcp",
+      "tools": 39,
+      "validateCanon": {
+        "ok": true,
+        "ms": 2158,
+        "jsonBytes": 956395
+      },
+      "render48k24": {
+        "refused": true,
+        "message": "CLOUD_OUTPUT_LIMIT: choose 24000 Hz, 16-bit or a shorter project; cloud upload limit is 32 MB"
+      }
+    }
+  }
+}

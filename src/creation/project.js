@@ -3,6 +3,8 @@ import { PARAMS, PARAM_BY_ID, DEFAULTS, SCALES } from '../dsp/params.js';
 import { PRESETS, CATEGORIES } from '../presets/index.js';
 export const VERSION = '1.0.0';
 export const LIMITS = Object.freeze({ seconds: 180, sampleRate: 48000, tracks: 8, events: 8192, automation: 4096, jsonBytes: 1500000, outputBytes: 52000000 });
+/** Studio browser render budget in seconds: 3 s of work per planned audio second, 60 s – 10 min (a fixed 60 s could not finish long multi-part jobs). */
+export const browserRenderBudget = (project, options = {}) => Math.min(600, Math.max(60, Math.ceil(3 * (project.lengthBeats * 60 / project.globals['global.bpm'] + (options.tailSeconds ?? 2)))));
 export const AXES = Object.freeze({
   motive: { zh: '動機與發展', description: 'Intervals, durations, repetition, transposition, inversion, augmentation and fragmentation.', defaults: { intervals: [0, 0, 0, -2], durations: [0.5, 0.5, 0.5, 1.5], development: 'repeat', transpose: 2 } },
   rhythm: { zh: '節奏與張力', description: 'Tempo, density, rests, syncopation and accent strength.', defaults: { bpm: 110, bars: 4, density: 0.8, rest: 0.1, swing: 0.12, tension: 0.6 } },
